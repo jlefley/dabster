@@ -32,6 +32,7 @@ end
 
 gem 'sqlite3'
 gem 'sequel-rails'
+gem 'json'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
