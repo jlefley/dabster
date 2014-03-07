@@ -1,0 +1,34 @@
+<table>
+  <tr>
+    <td>Name</td>
+    <td><%= torrent_group.groupName %></td>
+  </tr>
+  <tr>
+    <td>Artist</td>
+    <td><%= torrent_group.artist %></td>
+  </tr>
+  <tr>
+    <td>ID</td>
+    <td><%= torrent_group.groupId %></td>
+  </tr>
+  <tr>
+    <td>Year</td>
+    <td><%= torrent_group.groupYear %></td>
+  </tr>
+  <tr>
+    <td>Release type</td>
+    <td><%= torrent_group.releaseType %></td>
+  </tr>
+  <tr>
+    <td>what.cd</td>
+    <td>
+      <a href='https://what.cd/torrents.php?id=<%= torrent_group.groupId %>' target='_blank'>Torrent group page</a>
+    </td>
+  </tr>
+  <tr>
+    <td>Associated artists</td>
+    <td>
+      <%= render partial: 'what/torrent_artist', collection: torrent_artists(torrent_group.torrents), as: :artist, spacer_template: 'shared/break' %>
+    </td>
+  </tr>
+</table>

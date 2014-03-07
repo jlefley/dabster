@@ -1,0 +1,51 @@
+<h1>Library Album</h1>
+<table>
+  <tr>
+    <td>Album</td>
+    <td><%= @library_album.album %></td>
+  </tr>
+  <tr>
+    <td>Artist</td>
+    <td><%= link_to @library_album.albumartist, library_artist_path(name: @library_album.albumartist) %></td>
+  </tr>
+  <tr>
+    <td>Track count</td>
+    <td><%= @library_album.tracktotal %></td>
+  </tr>
+  <tr>
+    <td>Date</td>
+    <td><%= @library_album.date %> (<%= @library_album.original_date %>)</td>
+  </tr>
+  <tr>
+    <td>Type</td>
+    <td><%= @library_album.albumtype %></td>
+  </tr>
+  <tr>
+    <td>Label</td>
+    <td><%= @library_album.label %></td>
+  </tr>
+  <tr>
+    <td>Media</td>
+    <td><%= @library_album.media %></td>
+  </tr>
+  <tr>
+    <td>MusicBrainz</td>
+    <td>
+      <a href='http://musicbrainz.org/release-group/<%= @library_album.mb_releasegroupid %>' target='_blank'>Release group</a>
+      <a href='http://musicbrainz.org/release/<%= @library_album.mb_albumid %>' target='_blank'>Release</a>
+    </td>
+  </tr>
+</table>
+<br>
+<%= form_for :what_request, method: :get, url: @library_album do |f| %>
+  <%= f.search_field :groupname, value: @what_request.try(:groupname) || @library_album.album %>
+  <%= f.hidden_field :action, value: :browse %>
+  <%= f.hidden_field 'filter_cat[1]', value: 1 %>
+  <%= f.submit 'Search what.cd for torrents' %>
+<% end %>
+
+<% if @what_response.try(:results) %>
+  <h2>what.cd Torrent Search Results</h2>
+  <%= @what_response.pages %>
+  <%= render partial: 'what/torrent_group', collection: @what_response.results, as: :torrent_group, spacer_template: 'shared/rule' %>
+<% end %>

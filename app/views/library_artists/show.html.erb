@@ -1,0 +1,24 @@
+<h1>Library Artist</h1>
+<table>
+  <tr>
+    <td>Name</td>
+    <td><%= @library_artist.name %></td>
+  </tr>
+  <tr>
+    <td>Sort name</td>
+    <td><%= @library_artist.sort_name %></td>
+  </tr>
+  <tr>
+    <td>MusicBrainz</td>
+    <td><a href='http://musicbrainz.org/artist/<%= @library_artist.mb_artistid %>' target='_blank'>Artist</a></td>
+  </tr>
+</table>
+<br>
+<%= form_for :what_request, method: :get, url: library_artist_path do |f| %>
+  <%= f.hidden_field :action, value: 'artist' %>
+  <%= f.hidden_field :name, value: @library_artist.name %>
+  <%= f.search_field :artistname, value: @library_artist.name %>
+  <%= f.submit 'Search what.cd for Artist' %>
+<% end %>
+<h2>Albums associated with library artist</h2>
+<%= render partial: 'library_album', collection: @library_artist_albums, spacer_template: 'shared/rule' %>

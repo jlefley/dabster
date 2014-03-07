@@ -1,0 +1,33 @@
+<table>
+  <tr>
+    <td>Album</td>
+    <td><%= link_to library_album.album, library_album %></td>
+  </tr>
+  <tr>
+    <td>Track count</td>
+    <td><%= library_album.tracktotal %></td>
+  </tr>
+  <tr>
+    <td>Date</td>
+    <td><%= library_album.date %> (<%= library_album.original_date %>)</td>
+  </tr>
+  <tr>
+    <td>Type</td>
+    <td><%= library_album.albumtype %></td>
+  </tr>
+  <tr>
+    <td>Label</td>
+    <td><%= library_album.label %></td>
+  </tr>
+  <tr>
+    <td>Media</td>
+    <td><%= library_album.media %></td>
+  </tr>
+  <tr>
+    <td>MusicBrainz</td>
+    <td>
+      <a href='http://musicbrainz.org/release-group/<%= library_album.mb_releasegroupid %>' target='_blank'>Release group</a>
+      <a href='http://musicbrainz.org/release/<%= library_album.mb_albumid %>' target='_blank'>Release</a>
+    </td>
+  </tr>
+</table>

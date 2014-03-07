@@ -3,19 +3,25 @@ require 'json'
 
 module WhatAPI
     
-    class InvalidResponse < StandardError; end
     class AuthenticationError < StandardError; end
     class Error < StandardError; end
+    class Failure < StandardError; end
 
     BASE_URI = 'https://what.cd'
 
     module_function
 
-    def make_request cookie, params
+    def make_request cookie, query
         endpoint = URI(BASE_URI + '/ajax.php')
-        endpoint.query = URI.encode_www_form(params)
+
+        if query.is_a? String
+          endpoint.query = query
+        else
+          endpoint.query = URI.encode_www_form(query)
+        end
 
         response = Net::HTTP.start(endpoint.host, endpoint.port, use_ssl: true) do |http|
+            puts endpoint
             request = Net::HTTP::Get.new(endpoint)
             request['Cookie'] = cookie
             http.request(request)
@@ -25,7 +31,7 @@ module WhatAPI
 
         data = JSON.parse(response.body)
 
-        raise InvalidResponse unless data['status'] == 'success'
+        raise Failure, data unless data['status'] == 'success'
 
         data['response']
     end
