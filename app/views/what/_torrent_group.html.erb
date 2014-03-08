@@ -1,15 +1,11 @@
 <table>
   <tr>
     <td>Name</td>
-    <td><%= torrent_group.groupName %></td>
+    <td><%= html_decode torrent_group.groupName %></td>
   </tr>
   <tr>
     <td>Artist</td>
-    <td><%= torrent_group.artist %></td>
-  </tr>
-  <tr>
-    <td>ID</td>
-    <td><%= torrent_group.groupId %></td>
+    <td><%= html_decode torrent_group.artist %></td>
   </tr>
   <tr>
     <td>Year</td>
@@ -30,5 +26,9 @@
     <td>
       <%= render partial: 'what/torrent_artist', collection: torrent_artists(torrent_group.torrents), as: :artist, spacer_template: 'shared/break' %>
     </td>
+  </tr>
+  <tr>
+    <td>Associate with album</td>
+    <td><%= f.radio_button :torrent_group_id, torrent_group.groupId %></td>
   </tr>
 </table>

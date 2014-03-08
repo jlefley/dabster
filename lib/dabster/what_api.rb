@@ -21,7 +21,6 @@ module WhatAPI
         end
 
         response = Net::HTTP.start(endpoint.host, endpoint.port, use_ssl: true) do |http|
-            puts endpoint
             request = Net::HTTP::Get.new(endpoint)
             request['Cookie'] = cookie
             http.request(request)

@@ -34,6 +34,7 @@ gem 'sqlite3'
 gem 'sequel-rails'
 gem 'json'
 gem 'recursive-open-struct'
+gem 'htmlentities'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'

@@ -14,7 +14,7 @@
   </tr>
   <tr>
     <td>Date</td>
-    <td><%= @library_album.date %> (<%= @library_album.original_date %>)</td>
+    <td><%= format_date @library_album %></td>
   </tr>
   <tr>
     <td>Type</td>
@@ -35,6 +35,14 @@
       <a href='http://musicbrainz.org/release/<%= @library_album.mb_albumid %>' target='_blank'>Release</a>
     </td>
   </tr>
+  <tr>
+    <td>Artist association</td>
+    <td>None</td>
+  </tr>
+  <tr>
+    <td>Group association</td>
+    <td><%= @release_group.what_group_id || 'None' %></td>
+  </tr>
 </table>
 <br>
 <%= form_for :what_request, method: :get, url: @library_album do |f| %>
@@ -45,7 +53,20 @@
 <% end %>
 
 <% if @what_response.try(:results) %>
-  <h2>what.cd Torrent Search Results</h2>
-  <%= @what_response.pages %>
-  <%= render partial: 'what/torrent_group', collection: @what_response.results, as: :torrent_group, spacer_template: 'shared/rule' %>
+  <h2>what.cd Results</h2>
+  <%= form_for @release_group do |f| %>
+    <%= render partial: 'what/torrent_group', locals: { f: f }, collection: @what_response.results, as: :torrent_group, spacer_template: 'shared/rule' %>
+  <% end %>
+  <br>
+  <span>Pages:
+  <% @what_response.pages.to_i.times do |p| %>
+    <% page = p + 1 %>
+    <% if @what_response.currentPage == page %>
+      <%= page %>
+    <% else %>
+      <% @what_request.page = page %>
+      <%= link_to page, library_album_path(@library_album, commit: true, what_request: @what_request.marshal_dump) %>
+    <% end %>
+  <% end %>
+  </span>
 <% end %>
