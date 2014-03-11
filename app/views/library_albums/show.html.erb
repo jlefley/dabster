@@ -41,7 +41,7 @@
   </tr>
   <tr>
     <td>Group association</td>
-    <td><%= @release_group.what_group_id || 'None' %></td>
+    <td><%= @group.what_id || 'None' %></td>
   </tr>
 </table>
 <br>
@@ -54,7 +54,11 @@
 
 <% if @what_response.try(:results) %>
   <h2>what.cd Results</h2>
-  <%= form_for @release_group do |f| %>
+  <%= form_for @group do |f| %>
+    <%= f.submit 'Associate selection with album' %>
+    <%= f.hidden_field :what_results, value: @what_response.results_as_a_hash.to_json %>
+    <%= f.hidden_field :library_album_id, value: @library_album.id %>
+    <br><br>
     <%= render partial: 'what/torrent_group', locals: { f: f }, collection: @what_response.results, as: :torrent_group, spacer_template: 'shared/rule' %>
   <% end %>
   <br>
