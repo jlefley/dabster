@@ -2,13 +2,13 @@ class GroupsController < ApplicationController
 
   def create
     GroupService.new(Group, Library::Album).associate_group(association_params)
-    flash[:notice] = 'Library album associated with group'
+    flash[:notice] = 'Library album - group associated created'
     redirect_to request.referrer
   end
 
   def update
     GroupService.new(Group, Library::Album).associate_group(association_params)
-    flash[:notice] = 'Library album association updated'
+    flash[:notice] = 'Library album - group association updated'
     redirect_to request.referrer
   end
 

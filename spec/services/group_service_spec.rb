@@ -29,6 +29,12 @@ describe GroupService do
       end
     end
 
+    describe 'when result group matching specified result group id is not present' do
+      it 'raises ArgumentError' do
+        expect{ subject.associate_group(result_group_id: 2, result_groups: [], library_album_id: 3) }.to raise_error(StandardError)
+      end
+    end
+
     describe 'when library album does not have associated group' do
 
       before do

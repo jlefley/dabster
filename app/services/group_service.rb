@@ -24,6 +24,7 @@ class GroupService
     result_group_id = parameters.fetch(:result_group_id).to_i
 
     result_group = result_groups.select { |g| g.id == result_group_id }.first
+    raise(ArgumentError, 'result group not found') unless result_group
     
     library_album = library_album_class.first!(id: library_album_id)
   
