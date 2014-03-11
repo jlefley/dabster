@@ -1,18 +1,25 @@
 class GroupsController < ApplicationController
 
   def create
-    GroupService.new(Group, Library::Album).associate_group(association_params)
+    execute 
     flash[:notice] = 'Library album - group associated created'
     redirect_to request.referrer
   end
 
   def update
-    GroupService.new(Group, Library::Album).associate_group(association_params)
+    execute 
     flash[:notice] = 'Library album - group association updated'
     redirect_to request.referrer
   end
 
   private
+
+  def execute
+    Sequel::Model.db.transaction do
+      @group = GroupService.new(Group, Library::Album).associate_group(association_params)
+      ArtistService.new(Artist).associate_artists(@group)
+    end
+  end
 
   def association_params
     results = JSON.parse(params[:group].delete(:what_results), symbolize_names: true)

@@ -68,7 +68,7 @@ describe GroupService do
       end
 
       it 'returns the group' do
-        expect(subject.associate_group(parameters)).to eq(group)
+        expect(subject.associate_group(parameters)).to be(group)
       end
 
       it 'saves the group' do

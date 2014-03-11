@@ -2,13 +2,10 @@ Sequel.migration do
   change do
     create_table(:artists) do
       primary_key :id
-      column :name, "varchar(255)"
       column :what_id, "integer"
       column :what_name, "varchar(255)"
       column :created_at, "timestamp", :null=>false
       column :updated_at, "timestamp"
-      
-      index [:what_id]
     end
     
     create_table(:groups) do
@@ -26,7 +23,6 @@ Sequel.migration do
       column :updated_at, "timestamp"
       
       index [:library_album_id]
-      index [:what_id]
     end
     
     create_table(:schema_migrations) do

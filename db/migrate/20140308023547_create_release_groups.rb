@@ -3,7 +3,7 @@ Sequel.migration do
     create_table :groups do
       primary_key :id
       Integer :library_album_id, index: true, null: false, unique: true
-      Integer :what_id, index: true
+      Integer :what_id, unique: true
       String :what_artist
       String :what_name
       String :what_tags
