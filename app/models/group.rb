@@ -21,4 +21,9 @@ class Group < Sequel::Model
     end
 
   end
+
+  def library_items
+    library_album.library_items
+  end
+
 end

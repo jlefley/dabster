@@ -44,6 +44,15 @@ Sequel.migration do
       
       index [:group_id]
     end
+    
+    create_table(:artists_library_items) do
+      foreign_key :artist_id, :artists, :null=>false, :on_delete=>:cascade
+      column :library_item_id, "integer", :null=>false
+      
+      primary_key [:artist_id, :library_item_id]
+      
+      index [:library_item_id]
+    end
   end
 end
 Sequel.migration do
@@ -51,5 +60,6 @@ Sequel.migration do
     self << "INSERT INTO `schema_migrations` (`filename`) VALUES ('20140308023547_create_release_groups.rb')"
     self << "INSERT INTO `schema_migrations` (`filename`) VALUES ('20140311194900_create_artists.rb')"
     self << "INSERT INTO `schema_migrations` (`filename`) VALUES ('20140311195146_create_artists_groups.rb')"
+    self << "INSERT INTO `schema_migrations` (`filename`) VALUES ('20140312012119_create_artists_library_items.rb')"
   end
 end
