@@ -32,7 +32,8 @@ class ArtistService
     removed_artists.each do |artist|
       group.remove_artist(artist)
     end
-
+    
+    group.match_artists
     group
   end
 

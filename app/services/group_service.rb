@@ -19,7 +19,7 @@ class GroupService
   def associate_group parameters
     parameters.delete_if { |k, v| v.nil? }
 
-    result_groups = parameters.fetch(:result_dgroups)
+    result_groups = parameters.fetch(:result_groups)
     library_album_id = parameters.fetch(:library_album_id).to_i
     result_group_id = parameters.fetch(:result_group_id).to_i
 

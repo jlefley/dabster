@@ -3,7 +3,7 @@ require 'artist_service'
 
 describe ArtistService do
 
-  let(:group) { double 'group', add_artist: nil, remove_artist: nil, artists: [] }
+  let(:group) { double 'group', match_artists: nil, add_artist: nil, remove_artist: nil, artists: [] }
   let(:artist0) { double 'artist 0', :id => 0, :what_id= => nil, :what_name= => nil, :save => nil }
   let(:artist1) { double 'artist 1', id: 1 }
   let(:artist2) { double 'artist 2', id: 2 }
@@ -81,6 +81,12 @@ describe ArtistService do
 
     it 'returns the group' do
       expect(subject.associate_artists(group)).to be(group)
+    end
+
+    it 'matches artists in group' do
+      expect(group).to receive(:match_artists)
+      
+      subject.associate_artists(group)
     end
 
   end

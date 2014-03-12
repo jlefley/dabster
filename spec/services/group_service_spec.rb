@@ -20,7 +20,7 @@ describe GroupService do
     before do
       allow(library_album_class).to receive(:first!).with(id: 456).and_return(library_album)
       allow(result_group1).to receive(:map).with(GroupService::WHAT_GROUP_MAPPING).and_return('mapped group data')
-      allow(result_group1).to receive(:artists).and_return('artists')
+      allow(result_group1).to receive(:artists_hashes).and_return('artists')
     end
 
     describe 'when parameters contains nil value for required key' do

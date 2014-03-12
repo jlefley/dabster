@@ -1,4 +1,6 @@
 class Group < Sequel::Model
+  include ArtistMatching
+
   serialize_attributes :json, :what_artists, :what_tags
   many_to_one :library_album, class: 'Library::Album', key: :library_album_id
   many_to_many :artists
