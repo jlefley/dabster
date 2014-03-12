@@ -19,6 +19,8 @@ class GroupsController < ApplicationController
       @group = GroupService.new(Group, Library::Album).associate_group(association_params)
       ArtistService.new(Artist).associate_artists(@group)
     end
+  rescue StandardError => e
+    raise Dabster::Error, "(#{e.class}) #{e.message}"
   end
 
   def association_params

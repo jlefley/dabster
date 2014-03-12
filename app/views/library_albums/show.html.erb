@@ -46,9 +46,16 @@
 </table>
 <br>
 <%= form_for :what_request, method: :get, url: @library_album do |f| %>
-  <%= f.search_field :groupname, value: @what_request.try(:groupname) || @library_album.album %>
-  <%= f.hidden_field :action, value: :browse %>
   <%= f.hidden_field 'filter_cat[1]', value: 1 %>
+  <%= f.hidden_field :action, value: :browse %>
+  <p>
+  <%= f.label :groupname %>
+  <%= f.search_field :groupname, value: @what_request.try(:groupname) || @library_album.album %>
+  </p>
+  <p>
+  <%= f.label :artistname %>
+  <%= f.search_field :artistname, value: @what_request.try(:artistname) || @library_album.albumartist %>
+  </p>
   <%= f.submit 'Search what.cd for torrents' %>
 <% end %>
 
