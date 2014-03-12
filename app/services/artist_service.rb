@@ -7,7 +7,7 @@ class ArtistService
   end
 
   def associate_artists group
-    group.what_artists.each do |artist|
+    metadata_artists = group.what_artists.map do |artist|
       what_id = artist.fetch(:id)
       what_name = artist.fetch(:name)
 
@@ -18,9 +18,30 @@ class ArtistService
         artist.save
       end
 
+      artist
+    end
+ 
+    existing_artists = group.artists
+    added_artists = difference(metadata_artists, existing_artists)
+    removed_artists = difference(existing_artists, metadata_artists)
+
+    added_artists.each do |artist|
       group.add_artist(artist)
     end
+
+    removed_artists.each do |artist|
+      group.remove_artist(artist)
+      artist.delete if artist.groups.empty?
+    end
+
     group
   end
 
+  private
+
+  def difference a, b
+    ids = b.map { |e| e.id }
+    a.select { |e| !ids.include?(e.id) }
+  end
+  
 end
