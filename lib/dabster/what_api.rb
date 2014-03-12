@@ -28,11 +28,11 @@ module WhatAPI
 
         raise Error unless response.code == '200'
 
-        data = JSON.parse(response.body)
+        data = JSON.parse(response.body, symbolize_names: true)
 
-        raise Failure, data unless data['status'] == 'success'
+        raise Failure, data unless data[:status] == 'success'
 
-        data['response']
+        data[:response]
     end
 
     def login

@@ -1,24 +1,40 @@
 require 'htmlentities'
+require 'ostruct'
 
-class WhatGroup
+class WhatGroup < OpenStruct
 
-  def initialize group
-    @group = group
+  def initialize hash
+    super(hash)
     @coder = HTMLEntities.new
   end
 
-  def map mapping
-    Hash[mapping.map { |k, v|
-      [v, [:what_name, :what_artists].include?(k) ? @coder.decode(@group.fetch(k)) : @group.fetch(k)]
-    }]
+  def method_missing method, *args
+    raise KeyError, "#{method} not set" unless respond_to?(method)
+    super
+  end
+  
+  def artist
+    @coder.decode(super)
   end
 
-  def artists
-    @group.fetch(:torrents).map { |t| t.fetch(:artists) }.flatten.uniq
+  def groupName
+    @coder.decode(super)
   end
 
   def id
-    @group.fetch(:groupId)
+    groupId
+  end
+
+  def map mapping
+    Hash[mapping.map { |k, v| [v, self.send(k)] }]
+  end
+
+  def artists_hashes
+    torrents.map { |t| t.fetch(:artists) }.flatten.uniq
+  end
+
+  def artists
+    artists_hashes.map { |a| OpenStruct.new a }
   end
 
 end

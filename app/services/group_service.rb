@@ -19,7 +19,7 @@ class GroupService
   def associate_group parameters
     parameters.delete_if { |k, v| v.nil? }
 
-    result_groups = parameters.fetch(:result_groups)
+    result_groups = parameters.fetch(:result_dgroups)
     library_album_id = parameters.fetch(:library_album_id).to_i
     result_group_id = parameters.fetch(:result_group_id).to_i
 
@@ -35,7 +35,7 @@ class GroupService
    
     group.set_fields(result_group.map(WHAT_GROUP_MAPPING), group_fields)
     group.set_fields(parameters, [:what_confidence])
-    group.what_artists = result_group.artists
+    group.what_artists = result_group.artists_hashes
 
     group.save
 

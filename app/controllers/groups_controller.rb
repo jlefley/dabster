@@ -20,7 +20,7 @@ class GroupsController < ApplicationController
       ArtistService.new(Artist).associate_artists(@group)
     end
   rescue StandardError => e
-    raise Dabster::Error, "(#{e.class}) #{e.message}"
+    raise Dabster::Error, "#{e.class} (#{e.message})", e.backtrace
   end
 
   def association_params

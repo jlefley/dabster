@@ -20,27 +20,15 @@ describe ArtistService do
     end
 
     describe 'when group has existing artist associations not corresponding to any current metadata artists' do
-      before do
-        allow(group).to receive(:artists).and_return([artist1, artist2])
-        allow(artist2).to receive(:groups).and_return(['other group'])
-      end
 
       it 'removes the artist not present in the metadata from the group' do
+        allow(group).to receive(:artists).and_return([artist1, artist2])
+        
         expect(group).to receive(:remove_artist).with(artist2)
         
         subject.associate_artists(group)
       end
 
-      describe 'when removed artist does not belong to any groups' do
-        it 'deletes the artist' do
-          allow(artist2).to receive(:groups).and_return([])
-          
-          expect(artist2).to receive(:delete)
-        
-          subject.associate_artists(group)
-        end
-      end
-      
     end
 
     describe 'when group has existing artist associations corresponding to current metadata artists' do

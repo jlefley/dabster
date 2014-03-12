@@ -63,10 +63,10 @@
   <h2>what.cd Results</h2>
   <%= form_for @group do |f| %>
     <%= f.submit 'Associate selection with album' %>
-    <%= f.hidden_field :what_results, value: @what_response.results_as_a_hash.to_json %>
+    <%= f.hidden_field :what_results, value: @what_response.marshal_dump[:results].to_json %>
     <%= f.hidden_field :library_album_id, value: @library_album.id %>
     <br><br>
-    <%= render partial: 'what/torrent_group', locals: { f: f }, collection: @what_response.results, as: :torrent_group, spacer_template: 'shared/rule' %>
+    <%= render partial: 'what/torrent_group', locals: { f: f }, collection: @what_response.groups, as: :torrent_group, spacer_template: 'shared/rule' %>
   <% end %>
   <br>
   <span>Pages:

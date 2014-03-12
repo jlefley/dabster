@@ -31,7 +31,6 @@ class ArtistService
 
     removed_artists.each do |artist|
       group.remove_artist(artist)
-      artist.delete if artist.groups.empty?
     end
 
     group

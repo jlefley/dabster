@@ -8,10 +8,16 @@ class ApplicationController < ActionController::Base
   private
 
   def make_what_request
-    api = WhatAPIConnection.new
-    @what_response_hash = api.make_request(params[:what_request].to_query)
+    response_hash = WhatAPIConnection.new.make_request(params[:what_request].to_query)
     @what_request = OpenStruct.new(params[:what_request])
-    @what_response = RecursiveOpenStruct.new(@what_response_hash, recurse_over_arrays: true)
+    
+    case @what_request.action
+    when 'browse'
+      results = response_hash.fetch(:results)
+      @what_response = OpenStruct.new(response_hash.merge(groups: results.map { |r| WhatGroup.new r }))
+    else
+      @what_response = RecursiveOpenStruct.new(response_hash, recurse_over_arrays: true)
+    end
   end
 
   def show_error e
@@ -19,6 +25,10 @@ class ApplicationController < ActionController::Base
     if match = msg.match(/(.+missing field in hash: \W\S+)/)
       msg = match[1] 
     end
+    logger.error
+    logger.error msg
+    Rails.backtrace_cleaner.clean(e.backtrace).each { |line| logger.error '  ' + line }
+    logger.error
     flash[:error] = msg
     redirect_to :back
   end
