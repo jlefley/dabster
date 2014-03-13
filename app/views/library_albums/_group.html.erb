@@ -1,0 +1,29 @@
+<h2>what.cd association</h2>
+<table>
+  <tr>
+    <td>Name</td>
+    <td><%= @group.what_name %></td>
+  </tr>
+  <tr>
+    <td>Artist</td>
+    <td><%= @group.what_artist %></td>
+  </tr>
+  <tr>
+    <td>Year</td>
+    <td><%= @group.what_year %></td>
+  </tr>
+  <tr>
+    <td>Release type</td>
+    <td><%= @group.what_release_type %></td>
+  </tr>
+  <tr>
+    <td>Confidence</td>
+    <td><%= @group.what_confidence %></td>
+  </tr>
+  <tr>
+    <td>what.cd</td>
+    <td>
+      <a href='https://what.cd/torrents.php?id=<%= @group.what_id %>' target='_blank'>Torrent group page</a>
+    </td>
+  </tr>
+</table>

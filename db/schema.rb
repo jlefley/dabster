@@ -36,6 +36,16 @@ Sequel.migration do
       column :cookie, "varchar(255)"
     end
     
+    create_table(:artist_library_item_relationships) do
+      primary_key :id
+      foreign_key :artist_id, :artists, :null=>false, :on_delete=>:cascade
+      column :library_item_id, "integer", :null=>false
+      column :type, "varchar(255)", :null=>false
+      
+      index [:artist_id, :library_item_id]
+      index [:library_item_id]
+    end
+    
     create_table(:artists_groups) do
       foreign_key :artist_id, :artists, :null=>false, :on_delete=>:cascade
       foreign_key :group_id, :groups, :null=>false, :on_delete=>:cascade
@@ -43,15 +53,6 @@ Sequel.migration do
       primary_key [:artist_id, :group_id]
       
       index [:group_id]
-    end
-    
-    create_table(:artists_library_items) do
-      foreign_key :artist_id, :artists, :null=>false, :on_delete=>:cascade
-      column :library_item_id, "integer", :null=>false
-      
-      primary_key [:artist_id, :library_item_id]
-      
-      index [:library_item_id]
     end
   end
 end

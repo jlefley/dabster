@@ -35,16 +35,17 @@
       <a href='http://musicbrainz.org/release/<%= @library_album.mb_albumid %>' target='_blank'>Release</a>
     </td>
   </tr>
-  <tr>
-    <td>Artist association</td>
-    <td>None</td>
-  </tr>
-  <tr>
-    <td>Group association</td>
-    <td><%= @group.what_id || 'None' %></td>
-  </tr>
 </table>
-<br>
+<h2>Items</h2>
+<table>
+  <th>Track</th>
+  <th>Name</th>
+  <th>Artist</th>
+  <th>Artist Associations</th>
+  <%= render partial: 'library_item', collection: @library_items %>
+</table>
+<%= render partial: 'group' if @group.id %>
+<hr>
 <%= form_for :what_request, method: :get, url: @library_album do |f| %>
   <%= f.hidden_field 'filter_cat[1]', value: 1 %>
   <%= f.hidden_field :action, value: :browse %>
