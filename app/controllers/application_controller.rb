@@ -3,20 +3,16 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  rescue_from Dabster::Error, with: :show_error
+  rescue_from Dabster::Error, with: :handle_error
 
   private
 
-  def show_error e
-    msg = e.message
-    if match = msg.match(/(.+missing field in hash: \W\S+)/)
-      msg = match[1] 
-    end
+  def handle_error e
     logger.error
-    logger.error msg
+    logger.error e.message
     Rails.backtrace_cleaner.clean(e.backtrace).each { |line| logger.error '  ' + line }
     logger.error
-    flash[:error] = msg
+    flash[:error] = e.message.truncate(100)
     redirect_to :back
   end
 end

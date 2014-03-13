@@ -3,12 +3,15 @@ class GroupService
   attr_reader :group_class, :library_album_class
 
   WHAT_GROUP_MAPPING = {
-      groupId: :what_id,
-      artist: :what_artist,
-      groupName: :what_name,
-      tags: :what_tags,
-      groupYear: :what_year,
-      releaseType: :what_release_type
+      id:               :what_id,
+      artist:           :what_artist,
+      name:             :what_name,
+      tags:             :what_tags,
+      year:             :what_year,
+      release_type:     :what_release_type,
+      artists:          :what_artists,
+      record_label:     :what_record_label,
+      catalog_number:   :what_catalog_number
     }
 
   def initialize group, library_album
@@ -35,7 +38,6 @@ class GroupService
    
     group.set_fields(result_group.map(WHAT_GROUP_MAPPING), group_fields)
     group.set_fields(parameters, [:what_confidence])
-    group.what_artists = result_group.artists_hashes
 
     group.save
 
