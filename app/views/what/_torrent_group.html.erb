@@ -1,7 +1,7 @@
 <table>
   <tr>
     <td>Name</td>
-    <td><%= torrent_group.groupName %></td>
+    <td><%= torrent_group.name %></td>
   </tr>
   <tr>
     <td>Artist</td>
@@ -9,26 +9,26 @@
   </tr>
   <tr>
     <td>Year</td>
-    <td><%= torrent_group.groupYear %></td>
+    <td><%= torrent_group.year %></td>
   </tr>
   <tr>
     <td>Release type</td>
-    <td><%= torrent_group.releaseType %></td>
+    <td><%= torrent_group.release_type %></td>
   </tr>
   <tr>
     <td>what.cd</td>
     <td>
-      <a href='https://what.cd/torrents.php?id=<%= torrent_group.groupId %>' target='_blank'>Torrent group page</a>
+      <a href='https://what.cd/torrents.php?id=<%= torrent_group.id %>' target='_blank'>Torrent group page</a>
     </td>
   </tr>
   <tr>
-    <td>Associated artists</td>
+    <td>Artists</td>
     <td>
-      <%= render partial: 'what/torrent_artist', collection: torrent_group.artists, as: :artist, spacer_template: 'shared/break' %>
+      <%= render partial: 'what/torrent_artist', collection: torrent_group.torrent_artists, as: :artist, spacer_template: 'shared/break' %>
     </td>
   </tr>
   <tr>
     <td>Associate with album</td>
-    <td><%= f.radio_button :what_id, torrent_group.groupId %></td>
+    <td><%= f.radio_button :what_id, torrent_group.id %></td>
   </tr>
 </table>

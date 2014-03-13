@@ -22,14 +22,14 @@ describe Group do
       subject.what_tags = ['asdf']
       subject.what_year = 1
       subject.what_release_type = 'DJ Mix'
-      subject.what_artists = ['asdf']
+      subject.what_artists = { artists: 'asdf' } 
       subject.what_confidence = 1.0
     end
     describe 'when what_tags is not an array' do
       before { subject.what_tags = 'asdf' }
       it { should_not be_valid }
     end
-    describe 'when what_artists is not an array' do
+    describe 'when what_artists is not a hash' do
       before { subject.what_artists = 'asdf' }
       it { should_not be_valid }
     end

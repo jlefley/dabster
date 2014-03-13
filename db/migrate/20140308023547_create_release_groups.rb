@@ -10,6 +10,8 @@ Sequel.migration do
       Integer :what_year
       String :what_release_type
       String :what_artists
+      String :what_record_label
+      String :what_catalog_number
       Float :what_confidence
       DateTime :created_at, null: false
       DateTime :updated_at

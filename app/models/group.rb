@@ -20,7 +20,7 @@ class Group < Sequel::Model
       validates_presence :what_release_type
       validates_presence :what_artists
       validates_presence :what_confidence
-      validates_type Array, :what_artists
+      validates_type Hash, :what_artists
       validates_type Array, :what_tags
       validates_includes WHAT_RELEASE_TYPES, :what_release_type
     end

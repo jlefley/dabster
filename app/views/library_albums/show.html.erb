@@ -62,7 +62,7 @@
   <h2>what.cd Results</h2>
   <%= form_for @group do |f| %>
     <%= f.submit 'Associate selection with album' %>
-    <%= f.hidden_field :what_results, value: @what_response.results.to_json %>
+    <%= f.hidden_field :results, value: @what_response.results.to_json %>
     <%= f.hidden_field :library_album_id, value: @library_album.id %>
     <br><br>
     <%= render partial: 'what/torrent_group', locals: { f: f }, collection: @what_response.groups, as: :torrent_group, spacer_template: 'shared/rule' %>

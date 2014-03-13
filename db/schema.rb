@@ -18,6 +18,8 @@ Sequel.migration do
       column :what_year, "integer"
       column :what_release_type, "varchar(255)"
       column :what_artists, "varchar(255)"
+      column :what_record_label, "varchar(255)"
+      column :what_catalog_number, "varchar(255)"
       column :what_confidence, "double precision"
       column :created_at, "timestamp", :null=>false
       column :updated_at, "timestamp"
