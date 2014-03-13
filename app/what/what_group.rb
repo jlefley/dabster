@@ -8,33 +8,44 @@ class WhatGroup < OpenStruct
     @coder = HTMLEntities.new
   end
 
-  def method_missing method, *args
-    raise KeyError, "#{method} not set" unless respond_to?(method)
-    super
+  def id
+    groupId || super
   end
-  
+
+  def name
+    @coder.decode(groupName || super)
+  end
+
   def artist
     @coder.decode(super)
   end
 
-  def groupName
-    @coder.decode(super)
+  def year
+    groupYear || super
   end
 
-  def id
-    groupId
+  def release_type
+    releaseType
   end
 
-  def map mapping
-    Hash[mapping.map { |k, v| [v, self.send(k)] }]
-  end
-
-  def artists_hashes
-    torrents.map { |t| t.fetch(:artists) }.flatten.uniq
+  def catalog_number
+    catalogueNumber
   end
 
   def artists
-    artists_hashes.map { |a| OpenStruct.new a }
+    musicInfo
+  end
+
+  def record_label
+    recordLabel
+  end
+
+  def map mapping
+    Hash[mapping.map { |old_key, new_key| raise(KeyError, "#{old_key} missing") unless val = send(old_key); [new_key, val] }]
+  end
+
+  def torrent_artists
+    torrents.map { |t| t.fetch(:artists) }.flatten.uniq.map { |a| OpenStruct.new(a) }
   end
 
 end

@@ -21,7 +21,7 @@ describe Group do
       subject.what_name = 'asdf'
       subject.what_tags = ['asdf']
       subject.what_year = 1
-      subject.what_release_type = 'asdf'
+      subject.what_release_type = 'DJ Mix'
       subject.what_artists = ['asdf']
       subject.what_confidence = 1.0
     end
@@ -63,6 +63,10 @@ describe Group do
     end
     describe 'when all what fields are present and of correct type' do
       it { should be_valid }
+    end
+    describe 'when what_release_type is not a valid release type' do
+      before { subject.what_release_type = 'asdf' }
+      it { should_not be_valid }
     end
   end
 
