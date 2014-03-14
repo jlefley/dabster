@@ -9,11 +9,11 @@ describe ArtistService do
   let(:artist2) { double 'artist 2', id: 2 }
   let(:artist_class) { double 'artist class' }
 
-  subject { ArtistService.new artist_class }
+  subject(:service) { ArtistService.new artist_class }
 
   describe 'when associating artists according to metadata' do
     before do
-      allow(group).to receive(:what_artists).and_return([{ id: 0, name: 'a0' }, { id: 1, name: 'a1' }])
+      allow(group).to receive(:what_artists).and_return(artists: [{ id: 0, name: 'a0' }], dj: [{ id: 1, name: 'a1' }])
       allow(artist_class).to receive(:first).with(what_id: 0).and_return(nil)
       allow(artist_class).to receive(:new).and_return(artist0)
       allow(artist_class).to receive(:first).with(what_id: 1).and_return(artist1)
@@ -26,7 +26,7 @@ describe ArtistService do
         
         expect(group).to receive(:remove_artist).with(artist2)
         
-        subject.associate_artists(group)
+        service.associate_artists(group)
       end
 
     end
@@ -38,7 +38,7 @@ describe ArtistService do
         expect(group).not_to receive(:remove_artist)
         expect(group).not_to receive(:add_artist)
         
-        subject.associate_artists(group)
+        service.associate_artists(group)
       end
     end
 
@@ -51,19 +51,19 @@ describe ArtistService do
           expect(artist0).to receive(:what_id=).with(0)
           expect(artist0).to receive(:what_name=).with('a0')
 
-          subject.associate_artists(group)
+          service.associate_artists(group)
         end
    
         it 'saves the new artist' do
           expect(artist0).to receive(:save)
           
-          subject.associate_artists(group)
+          service.associate_artists(group)
         end
 
         it 'adds the new artist to the group' do
           expect(group).to receive(:add_artist).once.with(artist0)
           
-          subject.associate_artists(group)
+          service.associate_artists(group)
         end    
 
       end
@@ -73,20 +73,20 @@ describe ArtistService do
         it 'adds the existing artist to the group' do
           expect(group).to receive(:add_artist).once.with(artist1)
           
-          subject.associate_artists(group)
+          service.associate_artists(group)
         end
 
       end
     end
 
     it 'returns the group' do
-      expect(subject.associate_artists(group)).to be(group)
+      expect(service.associate_artists(group)).to be(group)
     end
 
     it 'matches artists in group' do
       expect(group).to receive(:match_artists)
       
-      subject.associate_artists(group)
+      service.associate_artists(group)
     end
 
   end

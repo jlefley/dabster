@@ -20,7 +20,7 @@ class GroupsController < ApplicationController
     result_group = WhatScraper.new(WhatAPIConnection.new, WhatGroup).scrape_group(selected_group)
     Sequel::Model.db.transaction do
       @group = GroupService.new(Group, Library::Album).associate_group(result_group, params[:group].fetch(:library_album_id), 1.0)
-      #ArtistService.new(Artist).associate_artists(@group)
+      ArtistService.new(Artist).associate_artists(@group)
     end
   rescue StandardError => e
     raise Dabster::Error, "#{e.class} (#{e.message})", e.backtrace

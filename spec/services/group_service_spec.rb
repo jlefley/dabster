@@ -9,7 +9,7 @@ describe GroupService do
   let(:library_album_class) { double 'library album class' }
   let(:result_group) { double 'what group 0' }
 
-  subject { GroupService.new group_class, library_album_class }
+  subject(:service) { GroupService.new group_class, library_album_class }
 
   describe 'when associating group' do
     
@@ -23,9 +23,9 @@ describe GroupService do
 
     describe 'when any argument is nil' do
       it 'raises ArgumentError' do
-        expect{ subject.associate_group(nil, 123, 1.0) }.to raise_error(ArgumentError)
-        expect{ subject.associate_group(result_group, nil, 1.0) }.to raise_error(ArgumentError)
-        expect{ subject.associate_group(result_group, 123, nil) }.to raise_error(ArgumentError)
+        expect{ service.associate_group(nil, 123, 1.0) }.to raise_error(ArgumentError)
+        expect{ service.associate_group(result_group, nil, 1.0) }.to raise_error(ArgumentError)
+        expect{ service.associate_group(result_group, 123, nil) }.to raise_error(ArgumentError)
       end
     end
 
@@ -40,29 +40,29 @@ describe GroupService do
       it 'sets sets group fields with data from result group matching specified result group id' do
         expect(group).to receive(:set_fields).once.with('mapped group data', group_fields)
         
-        subject.associate_group(result_group, '456', 1.0)
+        service.associate_group(result_group, '456', 1.0)
       end
 
       it 'associates library album matching specified id with group' do
         expect(group).to receive(:library_album=).with(library_album)
 
-        subject.associate_group(result_group, '456', 1.0)
+        service.associate_group(result_group, '456', 1.0)
       end
 
       it 'sets what_confidence to specified value' do
         expect(group).to receive(:what_confidence=).with(1.0)
         
-        subject.associate_group(result_group, '456', 1.0)
+        service.associate_group(result_group, '456', 1.0)
       end
 
       it 'returns the group' do
-        expect(subject.associate_group(result_group, '456', 1.0)).to be(group)
+        expect(service.associate_group(result_group, '456', 1.0)).to be(group)
       end
 
       it 'saves the group' do
         expect(group).to receive(:save)
 
-        subject.associate_group(result_group, '456', 1.0)
+        service.associate_group(result_group, '456', 1.0)
       end
       
     end
@@ -76,23 +76,23 @@ describe GroupService do
       it 'sets sets group fields with data from result group matching specified result group id' do
         expect(group).to receive(:set_fields).once.with('mapped group data', group_fields)
         
-        subject.associate_group(result_group, '456', 1.0)
+        service.associate_group(result_group, '456', 1.0)
       end
 
       it 'sets what_confidence to specified value' do
         expect(group).to receive(:what_confidence=).with(1.0)
         
-        subject.associate_group(result_group, '456', 1.0)
+        service.associate_group(result_group, '456', 1.0)
       end
 
       it 'returns the group' do
-        expect(subject.associate_group(result_group, '456', 1.0)).to eq(group)
+        expect(service.associate_group(result_group, '456', 1.0)).to eq(group)
       end
 
       it 'saves the group' do
         expect(group).to receive(:save)
 
-        subject.associate_group(result_group, '456', 1.0)
+        service.associate_group(result_group, '456', 1.0)
       end
 
     end

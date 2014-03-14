@@ -26,27 +26,27 @@ describe WhatGroup do
   } }
 
   describe 'when constructed with result group' do
-    subject { WhatGroup.new result_group }
+    subject(:group) { WhatGroup.new result_group }
     it 'allows access to groupId as id' do
-      expect(subject.id).to eq(410618)
+      expect(group.id).to eq(410618)
     end
     it 'allows access to HTML decoded groupName as name' do
-      expect(subject.name).to eq('Jungle Music & More')
+      expect(group.name).to eq('Jungle Music & More')
     end
     it 'allows access to HTML decoded artist' do
-      expect(subject.artist).to eq('Above & Beyond')
+      expect(group.artist).to eq('Above & Beyond')
     end
     it 'allows access to tags' do
-      expect(subject.tags).to eq(['tag'])
+      expect(group.tags).to eq(['tag'])
     end
     it 'allows access to groupYear as year' do
-      expect(subject.year).to eq(2000)
+      expect(group.year).to eq(2000)
     end
     it 'allows access to releaseType as release_type' do
-      expect(subject.release_type).to eq('Album')
+      expect(group.release_type).to eq('Album')
     end
     it 'allows access to uniuque array of objects corresponding to artists in torrents' do
-      artists = subject.torrent_artists
+      artists = group.torrent_artists
       expect(artists.first.id).to eq(1460)
       expect(artists.first.name).to eq('Logistics')
       expect(artists.length).to eq(1)
@@ -54,36 +54,36 @@ describe WhatGroup do
   end
 
   describe 'when constructed with torrent group' do
-    subject { WhatGroup.new torrent_group }
+    subject(:group) { WhatGroup.new torrent_group }
     it 'allows access to id' do
-      expect(subject.id).to eq(44)
+      expect(group.id).to eq(44)
     end
     it 'allows access to HTML decoded name' do
-      expect(subject.name).to eq('Jungle Music & More')
+      expect(group.name).to eq('Jungle Music & More')
     end
     it 'allows access to year' do
-      expect(subject.year).to eq(2001)
+      expect(group.year).to eq(2001)
     end
     it 'allows access to musicInfo as artists' do
-      expect(subject.artists).to eq(artists: [{ id: 1460, name: 'Logistics'}])
+      expect(group.artists).to eq(artists: [{ id: 1460, name: 'Logistics'}])
     end
     it 'allows access to recordLabel as record_label' do
-      expect(subject.record_label).to eq('Label')
+      expect(group.record_label).to eq('Label')
     end
     it 'allows access to catalogueNumber as catalog_number' do
-      expect(subject.catalog_number).to eq('cat_no')
+      expect(group.catalog_number).to eq('cat_no')
     end
   end
 
   describe 'when mapping fields' do
-    subject { WhatGroup.new(result_group) }
+    subject(:group) { WhatGroup.new(result_group) }
     it 'returns HTML decoded values with keys mapped according to specified mapping' do
       mapping = { artist: :the_artist, id: :the_id, name: :the_name }
-      expect(subject.map(mapping)).to eq(the_id: 410618, the_name: 'Jungle Music & More', the_artist: 'Above & Beyond')
+      expect(group.map(mapping)).to eq(the_id: 410618, the_name: 'Jungle Music & More', the_artist: 'Above & Beyond')
     end
     describe 'when mapping specifies a field with nil value' do
       it 'raises KeyError' do
-        expect { subject.map(other: :field) }.to raise_error(KeyError)
+        expect { group.map(other: :field) }.to raise_error(KeyError)
       end
     end
   end

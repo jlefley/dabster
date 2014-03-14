@@ -7,7 +7,7 @@ class ArtistService
   end
 
   def associate_artists group
-    metadata_artists = group.what_artists.map do |artist|
+    metadata_artists = group.what_artists.values.flatten.uniq.map do |artist|
       what_id = artist.fetch(:id)
       what_name = artist.fetch(:name)
 
