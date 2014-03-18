@@ -3,6 +3,17 @@ require 'ostruct'
 
 class WhatGroup < OpenStruct
 
+  ARTISTS_MAPPING = {
+    # what.cd API field => app field
+    composers: :composer,
+    dj:        :dj,
+    artists:   :artist,
+    with:      :with,
+    conductor: :conductor,
+    remixedBy: :remixed_by,
+    producer:  :producer
+  }  
+
   def initialize hash
     super(hash)
     @coder = HTMLEntities.new
@@ -33,7 +44,7 @@ class WhatGroup < OpenStruct
   end
 
   def artists
-    musicInfo
+    Hash[ARTISTS_MAPPING.map { |old_key, new_key| [new_key, musicInfo[old_key]] }]
   end
 
   def record_label

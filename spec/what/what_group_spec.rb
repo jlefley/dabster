@@ -20,7 +20,8 @@ describe WhatGroup do
     id: 44,
     name: 'Jungle Music &amp; More',
     year: 2001,
-    musicInfo: { artists: [{ id: 1460, name: 'Logistics'}] },
+    musicInfo: { artists: 'artists', composers: 'composers', dj: 'djs', conductor: 'conductors',
+      remixedBy: 'remixed_bys', producer: 'producers', with: 'withs' },
     recordLabel: 'Label',
     catalogueNumber: 'cat_no'
   } }
@@ -65,7 +66,8 @@ describe WhatGroup do
       expect(group.year).to eq(2001)
     end
     it 'allows access to musicInfo as artists' do
-      expect(group.artists).to eq(artists: [{ id: 1460, name: 'Logistics'}])
+      expect(group.artists).to eq(artist: 'artists', conductor: 'conductors',
+        dj: 'djs', composer: 'composers', with: 'withs', remixed_by: 'remixed_bys', producer: 'producers')
     end
     it 'allows access to recordLabel as record_label' do
       expect(group.record_label).to eq('Label')

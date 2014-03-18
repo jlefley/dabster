@@ -1,4 +1,5 @@
 require 'db_spec_helper'
+require 'artist_matching'
 require 'group'
 
 describe Group do
