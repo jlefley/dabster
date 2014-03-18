@@ -6,6 +6,10 @@ class LibraryAlbumsController < ApplicationController
     @group = @library_album.group || Group.new
   end
 
+  def index
+    @library_albums = Library::Album.order(:album).limit(40, 0).all
+  end
+
   private
 
   def make_what_request

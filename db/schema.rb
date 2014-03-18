@@ -38,6 +38,16 @@ Sequel.migration do
       column :cookie, "varchar(255)"
     end
     
+    create_table(:artist_group_relationships) do
+      primary_key :id
+      foreign_key :artist_id, :artists, :null=>false, :on_delete=>:cascade
+      foreign_key :group_id, :groups, :null=>false, :on_delete=>:cascade
+      column :type, "varchar(255)", :null=>false
+      
+      index [:artist_id, :group_id]
+      index [:group_id]
+    end
+    
     create_table(:artist_library_item_relationships) do
       primary_key :id
       foreign_key :artist_id, :artists, :null=>false, :on_delete=>:cascade
@@ -47,22 +57,13 @@ Sequel.migration do
       index [:artist_id, :library_item_id]
       index [:library_item_id]
     end
-    
-    create_table(:artists_groups) do
-      foreign_key :artist_id, :artists, :null=>false, :on_delete=>:cascade
-      foreign_key :group_id, :groups, :null=>false, :on_delete=>:cascade
-      
-      primary_key [:artist_id, :group_id]
-      
-      index [:group_id]
-    end
   end
 end
 Sequel.migration do
   change do
-    self << "INSERT INTO `schema_migrations` (`filename`) VALUES ('20140308023547_create_release_groups.rb')"
+    self << "INSERT INTO `schema_migrations` (`filename`) VALUES ('20140308023547_create_groups.rb')"
     self << "INSERT INTO `schema_migrations` (`filename`) VALUES ('20140311194900_create_artists.rb')"
-    self << "INSERT INTO `schema_migrations` (`filename`) VALUES ('20140311195146_create_artists_groups.rb')"
-    self << "INSERT INTO `schema_migrations` (`filename`) VALUES ('20140312012119_create_artists_library_items.rb')"
+    self << "INSERT INTO `schema_migrations` (`filename`) VALUES ('20140311195146_create_artist_group_relationships.rb')"
+    self << "INSERT INTO `schema_migrations` (`filename`) VALUES ('20140312012119_create_artist_library_item_relationships.rb')"
   end
 end

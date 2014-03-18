@@ -12,7 +12,7 @@ Sequel::Model.db.run(File.read(File.join(dir, 'db', 'structure.sql')))
 #load File.join(dir, 'db', 'schema.rb')
 #Sequel::Migration.descendants.each { |m| m.apply(Sequel::Model.db, :up) }
 $:.push File.join(dir, 'app', 'models')
-$:.push File.join(dir, 'lib', 'sequel')
+$:.push File.join(dir, 'lib', 'sequel', 'plugins')
 $:.push File.join(dir, 'app', 'logic')
 
 RSpec.configure do |config|

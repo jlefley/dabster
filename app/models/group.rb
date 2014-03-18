@@ -1,11 +1,12 @@
 class Group < Sequel::Model
   include ArtistMatching
+  plugin :categorized_relationship
 
   WHAT_RELEASE_TYPES = %w(Album Soundtrack EP Anthology Compilation DJ\ Mix Single Live\ album Remix Bootleg Interview Mixtape Unknown Concert\ Recording Demo)
 
   serialize_attributes :json, :what_artists, :what_tags
   many_to_one :library_album, class: 'Library::Album', key: :library_album_id
-  many_to_many :artists
+  categorized_relationship :artists, :type, class: 'Artist', relationship_class: 'ArtistGroupRelationship'
 
   def validate 
     super

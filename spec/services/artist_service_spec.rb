@@ -3,7 +3,7 @@ require 'artist_service'
 
 describe ArtistService do
 
-  let(:group) { double 'group', match_artists: nil, add_artist: nil, remove_artist: nil, artists: [] }
+  let(:group) { double 'group', match_artists: nil, add_artist: nil, remove_artist: nil, artists: {} }
   let(:artist0) { double 'artist 0', :id => 0, :what_id= => nil, :what_name= => nil, :save => nil }
   let(:artist1) { double 'artist 1', id: 1 }
   let(:artist2) { double 'artist 2', id: 2 }
@@ -13,7 +13,7 @@ describe ArtistService do
 
   describe 'when associating artists according to metadata' do
     before do
-      allow(group).to receive(:what_artists).and_return(artists: [{ id: 0, name: 'a0' }], dj: [{ id: 1, name: 'a1' }])
+      allow(group).to receive(:what_artists).and_return(artist: [{ id: 0, name: 'a0' }], dj: [{ id: 1, name: 'a1' }])
       allow(artist_class).to receive(:first).with(what_id: 0).and_return(nil)
       allow(artist_class).to receive(:new).and_return(artist0)
       allow(artist_class).to receive(:first).with(what_id: 1).and_return(artist1)
@@ -21,10 +21,10 @@ describe ArtistService do
 
     describe 'when group has existing artist associations not corresponding to any current metadata artists' do
 
-      it 'removes the artist not present in the metadata from the group' do
-        allow(group).to receive(:artists).and_return([artist1, artist2])
+      it 'removes the artist not present in the metadata from the group for each artist type' do
+        allow(group).to receive(:artists).and_return(artist: [artist2], dj: [artist1])
         
-        expect(group).to receive(:remove_artist).with(artist2)
+        expect(group).to receive(:remove_artist).with(artist2, :artist)
         
         service.associate_artists(group)
       end
@@ -33,7 +33,7 @@ describe ArtistService do
 
     describe 'when group has existing artist associations corresponding to current metadata artists' do
       it 'does not remove or add any artists' do
-        allow(group).to receive(:artists).and_return([artist0, artist1])
+        allow(group).to receive(:artists).and_return(artist: [artist0], dj: [artist1])
         
         expect(group).not_to receive(:remove_artist)
         expect(group).not_to receive(:add_artist)
@@ -43,8 +43,6 @@ describe ArtistService do
     end
 
     describe 'when group does not have existing artist associations corrseponding to current metadata artists' do
-      before { allow(group).to receive(:artists).and_return([]) }
-
       describe 'when artist for metadata artist does not exist' do
 
         it 'sets the what fields on the new artist to the values from the metadata' do
@@ -60,8 +58,8 @@ describe ArtistService do
           service.associate_artists(group)
         end
 
-        it 'adds the new artist to the group' do
-          expect(group).to receive(:add_artist).once.with(artist0)
+        it 'adds the new artist to the group with the type' do
+          expect(group).to receive(:add_artist).once.with(artist0, :artist)
           
           service.associate_artists(group)
         end    
@@ -70,8 +68,8 @@ describe ArtistService do
 
       describe 'when artist for new metadata artist exists' do
 
-        it 'adds the existing artist to the group' do
-          expect(group).to receive(:add_artist).once.with(artist1)
+        it 'adds the existing artist to the group with the type' do
+          expect(group).to receive(:add_artist).once.with(artist1, :dj)
           
           service.associate_artists(group)
         end

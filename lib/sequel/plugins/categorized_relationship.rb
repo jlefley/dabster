@@ -23,6 +23,10 @@ module Sequel
           define_method(adder_name) { |o, cat| add_categorized_relationship(o, cat, name) }
           send(:private, adder_name)
           
+          remover_name = "_remove_#{singular_name}".to_sym
+          define_method(remover_name) { |o, cat| remove_categorized_relationship(o, cat, name) }
+          send(:private, remover_name)
+          
           define_method(name) { related_objects(name) }
 
           relationship_reflections[name] = {
@@ -39,9 +43,15 @@ module Sequel
         private
 
         def add_categorized_relationship(o, cat, name)
-          reflection = relationship_reflections(name)
-          send("add_#{reflection[:singular_name]}_relationship".to_sym,
-               reflection[:key] => o.id, reflection[:category_column] => cat.to_s)
+          ref = relationship_reflections(name)
+          send("add_#{ref[:singular_name]}_relationship", ref[:key] => o.id, ref[:category_column] => cat.to_s)
+        end
+
+        def remove_categorized_relationship(o, cat, name)
+          ref = relationship_reflections(name)
+          rel = send("#{ref[:relationship_name]}_dataset").where(ref[:key] => o.id, ref[:category_column] => cat.to_s).first
+          raise(Sequel::Error, "associated object #{o.inspect} is not currently associated to #{inspect} as #{cat}") unless rel
+          rel.destroy
         end
 
         def relationship_reflections(name)
@@ -49,13 +59,12 @@ module Sequel
         end
 
         def related_objects(name)
-          reflection = relationship_reflections(name)
+          ref = relationship_reflections(name)
           mapping = Hash.new { |hash, key| hash[key] = [] }
-          relationships = send(reflection[:relationship_name])
+          relationships = send(ref[:relationship_name])
           objects = load_associated_objects(self.class.association_reflections[name])
-          key = reflection[:key]
           relationships.each do |rel|
-            mapping[rel.send(reflection[:category_column]).to_sym] << objects.select { |o| o.id == rel.send(key) }.first
+            mapping[rel.send(ref[:category_column]).to_sym] << objects.select { |o| o.id == rel.send(ref[:key]) }.first
           end
           mapping
         end

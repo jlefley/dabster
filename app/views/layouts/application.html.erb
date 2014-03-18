@@ -7,15 +7,15 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <%= link_to 'Library Artists', library_artists_path %>
+  <%= link_to 'Library Albums', library_albums_path %>
+  <% if flash[:error] -%>
+    <p class='error'>Error: <%=h flash[:error] %></p>
+  <% end -%>
+  <% if flash[:notice] -%>
+    <p class='notice'>Notice: <%=h flash[:notice] %></p>
+  <% end -%>
 
-<% if flash[:error] -%>
-  <p class='error'>Error: <%=h flash[:error] %></p>
-<% end -%>
-<% if flash[:notice] -%>
-  <p class='notice'>Notice: <%=h flash[:notice] %></p>
-<% end -%>
-
-<%= yield %>
-
+  <%= yield %>
 </body>
 </html>
