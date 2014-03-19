@@ -1,6 +1,6 @@
 class ArtistGroupRelationship < Sequel::Model
   TYPES = %w(composer dj artist with conductor remixed_by producer)
-
+  
   def validate
     super
     validates_includes TYPES, :type

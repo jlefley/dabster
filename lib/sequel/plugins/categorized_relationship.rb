@@ -32,8 +32,9 @@ module Sequel
           relationship_reflections[name] = {
             singular_name: singular_name,
             key: association_reflections[name][:right_key],
-            relationship_name: rel_name,
-            category_column: column
+            category_column: column,
+            dataset: association_reflections[name].dataset_method,
+            relationship_dataset: association_reflections[rel_name].dataset_method
           }
         end
       end
@@ -49,7 +50,7 @@ module Sequel
 
         def remove_categorized_relationship(o, cat, name)
           ref = relationship_reflections(name)
-          rel = send("#{ref[:relationship_name]}_dataset").where(ref[:key] => o.id, ref[:category_column] => cat.to_s).first
+          rel = send(ref[:relationship_dataset]).where(ref[:key] => o.id, ref[:category_column] => cat.to_s).first
           raise(Sequel::Error, "associated object #{o.inspect} is not currently associated to #{inspect} as #{cat}") unless rel
           rel.destroy
         end
@@ -61,8 +62,8 @@ module Sequel
         def related_objects(name)
           ref = relationship_reflections(name)
           mapping = Hash.new { |hash, key| hash[key] = [] }
-          relationships = send(ref[:relationship_name])
-          objects = load_associated_objects(self.class.association_reflections[name])
+          relationships = send(ref[:relationship_dataset]).all
+          objects = send(ref[:dataset]).all
           relationships.each do |rel|
             mapping[rel.send(ref[:category_column]).to_sym] << objects.select { |o| o.id == rel.send(ref[:key]) }.first
           end

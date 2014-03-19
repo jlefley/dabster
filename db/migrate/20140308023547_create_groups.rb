@@ -4,7 +4,9 @@ Sequel.migration do
       primary_key :id
       Integer :library_album_id, index: true, null: false, unique: true
       Integer :what_id, unique: true
-      String :what_artist
+      String :what_artist_name
+      String :what_artist_type
+      foreign_key :what_artist_id, :artists, index: true
       String :what_name
       String :what_tags
       Integer :what_year

@@ -4,7 +4,7 @@ class GroupService
 
   WHAT_GROUP_MAPPING = {
       id:               :what_id,
-      artist:           :what_artist,
+      artist:           :what_artist_name,
       name:             :what_name,
       tags:             :what_tags,
       year:             :what_year,

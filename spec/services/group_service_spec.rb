@@ -13,7 +13,7 @@ describe GroupService do
 
   describe 'when associating group' do
     
-    let(:group_fields) { [:what_id, :what_artist, :what_name, :what_tags, :what_year,
+    let(:group_fields) { [:what_id, :what_artist_name, :what_name, :what_tags, :what_year,
       :what_release_type, :what_artists, :what_record_label, :what_catalog_number] }
 
     before do

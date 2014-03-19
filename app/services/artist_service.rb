@@ -8,7 +8,7 @@ class ArtistService
 
   def associate_artists group
     existing_artists = group.artists
-    
+   
     group.what_artists.each do |type, artists|
       metadata_artists = artists.map do |artist|
         what_id = artist.fetch(:id)
@@ -37,8 +37,11 @@ class ArtistService
         group.remove_artist(artist, type)
       end
     end
-    
+   
+    group.unmatch_implicit_artist 
+    group.update_what_artist_association 
     group.match_artists
+    group.match_implicit_artist
     group
   end
 
