@@ -28,6 +28,10 @@
     </td>
   </tr>
   <tr>
+    <td>Overall similarity</td>
+    <td><%= torrent_group.similarity(artist: what_request.artistname, name: what_request.groupname).round(2) %></td>
+  </tr>
+  <tr>
     <td>Associate with album</td>
     <td><%= f.radio_button :what_id, torrent_group.id %></td>
   </tr>

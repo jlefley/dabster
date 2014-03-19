@@ -59,4 +59,15 @@ class WhatGroup < OpenStruct
     torrents.map { |t| t.fetch(:artists) }.flatten.uniq.map { |a| OpenStruct.new(a) }
   end
 
+  def similarity(fields)
+    total = 0
+    count = 0
+    fields.each do |key, val|
+      this_val = send(key).downcase
+      total += this_val.similar(val.downcase)
+      count += 1
+    end
+    count > 0 ? total/count : 0
+  end
+
 end

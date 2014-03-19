@@ -15,5 +15,6 @@ class LibraryAlbumsController < ApplicationController
   def make_what_request
     @what_response = WhatScraper.new(WhatAPIConnection.new, WhatGroup).scrape_results(params[:what_request])
     @what_request = OpenStruct.new(params[:what_request])
+    @sorted_groups = @what_response.sort_groups(artist: @what_request.artistname, name: @what_request.groupname)
   end
 end

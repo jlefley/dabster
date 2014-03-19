@@ -22,8 +22,7 @@ class WhatScraper
 
   def scrape_results filter_params
     response = api_connection.make_request({ action: 'browse', 'filter_cat[1]' => 1 }.merge(filter_params))
-    groups = response.fetch(:results).map { |g| group_class.new(g) }
-    OpenStruct.new(response.merge(groups: groups))
+    WhatBrowseResponse.new(response)
   end
 
  end

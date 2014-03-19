@@ -54,20 +54,4 @@ describe WhatScraper do
 
   end
 
-  describe 'when scraping for results (browsing)' do
-    let(:response) { { pages: 3, results: [{ id: 123 }] } }
-
-    before do
-      allow(api).to receive(:make_request).with('filter_cat[1]' => 1, action: 'browse', groupname: 'group').and_return(response)
-    end
-
-    it 'returns OpenStruct with fields for top level keys' do
-      expect(scraper.scrape_results(groupname: 'group').pages).to eq(3)
-    end
-
-    it 'returns OpenStruct with results mapped to groups' do
-      expect(scraper.scrape_results(groupname: 'group').groups.first.id).to eq(123)
-    end
-
-  end
 end

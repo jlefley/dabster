@@ -48,26 +48,27 @@ module Sequel
 
         def add_categorized_relationship(o, attrs, name)
           ref = relationship_reflections(name)
-          attrs.merge!(ref[:key] => o.id)
-          send("add_#{ref[:singular_name]}_relationship", attrs)
+          send("add_#{ref[:singular_name]}_relationship", stringify_symbols(attrs.merge(ref[:key] => o.id)))
         end
 
         def remove_categorized_relationship(o, attrs, name)
           ref = relationship_reflections(name)
-          attrs.merge!(ref[:key] => o.id)
-          rel = send(ref[:relationship_dataset]).where(attrs).first
+          rel = send(ref[:relationship_dataset]).where(stringify_symbols(attrs.merge(ref[:key] => o.id))).first
           raise(Sequel::Error, "associated object #{o.inspect} is not currently associated to #{inspect} with #{attrs}") unless rel
           rel.destroy
         end
 
         def remove_all_categorized_relationships(attrs, name)
           ref = relationship_reflections(name)
-          stringified_attrs = Hash[attrs.map { |k, v| [k, v.to_s] }]
-          send(ref[:relationship_dataset]).where(stringified_attrs).delete
+          send(ref[:relationship_dataset]).where(stringify_symbols(attrs)).delete
         end
 
         def relationship_reflections(name)
           self.class.relationship_reflections[name]
+        end
+
+        def stringify_symbols(hash)
+          Hash[hash.map { |k, v| [k, v.is_a?(Symbol) ? v.to_s : v] }]
         end
 
         def related_objects(field, name, *filter)

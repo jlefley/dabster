@@ -35,6 +35,7 @@ gem 'sequel-rails'
 gem 'json'
 gem 'recursive-open-struct'
 gem 'htmlentities'
+gem 'similar_text'
 
 group :development, :test do
   gem 'rspec'
