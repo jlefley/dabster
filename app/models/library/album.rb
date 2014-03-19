@@ -14,5 +14,9 @@ module Library
     def albumartist_only_letters
       albumartist.gsub(/\W+/, ' ')
     end
+
+    def self.unmatched(limit)
+      left_join(:groups, library_album_id: :id).where(groups__id: nil).limit(limit).select_all(:albums).all
+    end
   end
 end

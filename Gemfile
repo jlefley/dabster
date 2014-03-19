@@ -36,6 +36,7 @@ gem 'json'
 gem 'recursive-open-struct'
 gem 'htmlentities'
 gem 'similar_text'
+gem 'fuzzy_match'
 
 group :development, :test do
   gem 'rspec'
