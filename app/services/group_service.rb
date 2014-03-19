@@ -1,10 +1,10 @@
 class GroupService
 
-  attr_reader :group_class, :library_album_class
+  attr_reader :group_class
 
   WHAT_GROUP_MAPPING = {
       id:               :what_id,
-      artist:           :what_artist_name,
+      artist:           :what_artist,
       name:             :what_name,
       tags:             :what_tags,
       year:             :what_year,
@@ -14,16 +14,13 @@ class GroupService
       catalog_number:   :what_catalog_number
     }
 
-  def initialize group, library_album
+  def initialize group
     @group_class = group
-    @library_album_class = library_album
   end
 
-  def associate_group result_group, library_album_id, confidence
-    raise(ArgumentError, 'argument cannot be nil') unless result_group && library_album_id && confidence
+  def associate_group result_group, library_album, confidence
+    raise(ArgumentError, 'argument cannot be nil') unless result_group && library_album && confidence
     
-    library_album = library_album_class.first!(id: library_album_id.to_i)
-  
     if (group = library_album.group).nil?
       group = group_class.new
       group.library_album = library_album
@@ -31,6 +28,7 @@ class GroupService
    
     group.set_fields(result_group.map(WHAT_GROUP_MAPPING), group_fields)
     group.what_confidence = confidence
+    group.what_updated_at = Time.now
 
     group.save
 

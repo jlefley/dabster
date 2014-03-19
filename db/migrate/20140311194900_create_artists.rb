@@ -4,6 +4,7 @@ Sequel.migration do
       primary_key :id
       Integer :what_id, unique: true
       String :what_name
+      DateTime :what_updated_at
       DateTime :created_at, null: false
       DateTime :updated_at
     end

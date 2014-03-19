@@ -3,7 +3,13 @@
   <td><%= library_item.title %></td>
   <td><%= library_item.artist %></td>
   <td>
-    <% library_item.artists.each do |type, artists| %>
+    <% library_item.artists_by(:type, group_artist: false).each do |type, artists| %>
+      <%= type %>:
+      <%= render partial: 'artist', collection: artists %>
+    <% end %>
+  </td>
+  <td>
+    <% library_item.artists_by(:type, group_artist: true).each do |type, artists| %>
       <%= type %>:
       <%= render partial: 'artist', collection: artists %>
     <% end %>

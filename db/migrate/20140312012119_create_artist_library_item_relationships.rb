@@ -5,7 +5,9 @@ Sequel.migration do
       foreign_key :artist_id, :artists, null: false, on_delete: :cascade
       Integer :library_item_id, null: false, index: true
       String :type, null: false
-      unique [:artist_id, :library_item_id, :type]
+      TrueClass :group_artist, null: false, default: false
+      Float :confidence, null: false
+      unique [:artist_id, :library_item_id, :type, :group_artist]
       index [:artist_id, :library_item_id]
     end
   end

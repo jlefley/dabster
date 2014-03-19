@@ -8,53 +8,35 @@ describe ArtistMatching do
   let(:artist2) { double 'artist 2', what_name: 'Super8 & Tab' }
   let(:artist3) { double 'artist 3', what_name: 'Other' }
   
-  let(:item0) { double 'item 0', artists: { }, add_artist: nil, artist: 'Mike Shiver & Aruna' }
-  let(:item1) { double 'item 1', artists: { }, add_artist: nil, artist: '  Super8 & Tab' }
+  let(:item0) { double 'item 0', artists_by: { }, add_artist: nil, artist: 'Mike Shiver & Aruna' }
+  let(:item1) { double 'item 1', artists_by: { }, add_artist: nil, artist: '  Super8 & Tab' }
   
   subject(:group) do
-    group_cls = Struct.new(:library_items, :artists, :what_artist, :what_artist_type) { include ArtistMatching }
-    group_cls.new([item0, item1], { artist: [artist0, artist1], dj: [artist2, artist0], with: [artist3] }, artist2, :dj)
+    group_cls = Struct.new(:library_items) { include ArtistMatching }
+    group_cls.new([item0, item1])
   end
 
-  describe 'when unmatching artists with items' do
-    it 'removes all artists from each associated item that do not have the artist name contained in the item artist' do
-      allow(item0).to receive(:artists).and_return(dj: [artist2])
-      allow(item1).to receive(:artists).and_return(dj: [artist2])
-
-      expect(item0).to receive(:remove_artist).with(artist2, :dj)
-
-      group.unmatch_implicit_artist
-    end
-  end
-
-  describe 'when matching artist with items according to implicit group association' do
-    it 'adds what_artist every item associated with group that is not yet associated with what_artist' do
-      allow(item1).to receive(:artists).and_return(dj: [artist2])
-
-      expect(item0).to receive(:add_artist).with(artist2, :dj)
-      expect(item1).not_to receive(:add_artist)
-
-      group.match_implicit_artist
-    end
+  before do
+    allow(group).to receive(:artists_by).with(:type).and_return(artist: [artist0, artist1], dj: [artist2, artist0], with: [artist3])
   end
 
   describe 'when matching items with artists' do
 
     describe 'when artist name is contained in item artist' do
       it 'adds the artist to the item' do
-        expect(item0).to receive(:add_artist).with(artist0, :artist)
-        expect(item0).to receive(:add_artist).with(artist1, :artist)
-        expect(item1).to receive(:add_artist).with(artist2, :dj)
-        expect(item0).to receive(:add_artist).with(artist0, :dj)
+        expect(item0).to receive(:add_artist).with(artist0, type: :artist, group_artist: false, confidence: 0.99)
+        expect(item0).to receive(:add_artist).with(artist1, type: :artist, group_artist: false, confidence: 0.99)
+        expect(item1).to receive(:add_artist).with(artist2, type: :dj, group_artist: false, confidence: 0.99)
+        expect(item0).to receive(:add_artist).with(artist0, type: :dj, group_artist: false, confidence: 0.99)
 
         group.match_artists
       end
 
       describe 'when item already has the artist' do
         it 'should not add the artist to the item' do
-          allow(item0).to receive(:artists).and_return(artist: [artist0], dj: [], with: [])
+          allow(item0).to receive(:artists_by).with(:type).and_return(artist: [artist0], dj: [], with: [])
 
-          expect(item0).not_to receive(:add_artist).with(artist0, :artist)
+          expect(item0).not_to receive(:add_artist).with(artist0, type: :artist)
           
           group.match_artists
         end

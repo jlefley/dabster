@@ -6,7 +6,7 @@
   </tr>
   <tr>
     <td>Artist</td>
-    <td><%= @group.what_artist_name %></td>
+    <td><%= @group.what_artist %></td>
   </tr>
   <tr>
     <td>Year</td>
@@ -29,7 +29,7 @@
 </table>
 <h3>what.cd Artists</h3>
 <table>
-  <% @group.artists.each do |type, artists| %>
+  <% @group.artists_by(:type).each do |type, artists| %>
     <tr>
       <td><%= type %></td>
       <td><%= render partial: 'artist', collection: artists, spacer_template: 'shared/break' %></td>

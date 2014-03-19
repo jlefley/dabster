@@ -6,5 +6,13 @@ module Library
     def ordered_library_items
       library_items_dataset.order(:track).all
     end
+
+    def album_only_letters
+      album.gsub(/\W+/, ' ')
+    end
+
+    def albumartist_only_letters
+      albumartist.gsub(/\W+/, ' ')
+    end
   end
 end

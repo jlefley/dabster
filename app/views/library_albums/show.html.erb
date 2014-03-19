@@ -9,6 +9,10 @@
     <td><%= link_to @library_album.albumartist, library_artist_path(name: @library_album.albumartist) %></td>
   </tr>
   <tr>
+    <td>Sort artist</td>
+    <td><%= @library_album.albumartist_sort %></td>
+  </tr>
+  <tr>
     <td>Track count</td>
     <td><%= @library_album.tracktotal %></td>
   </tr>
@@ -42,6 +46,7 @@
   <th>Name</th>
   <th>Artist</th>
   <th>Artist Associations</th>
+  <th>Group artist associations</th>
   <%= render partial: 'library_item', collection: @library_items %>
 </table>
 <%= render partial: 'group' if @group.id %>
@@ -49,11 +54,11 @@
 <%= form_for :what_request, method: :get, url: @library_album do |f| %>
   <p>
   <%= f.label :groupname %>
-  <%= f.search_field :groupname, value: @what_request.try(:groupname) || @library_album.album %>
+  <%= f.search_field :groupname, value: @what_request.try(:groupname) || @library_album.album_only_letters %>
   </p>
   <p>
   <%= f.label :artistname %>
-  <%= f.search_field :artistname, value: @what_request.try(:artistname) || @library_album.albumartist %>
+  <%= f.search_field :artistname, value: @what_request.try(:artistname) || @library_album.albumartist_only_letters %>
   </p>
   <%= f.submit 'Search what.cd for torrents' %>
 <% end %>

@@ -8,6 +8,7 @@ Sequel::Model.db.create_table(:join_table) {
   foreign_key :test_work_id, :test_works
   foreign_key :test_contributor_id, :test_contributors
   String :type
+  TrueClass :pick
 }
 
 class TestContributorTestWork < Sequel::Model(:join_table)
@@ -18,7 +19,7 @@ end
 
 class TestWork < Sequel::Model
   plugin :categorized_relationship
-  categorized_relationship :contributors, :type, class: 'TestContributor',
+  categorized_relationship :contributors, class: 'TestContributor',
     relationship_class: 'TestContributorTestWork', right_key: :test_contributor_id
 end
 
@@ -27,10 +28,11 @@ describe Sequel::Plugins::CategorizedRelationship do
   let(:work) { TestWork.create }
   let(:contributor) { TestContributor.create }
   let(:other_contributor) { TestContributor.create }
+  let(:another_contributor) { TestContributor.create }
 
   describe 'when adding related object' do
-    it 'creates relationship tp related object with specified category' do
-      work.add_contributor(contributor, :type)
+    it 'creates relationship to related object with attributes' do
+      work.add_contributor(contributor, type: :type)
       relationship = TestContributorTestWork.first
       expect(relationship.test_contributor_id).to eq(contributor.id)
       expect(relationship.test_work_id).to eq(work.id)
@@ -39,12 +41,12 @@ describe Sequel::Plugins::CategorizedRelationship do
   end
 
   describe 'when removing related object' do
-    describe 'when specified object is related with specified category' do
-      it 'removes the relationship to related object with specified category' do
-        work.add_contributor(contributor, :type)
-        work.add_contributor(other_contributor, :editor)
+    describe 'when specified object is related with specified attributes' do
+      it 'removes the relationship to related object with specified attributes' do
+        work.add_contributor(contributor, type: :type)
+        work.add_contributor(other_contributor, type: :editor)
 
-        work.remove_contributor(contributor, :type)
+        work.remove_contributor(contributor, type: :type)
 
         expect(TestContributorTestWork.all.length).to eq(1)
         expect(TestContributorTestWork.first.type).to eq('editor')
@@ -52,16 +54,36 @@ describe Sequel::Plugins::CategorizedRelationship do
     end
     describe 'when specified object is not related with specified category' do
       it 'raises error' do
-        expect { work.remove_contributor(contributor, :type) }.to raise_error(Sequel::Error)
+        expect { work.remove_contributor(contributor, type: :type) }.to raise_error(Sequel::Error)
       end
     end
   end
 
   describe 'when getting related object' do
-    it 'returns associated objects sorted by category' do
-      work.add_contributor(contributor, 'type')
-      work.add_contributor(other_contributor, 'editor')
-      expect(work.contributors).to eq(type: [contributor], editor: [other_contributor])
+    it 'returns associated objects sorted by specified attribute' do
+      work.add_contributor(contributor, type: :type)
+      work.add_contributor(other_contributor, type: :editor)
+      expect(work.contributors_by(:type)).to eq(type: [contributor], editor: [other_contributor])
+    end
+    describe 'when filter critera is specified' do
+      it 'returns only objects with relationships matching filter critera sorted by specified attribute' do
+        work.add_contributor(contributor, type: :type, pick: false)
+        work.add_contributor(other_contributor, type: :type, pick: true)
+        expect(work.contributors_by(:type, pick: false)).to eq(type: [contributor])
+      end
+    end
+  end
+
+  describe 'when removing all related objects' do
+    it 'removes all relationships matching specified conditions and related to model' do
+      work.add_contributor(contributor, type: :type)
+      work.add_contributor(other_contributor, type: :editor)
+      work.add_contributor(another_contributor, type: :editor)
+
+      work.remove_all_contributors(type: :editor)
+
+      expect(TestContributorTestWork.all.length).to eq(1)
+      expect(TestContributorTestWork.first.type).to eq('type')
     end
   end
 

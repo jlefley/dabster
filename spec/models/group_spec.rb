@@ -19,13 +19,14 @@ describe Group do
   describe 'when what_id is present' do
     before do
       group.what_id = 1
-      group.what_artist_name = 'asdf'
+      group.what_artist = 'asdf'
       group.what_name = 'asdf'
       group.what_tags = ['asdf']
       group.what_year = 1
       group.what_release_type = 'DJ Mix'
       group.what_artists = { artists: 'asdf' } 
       group.what_confidence = 1.0
+      group.what_updated_at = Time.now
     end
     describe 'when what_tags is not an array' do
       before { group.what_tags = 'asdf' }
@@ -36,7 +37,7 @@ describe Group do
       it { should_not be_valid }
     end
     describe 'when what_artist is missing' do
-      before { group.what_artist_name = nil }
+      before { group.what_artist = nil }
       it { should_not be_valid }
     end
     describe 'when what_name is missing' do
@@ -70,51 +71,43 @@ describe Group do
       before { group.what_release_type = 'asdf' }
       it { should_not be_valid }
     end
-  end
-
-  describe 'when what_artist_id is present' do
-    before { group.what_artist_id = 5 }
-    describe 'when what_artist_type is present' do
-      before { group.what_artist_type = 'dj' }
-      it { should be_valid }
-    end
-    describe 'when what_artist_type is not present' do
+    describe 'when what_updated_at is missing' do
+      before { group.what_updated_at = nil }
       it { should_not be_valid }
     end
   end
 
-  describe 'when what_artist_id is not present' do
-    describe 'when what_artist_type is present' do
-      before { group.what_artist_type = 'dj' }
-      it { should_not be_valid }
-    end
-    describe 'when what_artist_type is not present' do
-      it { should be_valid }
-    end
-  end
+  describe 'when updating item artist associations' do
 
-  describe 'when setting what artist association' do
-    describe 'when what_artists contains artist matching what_artist_name' do
+    let(:item0) { double 'item 0' }
+    let(:item1) { double 'item 1' }
+    before { allow(group).to receive(:library_items).and_return([item0, item1]) }
+
+    describe 'when unmatching group artists from items' do
+      it 'removes all artists from each associated item that are associated as group artists' do
+        expect(item0).to receive(:remove_all_artists).with(group_artist: true)
+        expect(item1).to receive(:remove_all_artists).with(group_artist: true)
+
+        group.remove_group_artists_from_items
+      end
+    end
+
+    describe 'when matching group artists with items' do
       before do
-        group.update(what_artist_name: 'artist name')
-        @matching = group.add_artist({ what_name: 'artist name', what_id: 123 }, :dj)
-        group.add_artist({ what_name: 'other', what_id: 1 }, :dj)
-        group.add_artist({ what_name: 'artist', what_id: 2 }, :artist)
-        group.update_what_artist_association
-        group.reload
+        group.set(what_artist: 'Herbie Hancock & Wayne Shorter')
+        group.set(what_artists: { dj: [{ id: 123, name: 'Herbie Hancock' }, { id: 456, name: 'Wayne Shorter' }] })
       end
-      it 'updates what_artist_id to id of artist in what_artists matching what_artist_name' do
-        expect(group.what_artist_id).to eq(@matching.id)
-      end
-      it 'updates what_artist_type to type of artist in what_artists matching what_artist_name' do
-        expect(group.what_artist_type).to eq(:dj)
-      end
-    end
+      
+      let!(:artist0) { Artist.create(what_id: 123, what_name: 'Herbie Hancock', what_updated_at: Time.now) }
+      let!(:artist1) { Artist.create(what_id: 456, what_name: 'Wayne Shorter', what_updated_at: Time.now) }
 
-    describe 'when what_artists does not contain artist matching what_artist_name' do
-      it 'raises error' do
-        group.update(what_artist_name: 'abc')
-        expect { group.update_what_artist_association }.to raise_error(RuntimeError)
+      it 'adds artists matching what_artist to each associated item' do
+        expect(item0).to receive(:add_artist).with(artist0, type: :dj, group_artist: true, confidence: 0.99)
+        expect(item0).to receive(:add_artist).with(artist1, type: :dj, group_artist: true, confidence: 0.99)
+        expect(item1).to receive(:add_artist).with(artist0, type: :dj, group_artist: true, confidence: 0.99)
+        expect(item1).to receive(:add_artist).with(artist1, type: :dj, group_artist: true, confidence: 0.99)
+
+        group.add_group_artists_to_items
       end
     end
   end

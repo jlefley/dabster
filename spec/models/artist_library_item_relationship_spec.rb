@@ -4,17 +4,25 @@ require 'artist_library_item_relationship'
 describe ArtistLibraryItemRelationship do
   subject(:relationship) { described_class.new }
 
+  before do
+    relationship.confidence = 1.0
+    relationship.type = 'artist'
+  end
+
+  it { should be_valid }
+  
   describe 'when type is not a valid type' do
     before { relationship.type = 'other' }
     it { should_not be_valid }
   end
 
-  describe 'when type is a valid type' do
-    before { relationship.type = 'artist' }
-    it { should be_valid }
+  describe 'when type is missing' do
+    before { relationship.type = nil }
+    it { should_not be_valid }
   end
 
-  describe 'when type is missing' do
+  describe 'when confidence is missing' do
+    before { relationship.confidence = nil }
     it { should_not be_valid }
   end
 

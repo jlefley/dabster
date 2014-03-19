@@ -9,7 +9,7 @@ module Sequel
       module ClassMethods
         attr_reader :relationship_reflections
 
-        def categorized_relationship(name, column, options={})
+        def categorized_relationship(name, options={})
           rel_class = options.fetch(:relationship_class)
           singular_name = singularize(name)
 
@@ -20,19 +20,22 @@ module Sequel
           one_to_many rel_name, class: rel_class, key: association_reflections[name][:left_key]
 
           adder_name = "_add_#{singular_name}".to_sym
-          define_method(adder_name) { |o, cat| add_categorized_relationship(o, cat, name) }
+          define_method(adder_name) { |o, attrs| add_categorized_relationship(o, attrs, name) }
           send(:private, adder_name)
           
           remover_name = "_remove_#{singular_name}".to_sym
-          define_method(remover_name) { |o, cat| remove_categorized_relationship(o, cat, name) }
+          define_method(remover_name) { |o, attrs| remove_categorized_relationship(o, attrs, name) }
           send(:private, remover_name)
           
-          define_method(name) { related_objects(name) }
+          clearer_name = "_remove_all_#{name}".to_sym
+          define_method(clearer_name) { |attrs| remove_all_categorized_relationships(attrs, name) }
+          send(:private, clearer_name)
+          
+          define_method("#{name}_by") { |field, *filter| related_objects(field, name, *filter) }
 
           relationship_reflections[name] = {
             singular_name: singular_name,
             key: association_reflections[name][:right_key],
-            category_column: column,
             dataset: association_reflections[name].dataset_method,
             relationship_dataset: association_reflections[rel_name].dataset_method
           }
@@ -43,29 +46,41 @@ module Sequel
 
         private
 
-        def add_categorized_relationship(o, cat, name)
+        def add_categorized_relationship(o, attrs, name)
           ref = relationship_reflections(name)
-          send("add_#{ref[:singular_name]}_relationship", ref[:key] => o.id, ref[:category_column] => cat.to_s)
+          attrs.merge!(ref[:key] => o.id)
+          send("add_#{ref[:singular_name]}_relationship", attrs)
         end
 
-        def remove_categorized_relationship(o, cat, name)
+        def remove_categorized_relationship(o, attrs, name)
           ref = relationship_reflections(name)
-          rel = send(ref[:relationship_dataset]).where(ref[:key] => o.id, ref[:category_column] => cat.to_s).first
-          raise(Sequel::Error, "associated object #{o.inspect} is not currently associated to #{inspect} as #{cat}") unless rel
+          attrs.merge!(ref[:key] => o.id)
+          rel = send(ref[:relationship_dataset]).where(attrs).first
+          raise(Sequel::Error, "associated object #{o.inspect} is not currently associated to #{inspect} with #{attrs}") unless rel
           rel.destroy
+        end
+
+        def remove_all_categorized_relationships(attrs, name)
+          ref = relationship_reflections(name)
+          stringified_attrs = Hash[attrs.map { |k, v| [k, v.to_s] }]
+          send(ref[:relationship_dataset]).where(stringified_attrs).delete
         end
 
         def relationship_reflections(name)
           self.class.relationship_reflections[name]
         end
 
-        def related_objects(name)
+        def related_objects(field, name, *filter)
+          critera = filter[0] || {}
           ref = relationship_reflections(name)
           mapping = Hash.new { |hash, key| hash[key] = [] }
-          relationships = send(ref[:relationship_dataset]).all
+          relationship_ds = send(ref[:relationship_dataset])
+          cats = relationship_ds.select_group(field).map { |r| r.send(field) }
           objects = send(ref[:dataset]).all
-          relationships.each do |rel|
-            mapping[rel.send(ref[:category_column]).to_sym] << objects.select { |o| o.id == rel.send(ref[:key]) }.first
+          relationship_ds.select_group(field).map { |r| r.send(field) }.each do |cat|
+            relationship_ds.where(critera.merge(field => cat)).all.each do |rel|
+              mapping[cat.to_sym] << objects.select { |o| o.id == rel.send(ref[:key]) }.first
+            end
           end
           mapping
         end
