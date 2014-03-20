@@ -1,2 +1,9 @@
 <h1>Library Albums</h1>
-<%= render partial: 'library_album', collection: @library_albums %>
+<%= form_for :query_options, url: library_albums_path, method: :get do |f| %>
+  Filter <%= f.select :matched_status, ['all', 'matched', 'unmatched'] %>
+  <%= f.submit 'Show' %>
+<% end %>
+<br>
+<%= @library_albums.pagination_record_count %> total
+<%= render partial: 'library_album', collection: @library_albums.all %>
+<%= will_paginate @library_albums %>

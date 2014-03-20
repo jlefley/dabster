@@ -1,4 +1,4 @@
-<h2>what.cd association</h2>
+<h2>what.cd metadata</h2>
 <table>
   <tr>
     <td>Name</td>
@@ -18,21 +18,20 @@
   </tr>
   <tr>
     <td>Confidence</td>
-    <td><%= @group.what_confidence %></td>
+    <td><%= '%.2f' % @group.what_confidence %></td>
   </tr>
   <tr>
-    <td>what.cd</td>
     <td>
       <a href='https://what.cd/torrents.php?id=<%= @group.what_id %>' target='_blank'>Torrent group page</a>
     </td>
   </tr>
 </table>
-<h3>what.cd Artists</h3>
+<h2>what.cd artists</h2>
 <table>
   <% @group.artists_by(:type).each do |type, artists| %>
     <tr>
       <td><%= type %></td>
-      <td><%= render partial: 'artist', collection: artists, spacer_template: 'shared/break' %></td>
+      <td><%= render partial: 'shared/artist', collection: artists, spacer_template: 'shared/break' %></td>
     </tr>
   <% end %>
 </table>

@@ -15,8 +15,15 @@ module Library
       albumartist.gsub(/\W+/, ' ')
     end
 
-    def self.unmatched(limit)
-      left_join(:groups, library_album_id: :id).where(groups__id: nil).limit(limit).select_all(:albums).all
+    dataset_module do
+      def unmatched
+        select_all(:albums).left_join(:groups, library_album_id: :id).where(groups__id: nil)
+      end
+
+      def matched
+        select_all(:albums).left_join(:groups, library_album_id: :id).exclude(groups__id: nil)
+      end
     end
+
   end
 end

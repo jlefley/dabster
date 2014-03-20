@@ -34,6 +34,7 @@ gem 'dabster', path: 'lib/dabster'
 gem 'similar_text'
 
 gem 'sequel-rails'
+gem 'will_paginate'
 
 group :development, :test do
   gem 'rspec'

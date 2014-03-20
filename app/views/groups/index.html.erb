@@ -1,0 +1,10 @@
+<h1>Groups</h1>
+<%= form_for :query_options, url: groups_path, method: :get do |f| %>
+  Sort <%= f.select :sort, ['name', 'confidence'] %>
+  <%= f.select :order, ['ascending', 'descending'] %>
+  <%= f.submit 'Show' %>
+<% end %>
+<br>
+<%= @groups.pagination_record_count %> total
+<%= render partial: 'group', collection: @groups.all %>
+<%= will_paginate @groups %>

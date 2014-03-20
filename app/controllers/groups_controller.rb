@@ -12,6 +12,28 @@ class GroupsController < ApplicationController
     redirect_to @group.library_album
   end
 
+  def index
+    @query_options = OpenStruct.new(params[:query_options])
+    ds = Group
+    case @query_options.sort
+    when 'confidence'
+      ds = ds.order(:what_confidence)
+    else
+      ds = ds.order(:what_name)
+    end
+
+    case @query_options.order
+    when 'descending'
+      ds = ds.reverse
+    end
+    @groups = ds.paginate(page, 50)
+  end
+
+  def show
+    @group = Group.first!(id: params[:id])
+    @library_album = @group.library_album
+  end
+
   private
 
   def execute
