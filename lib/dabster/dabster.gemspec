@@ -28,4 +28,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'htmlentities'
   spec.add_dependency 'similar_text'
   spec.add_dependency 'fuzzy_match'
+  spec.add_dependency 'ruby-progressbar'
 end

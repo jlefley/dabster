@@ -4,7 +4,7 @@ module Dabster
       app.config.autoload_paths += Dir["#{Dabster.root}/dabster/**"]
     end
     initializer 'dabster.sequel', after: 'sequel.connect' do
-      require 'dabster/sequel'
+      Dabster.connect_library_database
     end
   end
 end

@@ -23,7 +23,7 @@ class LibraryAlbumScraper
     result_group = @what_scraper.scrape_group(match.marshal_dump)
 
     # Determine confidence using similarity
-    confidence = match.similarity(name: album.album_only_letters, artist: album.albumartist_only_letters) / 100
+    confidence = match.similarity(name: album.album, artist: album.albumartist) / 100
 
     # Associate with group and artists
     Sequel::Model.db.transaction do

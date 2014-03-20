@@ -45,8 +45,8 @@
   <th>Track</th>
   <th>Name</th>
   <th>Artist</th>
-  <th>Artist Associations</th>
-  <th>Group artist associations</th>
+  <th>what.cd artist associations</th>
+  <th>Group what.cd artist associations</th>
   <%= render partial: 'library_item', collection: @library_items %>
 </table>
 <%= render partial: 'group' if @group.id %>
@@ -70,7 +70,7 @@
     <%= f.hidden_field :results, value: @what_response.results.to_json %>
     <%= f.hidden_field :library_album_id, value: @library_album.id %>
     <br><br>
-    <%= render partial: 'what/torrent_group', locals: { f: f, what_request: @what_request }, collection: @sorted_groups, as: :torrent_group, spacer_template: 'shared/rule' %>
+    <%= render partial: 'what/torrent_group', locals: { f: f, library_album: @library_album }, collection: @sorted_groups, as: :torrent_group, spacer_template: 'shared/rule' %>
   <% end %>
   <br>
   <span>Pages:

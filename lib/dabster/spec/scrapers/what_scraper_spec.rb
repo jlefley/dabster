@@ -3,7 +3,8 @@ require 'what_scraper'
 
 describe WhatScraper do
   let(:api) { double 'api connection' }
-  subject(:scraper) { WhatScraper.new(api, OpenStruct) }
+  let(:api_cache) { double 'what api response cache', cache_result_group: nil, cache_torrent_group: nil }
+  subject(:scraper) { WhatScraper.new(api, OpenStruct, api_cache) }
 
   describe 'when scraping for torrent group by result group' do
     let(:result_group) { { groupId: 55, groupName: 'Abbey Road', artist: 'The Beatles',
@@ -33,6 +34,18 @@ describe WhatScraper do
         allow(api).to receive(:make_request).and_return(group: { id: 55, name: 'Abbey Road', year: 1000 })
         expect { scraper.scrape_group(result_group) }.to raise_error(WhatScraperError)
       end
+    end
+
+    it 'caches the result group' do
+      expect(api_cache).to receive(:cache_result_group).with(group_id: 55, response: result_group)
+      
+      scraper.scrape_group(result_group)
+    end
+
+    it 'caches torrent group' do
+      expect(api_cache).to receive(:cache_torrent_group).with(group_id: 55, response: response)
+      
+      scraper.scrape_group(result_group)
     end
 
     it 'returns group with id, name, year, musicInfo, recordLabel and catalogueNumber from torrent group' do
