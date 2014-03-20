@@ -3,7 +3,7 @@ require 'fuzzy_match'
 class LibraryAlbumScraper
 
   def initialize
-    @what_scraper = WhatScraper.new(WhatAPIConnection.new, WhatGroup)
+    @what_scraper = WhatScraper.new(WhatAPIConnection.new, WhatGroup, WhatAPICache)
     @group_service = GroupService.new(Group)
     @artist_service = ArtistService.new(Artist)
   end

@@ -9,11 +9,11 @@ module Dabster
   end
 
   def self.library_database
-    '/home/jlefley/development/music/dabster/musiclibrary.db'
+    '/data/multimedia/musiclibrary.db'
   end
 
   def self.database
-    @database = File.join(File.expand_path('../../../..', __FILE__), 'db', 'development.sqlite3')
+    @database = File.join(File.expand_path('../../../..', __FILE__), 'db', 'dabster.sqlite3')
   end
 
   def self.connect_library_database

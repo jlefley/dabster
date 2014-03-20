@@ -1,5 +1,6 @@
 require 'htmlentities'
 require 'ostruct'
+require 'similar_text'
 
 class WhatGroup < OpenStruct
 

@@ -3,9 +3,8 @@ CREATE TABLE `artist_library_item_relationships` (`id` integer NOT NULL PRIMARY 
 CREATE TABLE `artists` (`id` integer NOT NULL PRIMARY KEY AUTOINCREMENT, `what_id` integer UNIQUE, `what_name` varchar(255), `what_updated_at` timestamp, `created_at` timestamp NOT NULL, `updated_at` timestamp);
 CREATE TABLE `groups` (`id` integer NOT NULL PRIMARY KEY AUTOINCREMENT, `library_album_id` integer NOT NULL UNIQUE, `what_id` integer UNIQUE, `what_artist` varchar(255), `what_name` varchar(255), `what_tags` varchar(255), `what_year` integer, `what_release_type` varchar(255), `what_artists` varchar(255), `what_record_label` varchar(255), `what_catalog_number` varchar(255), `what_confidence` double precision, `what_updated_at` timestamp, `created_at` timestamp NOT NULL, `updated_at` timestamp);
 CREATE TABLE `schema_migrations` (`filename` varchar(255) NOT NULL PRIMARY KEY);
-CREATE TABLE `what_api_info` (`last_request` timestamp, `cookie` varchar(255));
-CREATE TABLE `what_api_result_groups` (`id` integer NOT NULL PRIMARY KEY AUTOINCREMENT, `group_id` integer, `response` varchar(255), `created_at` timestamp NOT NULL);
-CREATE TABLE `what_api_torrent_groups` (`id` integer NOT NULL PRIMARY KEY AUTOINCREMENT, `group_id` integer, `response` varchar(255), `created_at` timestamp NOT NULL);
+CREATE TABLE `what_api_result_groups` (`id` integer NOT NULL PRIMARY KEY AUTOINCREMENT, `group_id` integer UNIQUE, `response` varchar(255), `updated_at` timestamp NOT NULL);
+CREATE TABLE `what_api_torrent_groups` (`id` integer NOT NULL PRIMARY KEY AUTOINCREMENT, `group_id` integer UNIQUE, `response` varchar(255), `updated_at` timestamp NOT NULL);
 CREATE INDEX `artist_group_relationships_artist_id_group_id_index` ON `artist_group_relationships` (`artist_id`, `group_id`);
 CREATE INDEX `artist_group_relationships_group_id_index` ON `artist_group_relationships` (`group_id`);
 CREATE INDEX `artist_library_item_relationships_artist_id_library_item_id_index` ON `artist_library_item_relationships` (`artist_id`, `library_item_id`);
