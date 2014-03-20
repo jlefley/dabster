@@ -30,13 +30,9 @@ group :doc do
   gem 'sdoc', require: false
 end
 
-gem 'sqlite3'
+gem 'dabster', path: 'lib/dabster'
+
 gem 'sequel-rails'
-gem 'json'
-gem 'recursive-open-struct'
-gem 'htmlentities'
-gem 'similar_text'
-gem 'fuzzy_match'
 
 group :development, :test do
   gem 'rspec'

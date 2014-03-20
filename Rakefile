@@ -3,4 +3,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Dabster::Application.load_tasks
+DabsterApp::Application.load_tasks

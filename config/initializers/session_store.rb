@@ -1,3 +1,3 @@
 # Be sure to restart your server when you modify this file.
 
-Dabster::Application.config.session_store :cookie_store, key: '_dabster_session'
+DabsterApp::Application.config.session_store :cookie_store, key: '_dabster_session'

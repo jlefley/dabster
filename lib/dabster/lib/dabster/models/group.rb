@@ -1,4 +1,5 @@
 require 'json'
+require 'dabster/models/artist_group_relationship'
 
 class Group < Sequel::Model
   include ArtistMatching

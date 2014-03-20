@@ -11,7 +11,7 @@ require "sprockets/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(:default, Rails.env)
 
-module Dabster
+module DabsterApp
   class Error < StandardError; end
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
@@ -26,7 +26,9 @@ module Dabster
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
     
-    config.autoload_paths +=  Dir["#{Rails.root}/lib/**"]
+    #config.autoload_paths +=  Dir["#{Rails.root}/lib/**"]
+    #config.autoload_paths += Dir["#{Rails.root}/lib/dabster/lib/**"]
+    #config.autoload_paths += ["#{Rails.root}/lib/dabster"]
     config.sequel.schema_format = :sql
   end
 end

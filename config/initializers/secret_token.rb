@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-Dabster::Application.config.secret_key_base = '9e3c6eadf527106c8bf97c86ac46c32787959b9ff2321d3d46223a109a65c4fb6589f80eab2cd1b395f8245dfb418bdb1a6068397c56fab40eb88f3123634bbc'
+DabsterApp::Application.config.secret_key_base = '9e3c6eadf527106c8bf97c86ac46c32787959b9ff2321d3d46223a109a65c4fb6589f80eab2cd1b395f8245dfb418bdb1a6068397c56fab40eb88f3123634bbc'

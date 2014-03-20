@@ -1,3 +1,14 @@
+PATH
+  remote: lib/dabster
+  specs:
+    dabster (0.0.1)
+      fuzzy_match
+      htmlentities
+      json
+      sequel
+      similar_text
+      sqlite3
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -75,7 +86,6 @@ GEM
     rake (10.1.1)
     rdoc (4.1.1)
       json (~> 1.4)
-    recursive-open-struct (0.4.5)
     rspec (2.14.1)
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
@@ -129,18 +139,13 @@ PLATFORMS
 
 DEPENDENCIES
   coffee-rails (~> 4.0.0)
-  fuzzy_match
-  htmlentities
+  dabster!
   jbuilder (~> 1.2)
   jquery-rails
-  json
   rails (= 4.0.3)
-  recursive-open-struct
   rspec
   sass-rails (~> 4.0.0)
   sdoc
   sequel-rails
-  similar_text
-  sqlite3
   turbolinks
   uglifier (>= 1.3.0)
