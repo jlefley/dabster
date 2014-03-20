@@ -31,6 +31,7 @@ group :doc do
 end
 
 gem 'dabster', path: 'lib/dabster'
+gem 'similar_text'
 
 gem 'sequel-rails'
 

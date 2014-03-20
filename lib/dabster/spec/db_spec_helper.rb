@@ -1,19 +1,18 @@
-require 'yaml'
-require 'sequel'
-
-Sequel.extension :migration
-
-Sequel.connect(YAML.load_file(File.join(File.expand_path('../../config', __FILE__), 'database.yml'))['test'])
-
-require File.join(File.expand_path('../../config/initializers', __FILE__), 'sequel.rb')
-
-dir = File.expand_path('../..', __FILE__)
-Sequel::Model.db.run(File.read(File.join(dir, 'db', 'structure.sql')))
+#Sequel.extension :migration
+#Sequel.connect(YAML.load_file(File.join(File.expand_path('../../config', __FILE__), 'database.yml'))['test'])
 #load File.join(dir, 'db', 'schema.rb')
 #Sequel::Migration.descendants.each { |m| m.apply(Sequel::Model.db, :up) }
-$:.push File.join(dir, 'app', 'models')
-$:.push File.join(dir, 'lib', 'sequel', 'plugins')
-$:.push File.join(dir, 'app', 'logic')
+
+dir = File.expand_path('../../lib', __FILE__)
+$:.push File.join(dir, 'sequel', 'plugins')
+$:.push File.join(dir, 'dabster', 'models')
+$:.push File.join(dir, 'dabster', 'logic')
+
+require 'sequel'
+
+Sequel.sqlite
+require File.join(dir, 'dabster', 'sequel.rb')
+Sequel::Model.db.run(File.read(File.join(File.expand_path('../../../../db', __FILE__), 'structure.sql')))
 
 RSpec.configure do |config|
 

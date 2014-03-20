@@ -1,4 +1,4 @@
-$:.push *Dir[File.join(File.expand_path('../../app', __FILE__), '/*/')]
+$:.push *Dir[File.join(File.expand_path('../../lib', __FILE__), '/**/')]
 
 RSpec.configure do |config|
   config.order = 'random'

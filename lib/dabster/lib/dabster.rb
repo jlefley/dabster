@@ -26,3 +26,4 @@ else
   end
 end
 
+Sequel::Model.db.run("ATTACH DATABASE '#{Dabster.library_database}' AS libdb")
