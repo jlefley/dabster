@@ -64,6 +64,18 @@ describe Group do
       before { group.what_confidence = nil }
       it { should_not be_valid }
     end
+    describe 'when what_confidence is not number' do
+      before { group.what_confidence = 'asdf' }
+      it { should_not be_valid }
+    end
+    describe 'when what_confidence is greater than 1' do
+      before { group.what_confidence = 1.1 }
+      it { should_not be_valid }
+    end
+    describe 'when what_confidence is less than 0' do
+      before { group.what_confidence = -0.1 }
+      it { should_not be_valid }
+    end
     describe 'when all what fields are present and of correct type' do
       it { should be_valid }
     end

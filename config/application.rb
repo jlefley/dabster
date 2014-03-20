@@ -26,9 +26,7 @@ module DabsterApp
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
     
-    #config.autoload_paths +=  Dir["#{Rails.root}/lib/**"]
-    #config.autoload_paths += Dir["#{Rails.root}/lib/dabster/lib/**"]
-    #config.autoload_paths += ["#{Rails.root}/lib/dabster"]
     config.sequel.schema_format = :sql
+    config.action_controller.action_on_unpermitted_parameters = :raise
   end
 end

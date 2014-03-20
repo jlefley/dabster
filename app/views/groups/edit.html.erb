@@ -1,0 +1,43 @@
+<h1>Edit Group</h1>
+<%= form_for @group do |f| %>
+  <h2>what.cd metadata</h2>
+  <table>
+    <tr>
+      <td>Name</td>
+      <td><%= @group.what_name %></td>
+    </tr>
+    <tr>
+      <td>Artist</td>
+      <td><%= @group.what_artist %></td>
+    </tr>
+    <tr>
+      <td>Year</td>
+      <td><%= @group.what_year %></td>
+    </tr>
+    <tr>
+      <td>Release type</td>
+      <td><%= @group.what_release_type %></td>
+    </tr>
+    <tr>
+      <td>Confidence</td>
+      <td><%= f.text_field :what_confidence %></td>
+    </tr>
+    <tr>
+      <td>
+        <a href='https://what.cd/torrents.php?id=<%= @group.what_id %>' target='_blank'>Torrent group page</a>
+      </td>
+    </tr>
+  </table>
+  <h2>what.cd artists</h2>
+  <table>
+    <% @group.artists_by(:type).each do |type, artists| %>
+      <tr>
+        <td><%= type %></td>
+        <td><%= render partial: 'shared/artist', collection: artists, spacer_template: 'shared/break' %></td>
+      </tr>
+    <% end %>
+  </table>
+  <p>
+  <%= f.submit 'Update' %>&nbsp;<%= link_to 'Cancel', @group %>
+  </p>
+<% end %>

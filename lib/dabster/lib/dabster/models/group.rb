@@ -24,10 +24,14 @@ class Group < Sequel::Model
       validates_presence :what_release_type
       validates_presence :what_artists
       validates_presence :what_confidence
+      validates_numeric :what_confidence
       validates_presence :what_updated_at
       validates_type Hash, :what_artists
       validates_type Array, :what_tags
       validates_includes WHAT_RELEASE_TYPES, :what_release_type
+      if what_confidence && (what_confidence.to_f < 0 || what_confidence.to_f > 1)
+        errors.add(:what_confidence, 'must be between 0 and 1, inclusive')
+      end
     end
 
   end

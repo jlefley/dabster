@@ -7,7 +7,7 @@ class LibraryAlbumsScraper
   end
 
   def run(limit=nil)
-    albums = Library::Album.unmatched(limit)
+    albums = Library::Album.unmatched.limit(limit).all
     unmatched = albums.length
     progress_bar = ProgressBar.create(format: 'Elapsed %a Remaining %E |%B| %p%%', starting_at: 0, total: unmatched)
     count = 0
