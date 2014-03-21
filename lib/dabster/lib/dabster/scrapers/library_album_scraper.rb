@@ -12,6 +12,7 @@ class LibraryAlbumScraper
 
     # Check for VA
     if album.albumartist.downcase == 'various artists'
+      return nil
       # Get results using album name only
       response = @what_scraper.scrape_results(groupname: album.album_only_letters)
 
@@ -21,7 +22,7 @@ class LibraryAlbumScraper
       fz = FuzzyMatch.new(va_groups, read: :name)
     else
       # Get results using library_album fields
-      response = @what_scraper.scrape_results(groupname: album.album_only_letters, artistname: album.albumartist_only_letters)
+      response = @what_scraper.scrape_results(groupname: album.album, artistname: album.albumartist)
 
       fz = FuzzyMatch.new(response.groups, read: :name)
     end
@@ -47,6 +48,8 @@ class LibraryAlbumScraper
   rescue StandardError => e
     File.open('scraper_log', 'a') do |file|
       file.puts "#{e.class} (#{e.message})"
+      file.puts "Library album: #{album.inspect}"
+      file.puts "Torrent group: #{result_group.inspect}"
       file.puts e.backtrace.join("\n")
       file.write "\n"
     end

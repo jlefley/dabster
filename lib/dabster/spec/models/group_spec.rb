@@ -4,6 +4,17 @@ require 'group'
 
 describe Group do
   subject(:group) { described_class.new }
+  let(:valid_what_attributes) {{
+    what_id: 1,
+    what_artist: 'asdf',
+    what_name: 'asdf',
+    what_tags: ['asdf'],
+    what_year: 1,
+    what_release_type: 'DJ Mix',
+    what_artists: { artists: 'asdf' },
+    what_confidence: 1.0,
+    what_updated_at: Time.now
+  }}
 
   before { group.library_album_id = 5 }
   
@@ -15,18 +26,10 @@ describe Group do
     before { group.library_album_id = nil }
     it { should_not be_valid }
   end
-  
+
   describe 'when what_id is present' do
     before do
-      group.what_id = 1
-      group.what_artist = 'asdf'
-      group.what_name = 'asdf'
-      group.what_tags = ['asdf']
-      group.what_year = 1
-      group.what_release_type = 'DJ Mix'
-      group.what_artists = { artists: 'asdf' } 
-      group.what_confidence = 1.0
-      group.what_updated_at = Time.now
+      group.set(valid_what_attributes)
     end
     describe 'when what_tags is not an array' do
       before { group.what_tags = 'asdf' }
@@ -85,6 +88,10 @@ describe Group do
     end
     describe 'when what_updated_at is missing' do
       before { group.what_updated_at = nil }
+      it { should_not be_valid }
+    end
+    describe 'when what_id is not unique' do
+      before { described_class.create(valid_what_attributes.merge(library_album_id: 55)) }
       it { should_not be_valid }
     end
   end

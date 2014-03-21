@@ -3,6 +3,12 @@
     <td>Album</td>
     <td><%= @library_album.album %></td>
   </tr>
+  <% if @library_album.albumdisambig.present? %>
+    <tr>
+      <td>Album disambiguation</td>
+      <td><%= @library_album.albumdisambig %></td>
+    </tr>
+  <% end %>
   <tr>
     <td>Artist</td>
     <td><%= link_to @library_album.albumartist, library_artist_path(name: @library_album.albumartist) %></td>

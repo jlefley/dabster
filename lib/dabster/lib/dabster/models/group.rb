@@ -15,7 +15,8 @@ class Group < Sequel::Model
     super
 
     validates_presence :library_album_id
-
+    validates_unique :what_id
+    
     if what_id
       validates_presence :what_artist
       validates_presence :what_name
