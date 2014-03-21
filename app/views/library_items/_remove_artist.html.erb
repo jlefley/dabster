@@ -4,6 +4,6 @@
   <%= f.hidden_field :artist_id, value: artist.id %>
   <%= f.hidden_field :type, value: type %>
   <%= artist.what_name %>
-  <%= f.submit 'Remove from item' %>
+  <%= f.submit 'Remove from item', data: { confirm: 'Are you sure?' } %>
   </p>
 <% end %>
