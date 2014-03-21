@@ -8,7 +8,6 @@ class LibraryAlbumsController < ApplicationController
 
   def index
     @query_options = OpenStruct.new(params[:query_options])
-    @query_options.matched_status = 'unmatched'
     ds = Library::Album.dataset
     case @query_options.matched_status
     when 'matched'

@@ -9,13 +9,26 @@ class LibraryAlbumScraper
   end
 
   def fuzzy_match(album)
-    # Get results using library_album fields
-    response = @what_scraper.scrape_results(groupname: album.album_only_letters, artistname: album.albumartist_only_letters)
 
-    # Find matching group
-    fz = FuzzyMatch.new(response.groups, read: :name)
+    # Check for VA
+    if album.albumartist.downcase == 'various artists'
+      # Get results using album name only
+      response = @what_scraper.scrape_results(groupname: album.album_only_letters)
+
+      # Select groups with VA artist
+      va_groups = response.groups.select { |g| g.artist.downcase == 'various artists' }
+
+      fz = FuzzyMatch.new(va_groups, read: :name)
+    else
+      # Get results using library_album fields
+      response = @what_scraper.scrape_results(groupname: album.album_only_letters, artistname: album.albumartist_only_letters)
+
+      fz = FuzzyMatch.new(response.groups, read: :name)
+    end
+
+    # Find matching group by name
     match = fz.find(album.album)
-
+    
     # Return if match is not found
     return false if match.nil?
 
