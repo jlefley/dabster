@@ -1,7 +1,7 @@
 <tr>
-  <td><%= library_item.track %></td>
-  <td><%= library_item.title %></td>
-  <td><%= library_item.artist %></td>
+  <td><a href='http://musicbrainz.org/recording/<%= library_item.mb_trackid %>' target='_blank'><%= library_item.track %></a></td>
+  <td><%= link_to library_item.title, library_item %></td>
+  <td><a href='http://musicbrainz.org/artist/<%= library_item.mb_artistid %>' target='_blank'><%= library_item.artist %></a></td>
   <td>
     <% library_item.artists_by(:type, group_artist: false).each do |type, artists| %>
       <%= type %>:

@@ -1,0 +1,35 @@
+<h1>Library Item</h1>
+<table>
+  <tr>
+    <td>Title</td>
+    <td><%= @library_item.title %></td>
+  </tr>
+  <tr>
+    <td>Artist</td>
+    <td><%= @library_item.artist %></td>
+  </tr>
+  <tr>
+    <td>Artist sort</td>
+    <td><%= @library_item.artist_sort %></td>
+  </tr>
+  <tr>
+    <td>Belongs to</td>
+    <td><%= link_to @library_item.album, @library_album %></td>
+  </tr>
+</table>
+<h2>Artists associated with item</h2>
+<% if (item_artists = @library_item.artists_by(:type, group_artist: false)).empty? %>
+  <p>No associations</p>
+<% else %>
+  <% @library_item.artists_by(:type, group_artist: false).each do |type, artists| %>
+    <h3><%= pluralize artists.length, type.to_s %></h3>
+    <%= render partial: 'remove_artist', collection: artists, as: :artist, locals: { type: type, library_item: @library_item } %>
+  <% end %>
+<% end %>
+<% if @group %>
+  <h2>Artists associated with album item belongs to</h2>
+  <% @group.artists_by(:type).each do |type, artists| %>
+    <h3><%= pluralize artists.length, type.to_s %></h3>
+    <%= render partial: 'add_artist', collection: artists, as: :artist, locals: { type: type, library_item: @library_item } %>
+  <% end %>
+<% end %>
