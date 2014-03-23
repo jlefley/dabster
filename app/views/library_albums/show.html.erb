@@ -14,19 +14,23 @@
   <h1><%= link_to 'Associated Group', @group %></h1>
   <%= render partial: 'shared/group' %>
 <% end %>
-
 <hr>
-
+<%= form_for @group do |f| %>
+  <p>
+  <%= f.label :what_id %>
+  <%= f.text_field :what_id %>
+  <%= f.hidden_field :use_what_id, value: true %>
+  <%= f.submit 'Associate album with torrent group ID' %>
+  </p>
+<% end %>
 <%= form_for :what_request, method: :get, url: @library_album do |f| %>
   <p>
   <%= f.label :groupname %>
   <%= f.search_field :groupname, value: @what_request.try(:groupname) || @library_album.album_only_letters %>
-  </p>
-  <p>
   <%= f.label :artistname %>
   <%= f.search_field :artistname, value: @what_request.try(:artistname) || @library_album.albumartist_only_letters %>
-  </p>
   <%= f.submit 'Search what.cd for torrents' %>
+  </p>
 <% end %>
 
 <% if @what_response.try(:results) %>
