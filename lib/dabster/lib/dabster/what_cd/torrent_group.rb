@@ -17,8 +17,7 @@ module WhatCD
     }  
 
     def self.find(filter)
-      api = APIConnection.new
-      TorrentGroupSource.new(api, APICache, ArtistSource.new(api, APICache, Artist), self, nil).find(filter)
+      TorrentGroupSource.new(APIConnection.new, APICache, Artist, self, nil).find(filter)
     end
 
     def self.search(filter)

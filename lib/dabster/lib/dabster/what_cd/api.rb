@@ -37,7 +37,6 @@ module WhatCD
     end
 
     def login
-      puts 'logging in'
       response = Net::HTTP.post_form(URI(BASE_URI + '/login.php'), { username: '***REMOVED***', password: '***REMOVED***' })
 
       raise WhatCD::Error, "could not login" unless response.code == '302'
