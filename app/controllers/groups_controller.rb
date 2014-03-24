@@ -5,6 +5,9 @@ class GroupsController < ApplicationController
     @group.update_fields(group_params, [:what_confidence])
     flash[:notice] = 'Group updated successfully'
     redirect_to @group
+  rescue Sequel::ValidationFailed => e
+    flash.now[:error] = e.message
+    render :edit
   end
 
   def index
@@ -40,6 +43,7 @@ class GroupsController < ApplicationController
       @group = GroupService.new(Group).associate_group(torrent_group, library_album, 1.0)
       ArtistService.new(Artist).associate_artists(@group)
     end
+    flash[:notice] = 'Association successful'
     redirect_to @group.library_album
   rescue StandardError => e
     raise DabsterApp::Error, "#{e.class} (#{e.message})", e.backtrace
