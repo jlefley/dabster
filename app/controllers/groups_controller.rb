@@ -1,27 +1,10 @@
 class GroupsController < ApplicationController
 
-  def create
-    execute 
-    flash[:notice] = 'Group created successfully'
-    redirect_to @group.library_album
-  rescue StandardError => e
-    raise DabsterApp::Error, "#{e.class} (#{e.message})", e.backtrace
-  end
-
   def update
-    case params.fetch(:commit)
-    when 'Update'
-      @group = Group.first!(id: params[:id])
-      @group.update_fields(group_params, [:what_confidence])
-      flash[:notice] = 'Group updated successfully'
-      redirect_to @group
-    else
-      execute 
-      flash[:notice] = 'Group updated successfully'
-      redirect_to @group.library_album
-    end
-  rescue StandardError => e
-    raise DabsterApp::Error, "#{e.class} (#{e.message})", e.backtrace
+    @group = Group.first!(id: params[:id])
+    @group.update_fields(group_params, [:what_confidence])
+    flash[:notice] = 'Group updated successfully'
+    redirect_to @group
   end
 
   def index
@@ -50,21 +33,22 @@ class GroupsController < ApplicationController
     @group = Group.first!(id: params[:id])
   end
 
+  def associate_what_cd
+    library_album = Library::Album.first!(id: group_params.fetch(:library_album_id).to_i)
+    torrent_group = WhatCD::TorrentGroup.find(id: group_params.fetch(:what_id).to_i)
+    Sequel::Model.db.transaction do
+      @group = GroupService.new(Group).associate_group(torrent_group, library_album, 1.0)
+      ArtistService.new(Artist).associate_artists(@group)
+    end
+    redirect_to @group.library_album
+  rescue StandardError => e
+    raise DabsterApp::Error, "#{e.class} (#{e.message})", e.backtrace
+  end
+
   private
 
   def group_params
     @group_params ||= params.require(:group).permit!
-  end
-
-  def execute
-    results = JSON.parse(group_params.fetch(:results), symbolize_names: true)
-    selected_group = results.select { |g| g[:groupId] == group_params.fetch(:what_id).to_i }.first
-    result_group = WhatScraper.new(WhatAPIConnection.new, WhatGroup, WhatAPICache).scrape_group(selected_group)
-    library_album = Library::Album.first!(id: group_params.fetch(:library_album_id).to_i)
-    Sequel::Model.db.transaction do
-      @group = GroupService.new(Group).associate_group(result_group, library_album, 1.0)
-      ArtistService.new(Artist).associate_artists(@group)
-    end
   end
 
 end

@@ -17,11 +17,11 @@ module WhatCD
     }  
 
     def self.find(filter)
-      TorrentGroupSource.new(APIConnection.new, APICache, Artist, self, nil).find(filter)
+      WhatCD::TorrentGroupSource.new(WhatCD::APIConnection.new, WhatCD::APICache, WhatCD::Artist, self, nil).find(filter)
     end
 
     def self.search(filter)
-      TorrentGroupSource.new(APIConnection.new, nil, nil, nil, TorrentGroupResults).search(filter)
+      WhatCD::TorrentGroupSource.new(WhatCD::APIConnection.new, nil, nil, nil, WhatCD::TorrentGroupResults).search(filter)
     end
 
     def initialize hash

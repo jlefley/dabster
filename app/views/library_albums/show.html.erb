@@ -15,11 +15,11 @@
   <%= render partial: 'shared/group' %>
 <% end %>
 <hr>
-<%= form_for @group do |f| %>
+<%= form_for @group, url: groups_associate_what_cd_path, method: :post do |f| %>
   <p>
   <%= f.label :what_id %>
   <%= f.text_field :what_id %>
-  <%= f.hidden_field :use_what_id, value: true %>
+  <%= f.hidden_field :library_album_id, value: @library_album.id %>
   <%= f.submit 'Associate album with torrent group ID' %>
   </p>
 <% end %>
@@ -35,9 +35,8 @@
 
 <% if @what_response.try(:results) %>
   <h2>what.cd Results</h2>
-  <%= form_for @group do |f| %>
+  <%= form_for @group, url: groups_associate_what_cd_path, method: :post do |f| %>
     <%= f.submit 'Associate selection with album' %>
-    <%= f.hidden_field :results, value: @what_response.results.to_json %>
     <%= f.hidden_field :library_album_id, value: @library_album.id %>
     <br><br>
     <%= render partial: 'what/torrent_group', locals: { f: f, library_album: @library_album }, collection: @sorted_groups, as: :torrent_group, spacer_template: 'shared/rule' %>

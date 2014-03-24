@@ -12,8 +12,8 @@ describe GroupService do
 
   describe 'when associating group' do
     
-    let(:group_fields) { [:what_id, :what_artist, :what_name, :what_tags, :what_year,
-      :what_release_type, :what_artists, :what_record_label, :what_catalog_number] }
+    let(:group_fields) { [:what_id, :what_name, :what_tags, :what_year,
+      :what_release_type_id, :what_artists, :what_record_label, :what_catalog_number] }
 
     before do
       allow(Time).to receive(:now).and_return('current time')

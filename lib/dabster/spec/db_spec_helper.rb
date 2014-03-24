@@ -12,6 +12,7 @@ require 'sequel'
 Sequel.sqlite
 require File.join(dir, 'dabster', 'sequel.rb')
 Sequel::Model.db.run(File.read(File.join(File.expand_path('../../../../db', __FILE__), 'structure.sql')))
+load File.join(File.expand_path('../../../../db', __FILE__), 'seeds.rb')
 
 RSpec.configure do |config|
 

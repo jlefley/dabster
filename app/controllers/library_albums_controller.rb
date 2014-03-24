@@ -21,7 +21,7 @@ class LibraryAlbumsController < ApplicationController
   private
 
   def make_what_request
-    @what_response = WhatScraper.new(WhatAPIConnection.new, WhatGroup, WhatAPICache).scrape_results(params[:what_request])
+    @what_response = WhatCD::TorrentGroup.search(params[:what_request])
     @what_request = OpenStruct.new(params[:what_request])
     @sorted_groups = @what_response.sort_groups(artist: @library_album.albumartist, name: @library_album.album)
   end

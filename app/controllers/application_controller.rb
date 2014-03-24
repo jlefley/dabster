@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
     logger.error e.message
     Rails.backtrace_cleaner.clean(e.backtrace).each { |line| logger.error '  ' + line }
     logger.error
-    flash[:error] = e.message.truncate(100)
+    flash[:error] = e.message.truncate(400)
     redirect_to :back
   end
 end

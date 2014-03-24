@@ -4,11 +4,10 @@ class GroupService
 
   WHAT_GROUP_MAPPING = {
       id:               :what_id,
-      artist:           :what_artist,
       name:             :what_name,
       tags:             :what_tags,
       year:             :what_year,
-      release_type:     :what_release_type,
+      release_type:     :what_release_type_id,
       artists:          :what_artists,
       record_label:     :what_record_label,
       catalog_number:   :what_catalog_number

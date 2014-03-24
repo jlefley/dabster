@@ -5,8 +5,6 @@ class Group < Sequel::Model
   include ArtistMatching
   plugin :categorized_relationship
 
-  WHAT_RELEASE_TYPES = %w(Album Soundtrack EP Anthology Compilation DJ\ Mix Single Live\ album Remix Bootleg Interview Mixtape Unknown Concert\ Recording Demo)
-
   serialize_attributes :json, :what_artists, :what_tags
   many_to_one :library_album, class: 'Library::Album', key: :library_album_id
   categorized_relationship :artists, class: 'Artist', relationship_class: 'ArtistGroupRelationship'
@@ -18,18 +16,16 @@ class Group < Sequel::Model
     validates_unique :what_id
     
     if what_id
-      validates_presence :what_artist
       validates_presence :what_name
       validates_presence :what_tags
       validates_presence :what_year
-      validates_presence :what_release_type
+      validates_presence :what_release_type_id
       validates_presence :what_artists
       validates_presence :what_confidence
       validates_numeric :what_confidence
       validates_presence :what_updated_at
       validates_type Hash, :what_artists
       validates_type Array, :what_tags
-      validates_includes WHAT_RELEASE_TYPES, :what_release_type
       if what_confidence && (what_confidence.to_f < 0 || what_confidence.to_f > 1)
         errors.add(:what_confidence, 'must be between 0 and 1, inclusive')
       end
@@ -41,7 +37,12 @@ class Group < Sequel::Model
     library_album.library_items
   end
 
+  def what_release_type
+    db[self.class.table_name].join(:what_cd_release_types, id: what_release_type_id).select(:name).first[:name]
+  end
+
   def add_group_artists_to_items
+=begin
     what_artists.each do |type, artists|
       artists.each do |artist|
         if what_artist.include?(artist[:name])
@@ -51,6 +52,7 @@ class Group < Sequel::Model
         end
       end
     end
+=end
   end
 
   def remove_group_artists_from_items
