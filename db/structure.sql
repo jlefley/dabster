@@ -3,8 +3,9 @@ CREATE TABLE `artist_library_item_relationships` (`id` integer NOT NULL PRIMARY 
 CREATE TABLE `artists` (`id` integer NOT NULL PRIMARY KEY AUTOINCREMENT, `what_id` integer UNIQUE, `what_name` varchar(255), `what_updated_at` timestamp, `created_at` timestamp NOT NULL, `updated_at` timestamp);
 CREATE TABLE `groups` (`id` integer NOT NULL PRIMARY KEY AUTOINCREMENT, `library_album_id` integer NOT NULL UNIQUE, `what_id` integer UNIQUE, `what_artist` varchar(255), `what_name` varchar(255), `what_tags` varchar(255), `what_year` integer, `what_release_type` varchar(255), `what_artists` varchar(255), `what_record_label` varchar(255), `what_catalog_number` varchar(255), `what_confidence` double precision, `what_updated_at` timestamp, `created_at` timestamp NOT NULL, `updated_at` timestamp);
 CREATE TABLE `schema_migrations` (`filename` varchar(255) NOT NULL PRIMARY KEY);
-CREATE TABLE `what_api_result_groups` (`id` integer NOT NULL PRIMARY KEY AUTOINCREMENT, `group_id` integer UNIQUE, `response` varchar(255), `updated_at` timestamp NOT NULL);
-CREATE TABLE `what_api_torrent_groups` (`id` integer NOT NULL PRIMARY KEY AUTOINCREMENT, `group_id` integer UNIQUE, `response` varchar(255), `updated_at` timestamp NOT NULL);
+CREATE TABLE "what_cd_api_info" (`last_request` timestamp, `cookie` varchar(255));
+CREATE TABLE `what_cd_artist_responses` (`id` integer NOT NULL PRIMARY KEY, `response` varchar(255) NOT NULL, `updated_at` timestamp NOT NULL);
+CREATE TABLE "what_cd_torrent_group_responses"(id integer not null primary key, response varchar(255) not null, updated_at timestamp not null);
 CREATE INDEX `artist_group_relationships_artist_id_group_id_index` ON `artist_group_relationships` (`artist_id`, `group_id`);
 CREATE INDEX `artist_group_relationships_group_id_index` ON `artist_group_relationships` (`group_id`);
 CREATE INDEX `artist_library_item_relationships_artist_id_library_item_id_index` ON `artist_library_item_relationships` (`artist_id`, `library_item_id`);
@@ -16,3 +17,7 @@ INSERT INTO `schema_migrations` (`filename`) VALUES ('20140311195146_create_arti
 INSERT INTO `schema_migrations` (`filename`) VALUES ('20140312012119_create_artist_library_item_relationships.rb');
 INSERT INTO `schema_migrations` (`filename`) VALUES ('20140320180803_create_what_api_result_groups.rb');
 INSERT INTO `schema_migrations` (`filename`) VALUES ('20140320180813_create_what_api_torrent_groups.rb');
+INSERT INTO `schema_migrations` (`filename`) VALUES ('20140324193545_drop_what_api_result_groups.rb');
+INSERT INTO `schema_migrations` (`filename`) VALUES ('20140324200142_create_what_cd_torrent_group_responses.rb');
+INSERT INTO `schema_migrations` (`filename`) VALUES ('20140324201727_create_what_cd_artist_responses.rb');
+INSERT INTO `schema_migrations` (`filename`) VALUES ('20140324202010_rename_what_api_info_to_what_cd_api_info.rb');

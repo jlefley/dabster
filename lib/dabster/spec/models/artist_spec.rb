@@ -1,5 +1,5 @@
 require 'db_spec_helper'
-require 'artist'
+require 'models/artist'
 
 describe Artist do
   subject(:artist) { described_class.new }

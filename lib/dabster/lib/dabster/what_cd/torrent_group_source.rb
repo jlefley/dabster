@@ -1,3 +1,5 @@
+require 'what_cd'
+
 module WhatCD
   class TorrentGroupSource
 

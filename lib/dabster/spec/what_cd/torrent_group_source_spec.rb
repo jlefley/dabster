@@ -1,6 +1,5 @@
 require 'unit_spec_helper'
-require 'torrent_group_source'
-require 'what_cd'
+require 'what_cd/torrent_group_source'
 require 'ostruct'
 
 describe WhatCD::TorrentGroupSource do

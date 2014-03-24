@@ -1,5 +1,5 @@
 require 'db_spec_helper'
-require 'categorized_relationship'
+require 'sequel/plugins/categorized_relationship'
 
 Sequel::Model.db.create_table(:test_works) { primary_key :id }
 Sequel::Model.db.create_table(:test_contributors) { primary_key :id }

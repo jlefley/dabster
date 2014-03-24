@@ -1,5 +1,5 @@
 require 'db_spec_helper'
-require 'artist_library_item_relationship'
+require 'models/artist_library_item_relationship'
 
 describe ArtistLibraryItemRelationship do
   subject(:relationship) { described_class.new }

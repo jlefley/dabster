@@ -1,5 +1,5 @@
 require 'unit_spec_helper'
-require 'artist_matching'
+require 'logic/artist_matching'
 
 describe ArtistMatching do
   

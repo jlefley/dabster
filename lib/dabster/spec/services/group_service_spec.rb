@@ -1,5 +1,5 @@
 require 'unit_spec_helper'
-require 'group_service'
+require 'services/group_service'
 
 describe GroupService do
 

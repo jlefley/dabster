@@ -1,5 +1,5 @@
 require 'unit_spec_helper'
-require 'artist_source'
+require 'what_cd/artist_source'
 require 'ostruct'
 
 describe WhatCD::ArtistSource do

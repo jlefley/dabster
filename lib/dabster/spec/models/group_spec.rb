@@ -1,6 +1,6 @@
 require 'db_spec_helper'
-require 'artist_matching'
-require 'group'
+require 'logic/artist_matching'
+require 'models/group'
 
 describe Group do
   subject(:group) { described_class.new }

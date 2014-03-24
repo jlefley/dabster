@@ -1,7 +1,7 @@
 require 'unit_spec_helper'
-require 'what_group'
+require 'what_cd/torrent_group'
 
-describe WhatGroup do
+describe WhatCD::TorrentGroup do
 
   let(:result_group) { {
     groupId: 410618,
@@ -27,7 +27,7 @@ describe WhatGroup do
   } }
 
   describe 'when constructed with result group' do
-    subject(:group) { WhatGroup.new result_group }
+    subject(:group) { described_class.new result_group }
     it 'allows access to groupId as id' do
       expect(group.id).to eq(410618)
     end
@@ -55,7 +55,7 @@ describe WhatGroup do
   end
 
   describe 'when constructed with torrent group' do
-    subject(:group) { WhatGroup.new torrent_group }
+    subject(:group) { described_class.new torrent_group }
     it 'allows access to id' do
       expect(group.id).to eq(44)
     end
@@ -78,7 +78,7 @@ describe WhatGroup do
   end
 
   describe 'when mapping fields' do
-    subject(:group) { WhatGroup.new(result_group) }
+    subject(:group) { described_class.new(result_group) }
     it 'returns HTML decoded values with keys mapped according to specified mapping' do
       mapping = { artist: :the_artist, id: :the_id, name: :the_name }
       expect(group.map(mapping)).to eq(the_id: 410618, the_name: 'Jungle Music & More', the_artist: 'Above & Beyond')

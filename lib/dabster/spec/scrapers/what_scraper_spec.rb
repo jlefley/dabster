@@ -1,6 +1,6 @@
 require 'unit_spec_helper'
 require 'ostruct'
-require 'what_scraper'
+require 'scrapers/what_scraper'
 
 describe WhatScraper do
   let(:api) { double 'api connection' }

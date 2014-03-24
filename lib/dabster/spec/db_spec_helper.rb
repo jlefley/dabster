@@ -4,9 +4,8 @@
 #Sequel::Migration.descendants.each { |m| m.apply(Sequel::Model.db, :up) }
 
 dir = File.expand_path('../../lib', __FILE__)
-$:.push File.join(dir, 'sequel', 'plugins')
-$:.push File.join(dir, 'dabster', 'models')
-$:.push File.join(dir, 'dabster', 'logic')
+$:.push dir
+$:.push File.join(dir, 'dabster')
 
 require 'sequel'
 

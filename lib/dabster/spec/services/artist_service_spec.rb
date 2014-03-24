@@ -1,5 +1,5 @@
 require 'unit_spec_helper'
-require 'artist_service'
+require 'services/artist_service'
 
 describe ArtistService do
 
