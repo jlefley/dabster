@@ -15,27 +15,27 @@
   <%= render partial: 'shared/group' %>
 <% end %>
 <hr>
-<%= form_for @group, url: groups_associate_what_cd_path, method: :post do |f| %>
+<%= form_for @group, url: groups_associate_whatcd_path, method: :post do |f| %>
   <p>
-  <%= f.label :what_id %>
-  <%= f.text_field :what_id %>
+  <%= f.label :whatcd_id %>
+  <%= f.text_field :whatcd_id %>
   <%= f.hidden_field :library_album_id, value: @library_album.id %>
   <%= f.submit 'Associate album with torrent group ID' %>
   </p>
 <% end %>
-<%= form_for :what_request, method: :get, url: @library_album do |f| %>
+<%= form_for :whatcd_request, method: :get, url: @library_album do |f| %>
   <p>
   <%= f.label :groupname %>
-  <%= f.search_field :groupname, value: @what_request.try(:groupname) || @library_album.album_only_letters %>
+  <%= f.search_field :groupname, value: @whatcd_request.try(:groupname) || @library_album.album_only_letters %>
   <%= f.label :artistname %>
-  <%= f.search_field :artistname, value: @what_request.try(:artistname) || @library_album.albumartist_only_letters %>
+  <%= f.search_field :artistname, value: @whatcd_request.try(:artistname) || @library_album.albumartist_only_letters %>
   <%= f.submit 'Search what.cd for torrents' %>
   </p>
 <% end %>
 
-<% if @what_response.try(:results) %>
+<% if @whatcd_response.try(:results) %>
   <h2>what.cd Results</h2>
-  <%= form_for @group, url: groups_associate_what_cd_path, method: :post do |f| %>
+  <%= form_for @group, url: groups_associate_whatcd_path, method: :post do |f| %>
     <%= f.submit 'Associate selection with album' %>
     <%= f.hidden_field :library_album_id, value: @library_album.id %>
     <br><br>
@@ -43,13 +43,13 @@
   <% end %>
   <br>
   <span>Pages:
-  <% @what_response.pages.to_i.times do |p| %>
+  <% @whatcd_response.pages.to_i.times do |p| %>
     <% page = p + 1 %>
-    <% if @what_response.currentPage == page %>
+    <% if @whatcd_response.currentPage == page %>
       <%= page %>
     <% else %>
-      <% @what_request.page = page %>
-      <%= link_to page, library_album_path(@library_album, commit: true, what_request: @what_request.marshal_dump) %>
+      <% @whatcd_request.page = page %>
+      <%= link_to page, library_album_path(@library_album, commit: true, whatcd_request: @whatcd_request.marshal_dump) %>
     <% end %>
   <% end %>
   </span>

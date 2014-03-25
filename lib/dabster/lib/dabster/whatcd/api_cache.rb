@@ -1,4 +1,4 @@
-module WhatCD
+module Whatcd
   module APICache
 
     module_function

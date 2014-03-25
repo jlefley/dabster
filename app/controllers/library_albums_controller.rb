@@ -1,7 +1,7 @@
 class LibraryAlbumsController < ApplicationController
   def show
     @library_album = Library::Album.first! id: params[:id]
-    make_what_request if params[:commit]
+    make_whatcd_request if params[:commit]
     @library_items = @library_album.ordered_library_items
     @group = @library_album.group || Group.new
   end
@@ -20,10 +20,10 @@ class LibraryAlbumsController < ApplicationController
 
   private
 
-  def make_what_request
-    @what_response = WhatCD::TorrentGroup.search(params[:what_request])
-    @what_request = OpenStruct.new(params[:what_request])
-    @sorted_groups = @what_response.sort_groups(artist: @library_album.albumartist, name: @library_album.album)
+  def make_whatcd_request
+    @whatcd_response = Whatcd::TorrentGroup.search(params[:whatcd_request])
+    @whatcd_request = OpenStruct.new(params[:whatcd_request])
+    @sorted_groups = @whatcd_response.sort_groups(artist: @library_album.albumartist, name: @library_album.album)
   end
 
 end

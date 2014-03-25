@@ -3,14 +3,14 @@ class GroupService
   attr_reader :group_class
 
   WHAT_GROUP_MAPPING = {
-      id:               :what_id,
-      name:             :what_name,
-      tags:             :what_tags,
-      year:             :what_year,
-      release_type:     :what_release_type_id,
-      artists:          :what_artists,
-      record_label:     :what_record_label,
-      catalog_number:   :what_catalog_number
+      id:               :whatcd_id,
+      name:             :whatcd_name,
+      tags:             :whatcd_tags,
+      year:             :whatcd_year,
+      release_type:     :whatcd_release_type_id,
+      artists:          :whatcd_artists,
+      record_label:     :whatcd_record_label,
+      catalog_number:   :whatcd_catalog_number
     }
 
   def initialize group
@@ -26,8 +26,8 @@ class GroupService
     end
    
     group.set_fields(result_group.map(WHAT_GROUP_MAPPING), group_fields)
-    group.what_confidence = confidence
-    group.what_updated_at = Time.now
+    group.whatcd_confidence = confidence
+    group.whatcd_updated_at = Time.now
 
     group.save
 

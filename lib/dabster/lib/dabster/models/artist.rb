@@ -12,9 +12,9 @@ class Artist < Sequel::Model
   def validate
     super
     
-    if what_id
-      validates_presence :what_name
-      validates_presence :what_updated_at
+    if whatcd_id
+      validates_presence :whatcd_name
+      validates_presence :whatcd_updated_at
     end
   end
 end

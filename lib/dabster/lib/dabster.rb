@@ -2,7 +2,7 @@ require 'sequel'
 
 require 'dabster/version'
 require 'dabster/sequel'
-require 'dabster/what_cd'
+require 'dabster/whatcd'
 
 module Dabster
   def self.root
@@ -32,7 +32,7 @@ else
   require 'dabster/cli'
   Sequel.sqlite(Dabster.database)
   Dabster.connect_library_database
-  %w(what_cd services logic models scrapers).each do |dir|
+  %w(whatcd services logic models scrapers).each do |dir|
     Dir["#{Dabster.root}/dabster/#{dir}/**/*.rb"].each { |f| require(f) }
   end
 end

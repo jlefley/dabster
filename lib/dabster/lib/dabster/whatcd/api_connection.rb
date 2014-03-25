@@ -1,4 +1,4 @@
-module WhatCD
+module Whatcd
   class APIConnection
 
     attr_reader :db, :ds
@@ -16,7 +16,7 @@ module WhatCD
         response = API.make_request(cookie, params)
         ds.update(last_request: last_request)
         return response
-      rescue WhatCD::API::NotAuthenticated
+      rescue Whatcd::API::NotAuthenticated
         last_request = API.rate_limit(last_request)
         cookie = API.login
         ds.update(last_request: last_request, cookie: cookie)

@@ -1,8 +1,8 @@
 require 'unit_spec_helper'
-require 'what_cd/artist_source'
+require 'whatcd/artist_source'
 require 'ostruct'
 
-describe WhatCD::ArtistSource do
+describe Whatcd::ArtistSource do
   subject(:source) { described_class.new api, api_cache, OpenStruct }
 
   let(:api_cache) { double 'api cache' }

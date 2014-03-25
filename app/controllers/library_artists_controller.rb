@@ -5,13 +5,7 @@ class LibraryArtistsController < ApplicationController
   end
 
   def show
-    if params[:commit]
-      name = params[:what_request].delete(:name)
-      make_what_request 
-    else
-      name = params[:name]
-    end
-    @library_artist = Library::Artist.first! name: name
+    @library_artist = Library::Artist.first! name: params[:name]
     @library_artist_albums = @library_artist.albums
   end
 end

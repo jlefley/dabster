@@ -1,4 +1,4 @@
-module WhatCD
+module Whatcd
   class TorrentGroupSource
 
     attr_reader :api, :api_cache, :artist_source, :group_class, :results_class

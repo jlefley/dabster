@@ -2,23 +2,23 @@
 <table>
   <tr>
     <td>Name</td>
-    <td><%= @group.what_name %></td>
+    <td><%= @group.whatcd_name %></td>
   </tr>
   <tr>
     <td>Year</td>
-    <td><%= @group.what_year %></td>
+    <td><%= @group.whatcd_year %></td>
   </tr>
   <tr>
     <td>Release type</td>
-    <td><%= @group.what_release_type %></td>
+    <td><%= @group.whatcd_release_type %></td>
   </tr>
   <tr>
     <td>Confidence</td>
-    <td><%= '%.2f' % @group.what_confidence %></td>
+    <td><%= '%.2f' % @group.whatcd_confidence %></td>
   </tr>
   <tr>
     <td>
-      <a href='https://what.cd/torrents.php?id=<%= @group.what_id %>' target='_blank'>Torrent group page</a>
+      <a href='https://what.cd/torrents.php?id=<%= @group.whatcd_id %>' target='_blank'>Torrent group page</a>
     </td>
   </tr>
 </table>

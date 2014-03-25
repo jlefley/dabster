@@ -1,6 +1,6 @@
 require 'ostruct'
 
-module WhatCD
+module Whatcd
   class TorrentGroupResults < OpenStruct
 
     def groups

@@ -3,10 +3,10 @@ require 'logic/artist_matching'
 
 describe ArtistMatching do
   
-  let(:artist0) { double 'artist 0', what_name: 'Mike ShiveR' }
-  let(:artist1) { double 'artist 1', what_name: 'Aruna  ' }
-  let(:artist2) { double 'artist 2', what_name: 'Super8 & Tab' }
-  let(:artist3) { double 'artist 3', what_name: 'Other' }
+  let(:artist0) { double 'artist 0', whatcd_name: 'Mike ShiveR' }
+  let(:artist1) { double 'artist 1', whatcd_name: 'Aruna  ' }
+  let(:artist2) { double 'artist 2', whatcd_name: 'Super8 & Tab' }
+  let(:artist3) { double 'artist 3', whatcd_name: 'Other' }
   
   let(:item0) { double 'item 0', artists_by: { }, add_artist: nil, artist: 'Mike Shiver & Aruna' }
   let(:item1) { double 'item 1', artists_by: { }, add_artist: nil, artist: '  Super8 & Tab' }

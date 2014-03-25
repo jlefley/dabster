@@ -3,7 +3,7 @@
   <%= f.hidden_field :library_item_id, value: library_item.id %>
   <%= f.hidden_field :artist_id, value: artist.id %>
   <%= f.hidden_field :type, value: type %>
-  <%= link_to artist.what_name, artist %>
+  <%= link_to artist.whatcd_name, artist %>
   <%= f.submit 'Remove from item', data: { confirm: 'Are you sure?' } %>
   </p>
 <% end %>

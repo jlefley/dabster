@@ -20,7 +20,7 @@ class LibraryAlbumScraper
     return false if matching.nil?
 
     # Find the group
-    torrent_group = WhatCD::TorrentGroup.find(id: matching.id)
+    torrent_group = Whatcd::TorrentGroup.find(id: matching.id)
 
     # Determine confidence using similarity
     confidence = matching.similarity(name: album.album, artist: album.albumartist) / 100
@@ -38,7 +38,7 @@ class LibraryAlbumScraper
   end
 
   def id_match(album, torrent_group_id, confidence)
-    torrent_group = WhatCD::TorrentGroup.find(id: torrent_group_id)
+    torrent_group = Whatcd::TorrentGroup.find(id: torrent_group_id)
     
     Sequel::Model.db.transaction do
       group = @group_service.associate_group(torrent_group, album, confidence)
@@ -88,7 +88,7 @@ class LibraryAlbumScraper
   end
 
   def search(filter)
-    WhatCD::TorrentGroup.search(filter)
+    Whatcd::TorrentGroup.search(filter)
   end
 
   def match(groups, name)

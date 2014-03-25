@@ -2,7 +2,7 @@ require 'htmlentities'
 require 'ostruct'
 require 'similar_text'
 
-module WhatCD
+module Whatcd
   class TorrentGroup < OpenStruct
 
     ARTISTS_MAPPING = {
@@ -17,11 +17,11 @@ module WhatCD
     }  
 
     def self.find(filter)
-      WhatCD::TorrentGroupSource.new(WhatCD::APIConnection.new, WhatCD::APICache, WhatCD::Artist, self, nil).find(filter)
+      Whatcd::TorrentGroupSource.new(Whatcd::APIConnection.new, Whatcd::APICache, Whatcd::Artist, self, nil).find(filter)
     end
 
     def self.search(filter)
-      WhatCD::TorrentGroupSource.new(WhatCD::APIConnection.new, nil, nil, nil, WhatCD::TorrentGroupResults).search(filter)
+      Whatcd::TorrentGroupSource.new(Whatcd::APIConnection.new, nil, nil, nil, Whatcd::TorrentGroupResults).search(filter)
     end
 
     def initialize hash

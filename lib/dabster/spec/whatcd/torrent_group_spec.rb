@@ -1,7 +1,7 @@
 require 'unit_spec_helper'
-require 'what_cd/torrent_group'
+require 'whatcd/torrent_group'
 
-describe WhatCD::TorrentGroup do
+describe Whatcd::TorrentGroup do
 
   let(:result_group) { {
     groupId: 410618,

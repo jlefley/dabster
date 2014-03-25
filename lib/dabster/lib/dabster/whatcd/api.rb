@@ -1,7 +1,7 @@
 require 'net/http'
 require 'json'
 
-module WhatCD
+module Whatcd
   module API 
 
     class NotAuthenticated < StandardError; end
@@ -25,12 +25,12 @@ module WhatCD
         http.request(request)
       end
 
-      raise WhatCD::API::NotAuthenticated if response.code == '302'
-      raise WhatCD::Error , "http request not successful, received code #{response.code}" unless response.code == '200'
+      raise Whatcd::API::NotAuthenticated if response.code == '302'
+      raise Whatcd::Error , "http request not successful, received code #{response.code}" unless response.code == '200'
 
       data = JSON.parse(response.body, symbolize_names: true)
 
-      raise WhatCD::Error, "api request not successful: #{data}" unless data[:status] == 'success'
+      raise Whatcd::Error, "api request not successful: #{data}" unless data[:status] == 'success'
 
       data[:response]
     end
@@ -38,7 +38,7 @@ module WhatCD
     def login
       response = Net::HTTP.post_form(URI(BASE_URI + '/login.php'), { username: '***REMOVED***', password: '***REMOVED***' })
 
-      raise WhatCD::Error, "could not login" unless response.code == '302'
+      raise Whatcd::Error, "could not login" unless response.code == '302'
 
       cookie = response['Set-Cookie'].split('; ')
 

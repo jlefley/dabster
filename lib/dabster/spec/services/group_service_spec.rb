@@ -3,7 +3,7 @@ require 'services/group_service'
 
 describe GroupService do
 
-  let(:group) { double 'group', :what_updated_at= => nil, :set_fields => nil, :save => nil, :what_confidence= => nil }
+  let(:group) { double 'group', :whatcd_updated_at= => nil, :set_fields => nil, :save => nil, :whatcd_confidence= => nil }
   let(:group_class) { double 'group class' }
   let(:library_album) { double 'library album' }
   let(:result_group) { double 'what group 0' }
@@ -12,8 +12,8 @@ describe GroupService do
 
   describe 'when associating group' do
     
-    let(:group_fields) { [:what_id, :what_name, :what_tags, :what_year,
-      :what_release_type_id, :what_artists, :what_record_label, :what_catalog_number] }
+    let(:group_fields) { [:whatcd_id, :whatcd_name, :whatcd_tags, :whatcd_year,
+      :whatcd_release_type_id, :whatcd_artists, :whatcd_record_label, :whatcd_catalog_number] }
 
     before do
       allow(Time).to receive(:now).and_return('current time')
@@ -48,14 +48,14 @@ describe GroupService do
         service.associate_group(result_group, library_album, 1.0)
       end
 
-      it 'sets what_confidence to specified value' do
-        expect(group).to receive(:what_confidence=).with(1.0)
+      it 'sets whatcd_confidence to specified value' do
+        expect(group).to receive(:whatcd_confidence=).with(1.0)
         
         service.associate_group(result_group, library_album, 1.0)
       end
       
-      it 'sets what_updated_at to current time' do
-        expect(group).to receive(:what_updated_at=).with(Time.now)
+      it 'sets whatcd_updated_at to current time' do
+        expect(group).to receive(:whatcd_updated_at=).with(Time.now)
         
         service.associate_group(result_group, library_album, 1.0)
       end
@@ -84,14 +84,14 @@ describe GroupService do
         service.associate_group(result_group, library_album, 1.0)
       end
 
-      it 'sets what_confidence to specified value' do
-        expect(group).to receive(:what_confidence=).with(1.0)
+      it 'sets whatcd_confidence to specified value' do
+        expect(group).to receive(:whatcd_confidence=).with(1.0)
         
         service.associate_group(result_group, library_album, 1.0)
       end
 
-      it 'sets what_updated_at to current time' do
-        expect(group).to receive(:what_updated_at=).with(Time.now)
+      it 'sets whatcd_updated_at to current time' do
+        expect(group).to receive(:whatcd_updated_at=).with(Time.now)
         
         service.associate_group(result_group, library_album, 1.0)
       end

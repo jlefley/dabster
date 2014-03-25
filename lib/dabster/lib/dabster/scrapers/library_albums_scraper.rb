@@ -29,7 +29,7 @@ class LibraryAlbumsScraper
   def update_albums(albums)
     albums.each do |album|
       if group = album.group
-        @count += 1 if @album_scraper.id_match(album, group.what_id, group.what_confidence)
+        @count += 1 if @album_scraper.id_match(album, group.whatcd_id, group.whatcd_confidence)
       else
         @count += 1 if @album_scraper.fuzzy_match(album)
       end

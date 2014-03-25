@@ -2,7 +2,7 @@ class GroupsController < ApplicationController
 
   def update
     @group = Group.first!(id: params[:id])
-    @group.update_fields(group_params, [:what_confidence])
+    @group.update_fields(group_params, [:whatcd_confidence])
     flash[:notice] = 'Group updated successfully'
     redirect_to @group
   rescue Sequel::ValidationFailed => e
@@ -15,11 +15,11 @@ class GroupsController < ApplicationController
     ds = Group.dataset
     case @query_options.sort
     when 'confidence'
-      ds = ds.order(:what_confidence)
+      ds = ds.order(:whatcd_confidence)
     when 'whatcd updated at'
-      ds = ds.order(:what_updated_at)
+      ds = ds.order(:whatcd_updated_at)
     else
-      ds = ds.order(:what_name)
+      ds = ds.order(:whatcd_name)
     end
 
     case @query_options.order
@@ -38,9 +38,9 @@ class GroupsController < ApplicationController
     @group = Group.first!(id: params[:id])
   end
 
-  def associate_what_cd
+  def associate_whatcd
     library_album = Library::Album.first!(id: group_params.fetch(:library_album_id).to_i)
-    torrent_group = WhatCD::TorrentGroup.find(id: group_params.fetch(:what_id).to_i)
+    torrent_group = Whatcd::TorrentGroup.find(id: group_params.fetch(:whatcd_id).to_i)
     Sequel::Model.db.transaction do
       @group = GroupService.new(Group).associate_group(torrent_group, library_album, 1.0)
       ArtistService.new(Artist).associate_artists(@group)

@@ -17,7 +17,7 @@ module ArtistMatching
   private
 
   def match?(item, artist)
-    item.artist.strip.downcase.include?(artist.what_name.strip.downcase)
+    item.artist.strip.downcase.include?(artist.whatcd_name.strip.downcase)
   end
 
 end

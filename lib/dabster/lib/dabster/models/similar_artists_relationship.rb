@@ -3,7 +3,7 @@ class SimilarArtistsRelationship < Sequel::Model
   many_to_one :similar_artist, class: 'Artist', graph_join_type: :inner
 
   def similar_artist_name
-    similar_artist.what_name
+    similar_artist.whatcd_name
   end
 
 end

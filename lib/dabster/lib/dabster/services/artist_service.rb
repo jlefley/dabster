@@ -9,16 +9,16 @@ class ArtistService
   def associate_artists group
     existing_artists = group.artists_by(:type)
    
-    group.what_artists.each do |type, artists|
+    group.whatcd_artists.each do |type, artists|
       metadata_artists = artists.map do |artist|
-        what_id = artist.fetch(:id)
-        what_name = artist.fetch(:name)
+        whatcd_id = artist.fetch(:id)
+        whatcd_name = artist.fetch(:name)
 
-        if (artist = artist_class.first(what_id: what_id)).nil?
+        if (artist = artist_class.first(whatcd_id: whatcd_id)).nil?
           artist = artist_class.new
-          artist.what_id = what_id
-          artist.what_name = what_name
-          artist.what_updated_at = Time.now
+          artist.whatcd_id = whatcd_id
+          artist.whatcd_name = whatcd_name
+          artist.whatcd_updated_at = Time.now
           artist.save
         end
 

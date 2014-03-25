@@ -1,4 +1,4 @@
-module WhatCD
+module Whatcd
   class ArtistSource
 
     attr_reader :api_connection, :api_cache, :artist_class
