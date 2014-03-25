@@ -16,6 +16,8 @@ class GroupsController < ApplicationController
     case @query_options.sort
     when 'confidence'
       ds = ds.order(:what_confidence)
+    when 'whatcd updated at'
+      ds = ds.order(:what_updated_at)
     else
       ds = ds.order(:what_name)
     end

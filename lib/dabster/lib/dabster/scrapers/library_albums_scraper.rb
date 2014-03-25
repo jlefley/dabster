@@ -6,16 +6,42 @@ class LibraryAlbumsScraper
     @album_scraper = LibraryAlbumScraper.new
   end
 
-  def run(limit=nil)
+  def unmatched(limit=nil)
     albums = Library::Album.unmatched.limit(limit).all
-    unmatched = albums.length
-    progress_bar = ProgressBar.create(format: 'Elapsed %a Remaining %E |%B| %p%%', starting_at: 0, total: unmatched)
-    count = 0
+    create_progress_bar(albums.length)
+    update_albums(albums)
+  end
+
+  def matched(limit=nil)
+    albums = Library::Album.matched.limit(limit).all
+    create_progress_bar(total = albums.length)
+    update_albums(albums)
+  end
+
+  def all(limit=nil)
+    albums = Library::Album.limit(limit).all
+    create_progress_bar(albums.length)
+    update_albums(albums)
+  end
+
+  private
+
+  def update_albums(albums)
     albums.each do |album|
-      count += 1 if @album_scraper.fuzzy_match(album)
-      progress_bar.increment
+      if group = album.group
+        @count += 1 if @album_scraper.id_match(album, group.what_id, group.what_confidence)
+      else
+        @count += 1 if @album_scraper.fuzzy_match(album)
+      end
+      @progress_bar.increment
     end
-    puts "Matched #{count} out of #{unmatched} album(s)"
+    puts "Updated #{@count} out of #{@total} album(s)"
+  end
+
+  def create_progress_bar(total)
+    @count = 0
+    @total = total
+    @progress_bar = ProgressBar.create(format: 'Elapsed %a Remaining %E |%B| %p%%', starting_at: 0, total: total)
   end
 
 end

@@ -1,6 +1,5 @@
 require 'net/http'
 require 'json'
-require 'what_cd'
 
 module WhatCD
   module API 

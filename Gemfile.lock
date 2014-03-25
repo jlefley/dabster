@@ -9,6 +9,7 @@ PATH
       sequel
       similar_text
       sqlite3
+      thor
 
 GEM
   remote: https://rubygems.org/

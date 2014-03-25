@@ -38,7 +38,9 @@ class Group < Sequel::Model
   end
 
   def what_release_type
-    db[self.class.table_name].join(:what_cd_release_types, id: what_release_type_id).select(:name).first[:name]
+    type = db[self.class.table_name].join(:what_cd_release_types, id: what_release_type_id).select(:name).first
+    return type[:name] if type
+    'missing'
   end
 
   def add_group_artists_to_items

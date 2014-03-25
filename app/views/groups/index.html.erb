@@ -1,6 +1,6 @@
 <h1>Groups</h1>
 <%= form_for :query_options, url: groups_path, method: :get do |f| %>
-  Sort <%= f.select :sort, ['name', 'confidence'] %>
+  Sort <%= f.select :sort, ['name', 'confidence', 'whatcd updated at'] %>
   <%= f.select :order, ['ascending', 'descending'] %>
   <%= f.submit 'Show' %>
 <% end %>
