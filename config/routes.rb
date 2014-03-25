@@ -5,6 +5,7 @@ DabsterApp::Application.routes.draw do
   resources :library_items, only: [:show]
   resources :groups, only: [:edit, :update, :index, :show]
   resources :artist_library_item_relationships, only: [:create]
+  resources :artists, only: [:show]
 
   post '/groups/associate_what_cd' => 'groups#associate_what_cd'
   delete '/artist_library_item_relationships' => 'artist_library_item_relationships#destroy'

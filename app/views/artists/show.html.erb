@@ -1,0 +1,41 @@
+<h1>Artist</h1>
+<table>
+  <tr>
+    <td>whatcd name</td>
+    <td><%= @artist.what_name %></td>
+  </tr>
+  <tr>
+    <td>whatcd links</td>
+    <td><a href='https://what.cd/artist.php?id=<%= @artist.what_id %>' target='_blank'>artist page</a></td>
+  </tr>
+</table>
+<% if !@similar_artists.empty? %>
+  <h2>Similar artists</h2>
+  <table>
+    <th>Artist name</th>
+    <th>whatcd score</th>
+    <%= render partial: 'similar_artist', collection: @similar_artists, as: :similar_artist %>
+  </table>
+<% end %>
+<% if !@groups_by_type.empty? %>
+  <h2>Groups associated with artist</h2>
+  <% @groups_by_type.each do |type, groups| %>
+    <h3>As <%= type %></h3>
+    <table>
+      <th>Group</th>
+      <th>Album</th>
+      <%= render partial: 'group', collection: groups %>
+    </table>
+  <% end %>
+<% end %>
+<% if !@items_by_type.empty? %>
+  <h2>Items associated with artist</h2>
+  <% @items_by_type.each do |type, items| %>
+    <h3>As <%= type %></h3>
+    <table>
+      <th>Title</th>
+      <th>Album</th>
+      <%= render partial: 'library_item', collection: items %>
+    </table>
+  <% end %>
+<% end %>

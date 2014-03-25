@@ -33,6 +33,10 @@ class Group < Sequel::Model
 
   end
 
+  def library_album_name
+    library_album.album
+  end
+
   def library_items
     library_album.library_items
   end
