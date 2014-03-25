@@ -1,6 +1,7 @@
 Sequel.migration do
   up do
     transaction do
+      run 'DROP INDEX groups_library_album_id_index'
       rename_table :groups, :old_groups
       create_table :groups do
         primary_key :id

@@ -4,10 +4,9 @@ CREATE TABLE `artists` (`id` integer NOT NULL PRIMARY KEY AUTOINCREMENT, `whatcd
 CREATE TABLE `groups` (`id` integer NOT NULL PRIMARY KEY AUTOINCREMENT, `library_album_id` integer NOT NULL UNIQUE, `whatcd_id` integer, `whatcd_name` varchar(255), `whatcd_tags` varchar(255), `whatcd_year` integer, `whatcd_artists` varchar(255), `whatcd_record_label` varchar(255), `whatcd_catalog_number` varchar(255), `whatcd_release_type_id` integer REFERENCES `whatcd_release_types`, `whatcd_confidence` double precision, `whatcd_updated_at` timestamp, `created_at` timestamp NOT NULL, `updated_at` timestamp);
 CREATE TABLE `schema_migrations` (`filename` varchar(255) NOT NULL PRIMARY KEY);
 CREATE TABLE `similar_artists_relationships` (`artist_id` integer NOT NULL REFERENCES `artists`, `similar_artist_id` integer NOT NULL REFERENCES `artists`, `whatcd_score` integer NOT NULL, PRIMARY KEY (`artist_id`, `similar_artist_id`));
-CREATE TABLE `whatcd_api_info` (`last_request` timestamp, `cookie` varchar(255));
 CREATE TABLE "whatcd_artist_responses" (`id` integer NOT NULL PRIMARY KEY, `response` varchar(255) NOT NULL, `updated_at` timestamp NOT NULL);
 CREATE TABLE "whatcd_release_types" (`id` integer NOT NULL PRIMARY KEY, `name` varchar(255) NOT NULL);
-CREATE TABLE "whatcd_torrent_group_responses"(id integer not null primary key, response varchar(255) not null, updated_at timestamp not null);
+CREATE TABLE "whatcd_torrent_group_responses" (`id` integer NOT NULL PRIMARY KEY, `response` varchar(255) NOT NULL, `updated_at` timestamp NOT NULL);
 CREATE INDEX `artist_group_relationships_artist_id_group_id_index` ON `artist_group_relationships` (`artist_id`, `group_id`);
 CREATE INDEX `artist_group_relationships_group_id_index` ON `artist_group_relationships` (`group_id`);
 CREATE INDEX `artist_library_item_relationships_artist_id_library_item_id_index` ON `artist_library_item_relationships` (`artist_id`, `library_item_id`);
