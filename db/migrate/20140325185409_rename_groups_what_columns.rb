@@ -20,7 +20,6 @@ Sequel.migration do
         DateTime :updated_at
       end
       run 'INSERT INTO groups (id, library_album_id, whatcd_id, whatcd_name, whatcd_tags, whatcd_year, whatcd_artists, whatcd_record_label, whatcd_catalog_number, whatcd_release_type_id, whatcd_confidence, whatcd_updated_at, created_at, updated_at) SELECT id, library_album_id, what_id, what_name, what_tags, what_year, what_artists, what_record_label, what_catalog_number, what_release_type_id, what_confidence, what_updated_at, created_at, updated_at FROM old_groups;'
-      drop_table :old_groups
     end
   end
 
