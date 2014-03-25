@@ -6,7 +6,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-Sequel::Model.db[:what_cd_release_types].multi_insert([
+Sequel::Model.db[:whatcd_release_types].multi_insert([
   { id: 1, name: 'Album' },
   { id: 3, name: 'Soundtrack' },
   { id: 5, name: 'EP' },

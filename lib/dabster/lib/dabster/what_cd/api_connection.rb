@@ -27,8 +27,8 @@ module WhatCD
     private
 
     def info_dataset
-      ds = db.from(:what_cd_api_info)
-      db.create_table?(:what_cd_api_info) { Time :last_request; String :cookie }
+      ds = db.from(:whatcd_api_info)
+      db.create_table?(:whatcd_api_info) { Time :last_request; String :cookie }
       ds.insert(last_request: nil, cookie: nil) if ds.empty?
       raise 'More than one row in what API info table' if ds.count > 1
       ds

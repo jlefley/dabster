@@ -42,7 +42,7 @@ class Group < Sequel::Model
   end
 
   def what_release_type
-    type = db[self.class.table_name].join(:what_cd_release_types, id: what_release_type_id).select(:name).first
+    type = db[self.class.table_name].join(:whatcd_release_types, id: what_release_type_id).select(:name).first
     return type[:name] if type
     'missing'
   end

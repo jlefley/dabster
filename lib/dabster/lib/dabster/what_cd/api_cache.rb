@@ -4,29 +4,29 @@ module WhatCD
     module_function
       
     def cache_torrent_group(fields)
-      if cached = WhatCDTorrentGroupResponse.first(id: fields.fetch(:id))
+      if cached = WhatcdTorrentGroupResponse.first(id: fields.fetch(:id))
         cached.update(response: fields.fetch(:response))
       else
-        WhatCDTorrentGroupResponse.create(fields)
+        WhatcdTorrentGroupResponse.create(fields)
       end
     end
 
     def torrent_group(filter)
-      if cached = WhatCDTorrentGroupResponse.first(filter)
+      if cached = WhatcdTorrentGroupResponse.first(filter)
         cached.response
       end
     end
   
     def cache_artist(fields)
-      if cached = WhatCDArtistResponse.first(id: fields.fetch(:id))
+      if cached = WhatcdArtistResponse.first(id: fields.fetch(:id))
         cached.update(response: fields.fetch(:response))
       else
-        WhatCDArtistResponse.create(fields)
+        WhatcdArtistResponse.create(fields)
       end
     end
 
     def artist(filter)
-      if cached = WhatCDArtistResponse.first(filter)
+      if cached = WhatcdArtistResponse.first(filter)
         cached.response
       end
     end
