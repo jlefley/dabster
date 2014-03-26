@@ -31,5 +31,19 @@ module Whatcd
       end
     end
 
+    def similar_artists(filter)
+      if cached = WhatcdSimilarArtistsResponse.first(filter)
+        cached.response
+      end
+    end
+
+    def cache_similar_artists(fields)
+      if cached = WhatcdSimilarArtistsResponse.first(id: fields.fetch(:id))
+        cached.update(response: fields.fetch(:response))
+      else
+        WhatcdSimilarArtistsResponse.create(fields)
+      end
+    end
+
   end
 end

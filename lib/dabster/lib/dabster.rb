@@ -14,7 +14,8 @@ module Dabster
   end
 
   def self.database
-    '/home/jlefley/development/music/dabster/db/dabster.sqlite3'
+    '/home/jlefley/development/music/dabster/db/development.sqlite3'
+    #'/home/jlefley/development/music/dabster/db/dabster.sqlite3'
   end
 
   def self.connect_library_database

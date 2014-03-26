@@ -10,26 +10,37 @@ module Dabster
       puts "#{Artist.count} artists"
     end
 
-    desc 'update STATUS', 'updates STATUS library albums with metadata from whatcd'
+    desc 'update TYPE', 'updates entities of type TYPE with metadata from whatcd'
     option :limit
-    def update(match_status=nil)
-      case match_status
+    def update(type=nil)
+      case type
+      when 'album'
+        album_scraper.matched(options[:limit])
+      when 'similarartists'
+        similar_artists_scraper.all(options[:limit])
       when 'all'
-        scraper.all(options[:limit])
-      when 'matched'
-        scraper.matched(options[:limit])
-      when 'unmatched'
-        scraper.unmatched(options[:limit])
+        album_scraper.matched(options[:limit])
+        artists_scraper.similar_artists(options[:limit])
       else
-        puts 'ERROR: match status must be all, matched, or unmatched'
+        puts 'ERROR: TYPE must be album, similarartists, or all'
         return
       end
     end
 
+    desc 'match STATUS', 'match albums with metadata from whatcd'
+    option :limit
+    def match()
+      album_scraper.unmatched(options[:limit])
+    end
+    
     private
 
-    def scraper
+    def album_scraper
       LibraryAlbumsScraper.new
+    end
+
+    def similar_artists_scraper
+      SimilarArtistsScraper.new
     end
 
   end

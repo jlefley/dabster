@@ -6,4 +6,12 @@ class SimilarArtistsRelationship < Sequel::Model
     similar_artist.whatcd_name
   end
 
+  def validate
+    super
+
+    validates_presence :whatcd_score
+    validates_presence :artist_id
+    validates_presence :similar_artist_id
+  end
+
 end

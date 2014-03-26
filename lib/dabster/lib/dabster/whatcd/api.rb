@@ -26,13 +26,17 @@ module Whatcd
       end
 
       raise Whatcd::API::NotAuthenticated if response.code == '302'
-      raise Whatcd::Error , "http request not successful, received code #{response.code}" unless response.code == '200'
+      raise Whatcd::Error, "http request not successful, received code #{response.code}" unless response.code == '200'
 
       data = JSON.parse(response.body, symbolize_names: true)
+      
+      if data.is_a?(Hash)
+        raise Whatcd::Error, "api request not successful: #{data}" unless data[:status] == 'success'
+        data[:response]
+      else
+        data
+      end
 
-      raise Whatcd::Error, "api request not successful: #{data}" unless data[:status] == 'success'
-
-      data[:response]
     end
 
     def login
