@@ -5,9 +5,9 @@ class SimilarArtistsScraper
   end
 
   def all(limit)
-    artists_ds = ::Artist.order(:id).limit(limit)
-    create_progress_bar(artists_ds.count)
-    artists_ds.paged_each do |artist|
+    artists = ::Artist.limit(limit).all
+    create_progress_bar(artists.length)
+    artists.each do |artist|
       @count += 1 if relate(artist)
       @progress_bar.increment
     end
