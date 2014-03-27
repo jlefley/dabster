@@ -16,8 +16,6 @@ module Whatcd
         api_cache.cache_similar_artists(id: filter[:id], response: relationships)
       end
       relationships.map { |r| similar_artists_class.new(r) }
-    rescue JSON::ParserError
-      []
     end
 
   end

@@ -27,6 +27,8 @@ module Whatcd
 
       raise Whatcd::API::NotAuthenticated if response.code == '302'
       raise Whatcd::Error, "http request not successful, received code #{response.code}" unless response.code == '200'
+      
+      return [] if query[:action] == 'similar_artists' && response.body == 'null'
 
       data = JSON.parse(response.body, symbolize_names: true)
       

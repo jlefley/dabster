@@ -27,34 +27,24 @@ describe Whatcd::SimilarArtistsSource do
         before do
           allow(api_cache).to receive(:similar_artists).and_return(nil)
           allow(api_cache).to receive(:cache_similar_artists)
+          allow(api).to receive(:make_request).with(action: 'similar_artists', id: 23, limit: 1000000).and_return(similar_artists)
         end
-        describe 'when api request is successful' do
-          before do
-            allow(api).to receive(:make_request).with(action: 'similar_artists', id: 23, limit: 1000000).
-              and_return(similar_artists)
-          end
 
-          it 'returns similar artists instances with fields from fetched response' do
-            expect(source.find(id: 23).first.score).to eq(200)
-            expect(source.find(id: 23).first.id).to eq(23)
-          end
-
-          it 'caches fetched response' do
-            expect(api_cache).to receive(:cache_similar_artists).with(id: 23, response: similar_artists)
-            
-            source.find(id: 23)
-          end
-
+        it 'returns similar artists instances with fields from fetched response' do
+          expect(source.find(id: 23).first.score).to eq(200)
+          expect(source.find(id: 23).first.id).to eq(23)
         end
-        describe 'when response cannot be parsed as JSON by api' do
-          before { allow(api).to receive(:make_request).and_raise(JSON::ParserError) }
-          it 'returns empty array' do
-            expect(source.find(id: 23)).to eq([])
-          end
+
+        it 'caches fetched response' do
+          expect(api_cache).to receive(:cache_similar_artists).with(id: 23, response: similar_artists)
+          
+          source.find(id: 23)
         end
+
       end
 
     end
+
     describe 'when specified filter does not contain id key' do
       it 'raises error' do
         expect { source.find({}) }.to raise_error(ArgumentError)
