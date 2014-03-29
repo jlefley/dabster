@@ -19,12 +19,13 @@
       <td><%= f.text_field :whatcd_confidence %></td>
     </tr>
     <tr>
+      <td>Links</td>
       <td>
         <a href='https://what.cd/torrents.php?id=<%= @group.whatcd_id %>' target='_blank'>Torrent group page</a>
       </td>
     </tr>
   </table>
-  <h2>what.cd artists</h2>
+  <h2>artists</h2>
   <table>
     <% @group.artists_by(:type).each do |type, artists| %>
       <tr>
@@ -34,6 +35,6 @@
     <% end %>
   </table>
   <p>
-  <%= f.submit 'Update' %>&nbsp;<%= link_to 'Cancel', @group %>
+  <%= f.submit 'Update' %>&nbsp;<%= link_to 'Cancel', @group.library_album %>
   </p>
 <% end %>

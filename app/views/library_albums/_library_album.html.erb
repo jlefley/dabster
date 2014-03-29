@@ -1,1 +1,4 @@
-<p><%= link_to library_album.album, library_album %></p>
+<tr>
+  <td><%= link_to library_album.album, library_album %></td>
+  <td><%= try_format_float library_album.whatcd_confidence %></td>
+</tr>

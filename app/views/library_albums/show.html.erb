@@ -1,5 +1,61 @@
 <h1>Library Album</h1>
-<%= render partial: 'shared/library_album' %>
+<h2 class='inline'>Information </h2><%= link_to 'edit', edit_group_path(@group) if @group.id %>
+<h3>MusicBrainz</h3>
+<table>
+  <tr>
+    <td>Album</td>
+    <td><%= @library_album.album %></td>
+  </tr>
+  <% if @library_album.albumdisambig.present? %>
+    <tr>
+      <td>Album disambiguation</td>
+      <td><%= @library_album.albumdisambig %></td>
+    </tr>
+  <% end %>
+  <tr>
+    <td>Artist</td>
+    <td><%= link_to @library_album.albumartist, library_artist_path(name: @library_album.albumartist) %></td>
+  </tr>
+  <tr>
+    <td>Sort artist</td>
+    <td><%= @library_album.albumartist_sort %></td>
+  </tr>
+  <tr>
+    <td>Track count</td>
+    <td><%= @library_album.tracktotal %></td>
+  </tr>
+  <tr>
+    <td>Date</td>
+    <td><%= format_date @library_album %></td>
+  </tr>
+  <tr>
+    <td>Type</td>
+    <td><%= @library_album.albumtype %></td>
+  </tr>
+  <tr>
+    <td>Label</td>
+    <td><%= @library_album.label %></td>
+  </tr>
+  <tr>
+    <td>Media</td>
+    <td><%= @library_album.media %></td>
+  </tr>
+  <tr>
+    <td>Links</td>
+    <td>
+      <a href='http://musicbrainz.org/release-group/<%= @library_album.mb_releasegroupid %>' target='_blank'>Release group</a>
+      <a href='http://musicbrainz.org/release/<%= @library_album.mb_albumid %>' target='_blank'>Release</a>
+    </td>
+  </tr>
+</table>
+<% if @group.whatcd_id %>
+  <h3>what.cd</h3>
+  <%= render partial: 'group' %>
+<% end %>
+<% if @group_artists %>
+  <h3>Artists</h3>
+  <%= render partial: 'group_artists' %>
+<% end %>
 <h2>Items</h2>
 <table>
   <th>Track</th>
@@ -9,11 +65,6 @@
   <th>Group what.cd artist associations</th>
   <%= render partial: 'library_item', collection: @library_items %>
 </table>
-
-<% if @group.id %>
-  <h1><%= link_to 'Associated Group', @group %></h1>
-  <%= render partial: 'shared/group' %>
-<% end %>
 <hr>
 <%= form_for @group, url: groups_associate_whatcd_path, method: :post do |f| %>
   <p>

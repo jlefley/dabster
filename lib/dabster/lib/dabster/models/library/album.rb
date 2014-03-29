@@ -15,13 +15,17 @@ module Library
       albumartist.gsub(/\W+/, ' ')
     end
 
+    def whatcd_confidence
+      group.whatcd_confidence if group
+    end
+
     dataset_module do
       def unmatched
-        select_all(:albums).left_join(:groups, library_album_id: :id).where(groups__id: nil)
+        eager_graph(:group).where(group__id: nil)
       end
 
       def matched
-        select_all(:albums).left_join(:groups, library_album_id: :id).exclude(groups__id: nil)
+        eager_graph(:group).exclude(group__id: nil)
       end
     end
 

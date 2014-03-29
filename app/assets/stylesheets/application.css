@@ -15,3 +15,7 @@
 td {
   vertical-align: top
 }
+
+.inline {
+  display: inline
+}

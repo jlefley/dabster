@@ -1,0 +1,24 @@
+<table>
+  <tr>
+    <td>Name</td>
+    <td><%= @group.whatcd_name %></td>
+  </tr>
+  <tr>
+    <td>Year</td>
+    <td><%= @group.whatcd_year %></td>
+  </tr>
+  <tr>
+    <td>Release type</td>
+    <td><%= @group.whatcd_release_type %></td>
+  </tr>
+  <tr>
+    <td>Confidence</td>
+    <td><%= '%.2f' % @group.whatcd_confidence %></td>
+  </tr>
+  <tr>
+    <td>Links</td>
+    <td>
+      <a href='https://what.cd/torrents.php?id=<%= @group.whatcd_id %>' target='_blank'>Torrent group</a>
+    </td>
+  </tr>
+</table>

@@ -7,4 +7,8 @@ module ApplicationHelper
     formatted
   end
 
+  def try_format_float float
+    ('%.2f' % float) if float
+  end
+
 end
