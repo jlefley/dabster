@@ -3,7 +3,7 @@ DabsterApp::Application.routes.draw do
   resources :library_artists, only: [:index]
   resources :library_albums, only: [:show, :index]
   resources :library_items, only: [:show]
-  resources :groups, only: [:edit, :update]
+  resources :groups, only: [:edit, :update, :index]
   resources :artist_library_item_relationships, only: [:create]
   resources :artists, only: [:show]
 

@@ -27,6 +27,27 @@ class GroupsController < ApplicationController
     raise DabsterApp::Error, "#{e.class} (#{e.message})", e.backtrace
   end
 
+  def index
+    @query_options = OpenStruct.new(params[:query_options])
+    ds = Group
+    case @query_options.sort
+    when 'what.cd confidence'
+      ds = ds.order(:whatcd_confidence)
+    when 'what.cd updated at'
+      ds = ds.order(:whatcd_updated_at)
+    when 'updated at'
+      ds = ds.order(:updated_at)
+    else
+      ds = ds.order(:whatcd_name)
+    end
+
+    case @query_options.order
+    when 'descending'
+      ds = ds.reverse
+    end
+    @groups = ds.paginate(page, 50)
+  end
+
   private
 
   def group_params

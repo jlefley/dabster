@@ -1,15 +1,10 @@
 <h1>Library Albums</h1>
 <%= form_for :query_options, url: library_albums_path, method: :get do |f| %>
   Filter <%= f.select :filter, ['all', 'matched', 'unmatched', 'not digital'] %>
-  Sort <%= f.select :sort, ['album', 'what.cd confidence', 'what.cd updated at'] %>
-  <%= f.select :order, ['ascending', 'descending'] %>
   <%= f.submit 'Show' %>
 <% end %>
 <br>
-<%= @library_albums.pagination_record_count %> total
-<table>
-  <th>Album</th>
-  <th>what.cd confidence</th>
+<%= @library_albums.pagination_record_count %> total<br><br>
 <%= render partial: 'library_album', collection: @library_albums.all %>
-</table>
+<br>
 <%= will_paginate @library_albums %>
