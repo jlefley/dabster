@@ -51,6 +51,22 @@ class LibraryAlbumScraper
     false
   end
 
+  def hash_match(album, hash)
+    torrent_group = Whatcd::TorrentGroup.find(hash: hash)
+    
+    confidence = torrent_group.similarity(name: album.album) / 100
+    
+    Sequel::Model.db.transaction do
+      group = @group_service.associate_group(torrent_group, album, confidence)
+      @artist_service.associate_artists(group)
+    end
+
+    true
+  rescue StandardError => e
+    log_exception(e, album, torrent_group) 
+    false
+  end
+
   private
 
   def log_exception(e, album, torrent_group)

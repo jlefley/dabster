@@ -15,8 +15,11 @@ module Library
       albumartist.gsub(/\W+/, ' ')
     end
 
-    def whatcd_confidence
-      group.whatcd_confidence if group
+    def torrent_hash
+      path = File.join(File.dirname(library_items.first.path), 'torrent.hash')
+      if File.exists?(path)
+        File.read(path).delete("\n")
+      end
     end
 
     dataset_module do

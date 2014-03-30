@@ -24,4 +24,15 @@ describe Artist do
       it { should_not be_valid }
     end
   end
+
+  describe 'when determining if artist is associated with tracks belonging to a specified library album' do
+    describe 'when artist is associated with tracks belonging to specified library album' do
+      it 'returns the number of items the artist is associated with' do
+      end
+    end
+    describe 'when artist is not associated with any tracks belonging to library album' do
+      it 'returns false' do
+      end
+    end
+  end
 end

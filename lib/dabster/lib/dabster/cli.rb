@@ -27,9 +27,9 @@ module Dabster
       end
     end
 
-    desc 'match STATUS', 'match albums with metadata from whatcd'
+    desc 'match', 'match albums with metadata from whatcd'
     option :limit
-    def match()
+    def match
       album_scraper.unmatched(options[:limit])
     end
     

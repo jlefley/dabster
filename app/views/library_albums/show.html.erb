@@ -68,9 +68,11 @@
 <hr>
 <%= form_for @group, url: groups_associate_whatcd_path, method: :post do |f| %>
   <p>
-  <%= f.label :whatcd_id %>
+  <%= f.label :whatcd_id, 'Torrent group ID' %>
   <%= f.text_field :whatcd_id %>
   <%= f.hidden_field :library_album_id, value: @library_album.id %>
+  <%= label_tag :skip_validation %>
+  <%= check_box_tag :skip_validation %>
   <%= f.submit 'Associate album with torrent group ID' %>
   </p>
 <% end %>
@@ -87,6 +89,8 @@
 <% if @whatcd_response.try(:results) %>
   <h2>what.cd Results</h2>
   <%= form_for @group, url: groups_associate_whatcd_path, method: :post do |f| %>
+    <%= label_tag :skip_validation %>
+    <%= check_box_tag :skip_validation %>
     <%= f.submit 'Associate selection with album' %>
     <%= f.hidden_field :library_album_id, value: @library_album.id %>
     <br><br>

@@ -30,6 +30,8 @@ class LibraryAlbumsScraper
     albums.each do |album|
       if group = album.group
         @count += 1 if @album_scraper.id_match(album, group.whatcd_id, group.whatcd_confidence)
+      elsif hash = album.torrent_hash
+        @count += 1 if @album_scraper.hash_match(album, hash)
       else
         @count += 1 if @album_scraper.fuzzy_match(album)
       end
