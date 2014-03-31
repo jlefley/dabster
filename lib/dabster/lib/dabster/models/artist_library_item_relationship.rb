@@ -15,9 +15,5 @@ class ArtistLibraryItemRelationship < Sequel::Model
     def no_library_item
       select_all(:artist_library_item_relationships).left_join(:libdb__items, id: :library_item_id).where(items__id: nil)
     end
-
-    def whatcd_id_not_unique
-      db
-    end
   end
 end
