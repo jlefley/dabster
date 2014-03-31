@@ -1,9 +1,0 @@
-development:
-  adapter: sqlite
-  database: db/dabster.sqlite3
-  #database: db/development.sqlite3
-
-test:
-  adapter: sqlite
-  database: ':memory:'
-  

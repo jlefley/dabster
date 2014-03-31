@@ -1,0 +1,3 @@
+  [1m[36mSequel::SQLite::Database (0.3ms)[0m  [1mPRAGMA foreign_keys = 1[0m
+  [1m[35mSequel::SQLite::Database (0.0ms)[0m  PRAGMA case_sensitive_like = 1
+  [1m[36mSequel::SQLite::Database (38.4ms)[0m  [1mATTACH DATABASE '/data/multimedia/musiclibrary.db' AS libdb[0m
