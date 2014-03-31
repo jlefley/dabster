@@ -1,5 +1,9 @@
 <h1>Library Album</h1>
-<h2 class='inline'>Metadata </h2><%= link_to 'edit', edit_group_path(@group) if @group.id %>
+<h2 class='inline'>Metadata </h2>
+<% if @group.id %>
+  <%= link_to 'edit', edit_group_path(@group) %>
+  <%= link_to 'show', @group %>
+<% end %>
 <h3>MusicBrainz</h3>
 <table>
   <tr>
@@ -48,13 +52,10 @@
     </td>
   </tr>
 </table>
-<% if @group.whatcd_id %>
-  <h3>what.cd</h3>
-  <%= render partial: 'group' %>
-<% end %>
+<%= render partial: 'shared/group' %>
 <% if @group_artists %>
-  <h3>Artists</h3>
-  <%= render partial: 'group_artists' %>
+  <h2>Artists</h2>
+  <%= render partial: 'shared/group_artists' %>
 <% end %>
 <h2>Items</h2>
 <table>
@@ -71,8 +72,6 @@
   <%= f.label :whatcd_id, 'Torrent group ID' %>
   <%= f.text_field :whatcd_id %>
   <%= f.hidden_field :library_album_id, value: @library_album.id %>
-  <%= label_tag :skip_validation %>
-  <%= check_box_tag :skip_validation %>
   <%= f.submit 'Associate album with torrent group ID' %>
   </p>
 <% end %>
@@ -89,8 +88,6 @@
 <% if @whatcd_response.try(:results) %>
   <h2>what.cd Results</h2>
   <%= form_for @group, url: groups_associate_whatcd_path, method: :post do |f| %>
-    <%= label_tag :skip_validation %>
-    <%= check_box_tag :skip_validation %>
     <%= f.submit 'Associate selection with album' %>
     <%= f.hidden_field :library_album_id, value: @library_album.id %>
     <br><br>

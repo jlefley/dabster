@@ -1,4 +1,5 @@
 <tr>
-  <td><%= link_to group.whatcd_name, library_album_path(group.library_album_id) %></td>
+  <td><%= link_to group.library_album_name, library_album_path(group.library_album_id) %> <%= link_to '(show)', group %></td>
+  <td><%= group.whatcd_name %></td>
   <td><%= '%.2f' % group.whatcd_confidence %></td>
 </tr>

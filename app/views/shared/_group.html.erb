@@ -1,6 +1,4 @@
-<h1>Edit Group</h1>
-<h2>Metadata</h2>
-<%= form_for @group do |f| %>
+<% if @group.whatcd_id %>
   <h3>what.cd</h3>
   <table>
     <tr>
@@ -17,7 +15,7 @@
     </tr>
     <tr>
       <td>Confidence</td>
-      <td><%= f.text_field :whatcd_confidence %></td>
+      <td><%= '%.2f' % @group.whatcd_confidence %></td>
     </tr>
     <tr>
       <td>Links</td>
@@ -26,9 +24,4 @@
       </td>
     </tr>
   </table>
-  <h3>Artists</h3>
-  <%= render partial: 'shared/group_artists' %>
-  <p>
-  <%= f.submit 'Update' %>&nbsp;<%= link_to 'Cancel', @group.library_album %>
-  </p>
 <% end %>

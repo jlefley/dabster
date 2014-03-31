@@ -81,10 +81,6 @@ describe Group do
       before { group.whatcd_updated_at = nil }
       it { should_not be_valid }
     end
-    describe 'when whatcd_id is not unique' do
-      before { described_class.create(valid_whatcd_attributes.merge(library_album_id: 55)) }
-      it { should_not be_valid }
-    end
   end
 
   describe 'when updating item artist associations' do

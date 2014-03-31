@@ -1,12 +1,14 @@
 <h1>Artist</h1>
+<h2>Metadata</h2>
+<h3>what.cd</h3>
 <table>
   <tr>
-    <td>whatcd name</td>
+    <td>Name</td>
     <td><%= @artist.whatcd_name %></td>
   </tr>
   <tr>
-    <td>whatcd links</td>
-    <td><a href='https://what.cd/artist.php?id=<%= @artist.whatcd_id %>' target='_blank'>artist page</a></td>
+    <td>Links</td>
+    <td><a href='https://what.cd/artist.php?id=<%= @artist.whatcd_id %>' target='_blank'>artist</a></td>
   </tr>
 </table>
 <% if !@similar_artists.empty? %>

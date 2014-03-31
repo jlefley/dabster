@@ -2,6 +2,7 @@
 <%= form_for :query_options, url: groups_path, method: :get do |f| %>
   Sort <%= f.select :sort, ['name', 'what.cd confidence', 'what.cd updated at', 'updated at'] %>
   <%= f.select :order, ['ascending', 'descending'] %>
+  Filter <%= f.select :filter, ['all', 'non-existing libray album', 'what.cd ID not unique'] %>
   <%= f.submit 'Show' %>
 <% end %>
 <br>
@@ -9,6 +10,7 @@
 <br>
 <table>
   <th>Name</th>
+  <th>what.cd name</th>
   <th>what.cd confidence</th>
   <%= render partial: 'group', collection: @groups.all %>
 </table>

@@ -1,0 +1,15 @@
+<h1>Artist Library Item Relationships</h1>
+<%= form_for :query_options, url: artist_library_item_relationships_path, method: :get do |f| %>
+  Filter <%= f.select :filter, ['non-existing libray item'] %>
+  <%= f.submit 'Show' %>
+<% end %>
+<br>
+<%= @artist_library_item_relationships.count %> total
+<br>
+<table>
+  <th>Artist</th>
+  <th>Library item</th>
+  <th>Type</th>
+  <th>Confidence</th>
+  <%= render partial: 'artist_library_item_relationship', collection: @artist_library_item_relationships, as: :relationship %>
+</table>

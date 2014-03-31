@@ -12,6 +12,18 @@ class GroupsController < ApplicationController
 
   def edit
     @group = Group.first!(id: params[:id])
+    @group_artists = @group.artists_by(:type)
+  end
+
+  def show
+    @group = Group.first!(id: params[:id])
+    @group_artists = @group.artists_by(:type)
+  end
+
+  def destroy
+    @group = Group.first!(id: params[:id])
+    @group.destroy
+    redirect_to groups_path, notice: 'Group deleted'
   end
 
   def associate_whatcd
@@ -41,6 +53,13 @@ class GroupsController < ApplicationController
       ds = ds.order(:whatcd_name)
     end
 
+    case @query_options.filter
+    when 'non-existing libray album'
+      ds = ds.no_library_album
+    when 'what.cd ID not unique'
+      ds = ds.whatcd_id_not_unique
+    end
+    
     case @query_options.order
     when 'descending'
       ds = ds.reverse

@@ -9,11 +9,20 @@ class Group < Sequel::Model
   many_to_one :library_album, class: 'Library::Album', key: :library_album_id
   categorized_relationship :artists, class: 'Artist', relationship_class: 'ArtistGroupRelationship'
 
+  dataset_module do
+    def no_library_album
+      select_all(:groups).left_join(:libdb__albums, id: :library_album_id).where(albums__id: nil)
+    end
+    
+    def whatcd_id_not_unique
+      where(whatcd_id: select(:whatcd_id).group_by(:whatcd_id).having { Sequel.function(:count, :whatcd_id) > 1 })
+    end
+  end
+
   def validate 
     super
 
     validates_presence :library_album_id
-    validates_unique :whatcd_id
     
     if whatcd_id
       validates_presence :whatcd_name

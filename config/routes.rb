@@ -3,8 +3,8 @@ DabsterApp::Application.routes.draw do
   resources :library_artists, only: [:index]
   resources :library_albums, only: [:show, :index]
   resources :library_items, only: [:show]
-  resources :groups, only: [:edit, :update, :index]
-  resources :artist_library_item_relationships, only: [:create]
+  resources :groups, only: [:destroy, :show, :edit, :update, :index]
+  resources :artist_library_item_relationships, only: [:create, :index]
   resources :artists, only: [:show]
 
   post '/groups/associate_whatcd' => 'groups#associate_whatcd'

@@ -1,0 +1,14 @@
+<tr>
+  <td><%= link_to relationship.artist_name, relationship.artist %></td>
+  <td>missing (<%= relationship.library_item_id %>)</td>
+  <td><%= relationship.type %></td>
+  <td><%= '%.2f' % relationship.confidence %></td>
+  <td>
+    <%= form_for :relationship, url: artist_library_item_relationships_path, method: :delete do |f| %>
+      <%= f.hidden_field :library_item_id, value: relationship.library_item_id %>
+      <%= f.hidden_field :artist_id, value: relationship.artist_id %>
+      <%= f.hidden_field :type, value: relationship.type %>
+      <%= f.submit 'Delete', data: { confirm: 'Are you sure?' } %>
+    <% end %>
+  </td>
+</tr>

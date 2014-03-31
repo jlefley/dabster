@@ -6,16 +6,28 @@ class ArtistLibraryItemRelationshipsController < ApplicationController
   end
 
   def destroy
-    puts destroy_params
     rel = ArtistLibraryItemRelationship.first!(destroy_params)
     rel.destroy
     flash[:notice] = 'Artist library item relationship destroyed'
-    redirect_to library_item_path(id: rel.library_item_id)
+    redirect_to Library::Item.first!(id: rel.library_item_id)
+  rescue Sequel::NoMatchingRow
+    redirect_to artist_library_item_relationships_path
   end
+
+  def index
+    @artist_library_item_relationships = ArtistLibraryItemRelationship.no_library_item.all
+  end
+
+  private
 
   def destroy_params
     p = params.require(:relationship)
-    { library_item_id: p.fetch(:library_item_id).to_i, artist_id: p.fetch(:artist_id).to_i, type: p.fetch(:type), group_artist: false }
+    {
+      library_item_id: p.fetch(:library_item_id).to_i,
+      artist_id: p.fetch(:artist_id).to_i,
+      type: p.fetch(:type),
+      group_artist: false
+    }
   end
 
   def create_params
