@@ -11,12 +11,21 @@ module Dabster
 
     # Add lib to autoload path
     config.autoload_paths << File.join(config.root, 'lib')
+    
+    initializer 'dabster.initialize', after: 'sequel.configuration' do |app|
+      Dabster.initialize
+    end
 
-    initializer 'dabster.check_db', before: 'sequel.configuration' do |app|
-      if (path = app.config.database_configuration[Rails.env].fetch('database')) != Dabster.config[:database]
+    initializer 'dabster.check_db', before: 'sequel.connect' do |app|
+      app_db_path = File.expand_path(app.config.database_configuration[Rails.env].fetch('database'), app.root)
+      if  app_db_path != Dabster.config[:database]
         raise(Dabster::Error,
           "Rails database config does not match config.yml, set database in db/database.yml to #{Dabster.config[:database]}")
       end
+    end
+
+    initializer 'dabster.initialize_db', after: 'sequel.connect' do |app|
+      Dabster.initialize_db
     end
   end
 end

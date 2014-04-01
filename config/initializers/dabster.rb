@@ -1,2 +1,0 @@
-Dabster.initialize
-Dabster.initialize_db
