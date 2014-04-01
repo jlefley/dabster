@@ -1,5 +1,5 @@
 module Dabster
-  class Scrapers
+  module Scrapers
     class SimilarArtistsScraper
 
       def initialize
