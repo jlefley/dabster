@@ -34,11 +34,11 @@ module Dabster
     private
 
     def album_scraper
-      LibraryAlbumsScraper.new
+      Scrapers::LibraryAlbumsScraper.new
     end
 
     def similar_artists_scraper
-      SimilarArtistsScraper.new
+      Scrapers::SimilarArtistsScraper.new
     end
 
   end
