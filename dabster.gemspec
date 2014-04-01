@@ -13,24 +13,24 @@ Gem::Specification.new do |spec|
   spec.homepage      = ''
   spec.license       = 'MIT'
 
-  #spec.files         = `git ls-files -z`.split('\x0')
   spec.files         = Dir['{app,config,db,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.md']
-  #spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.executables   = ['dabster']
-  spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
+  spec.test_files    = Dir['spec/**/*']
   spec.require_paths = ['lib']
 
-  spec.add_development_dependency 'rspec'
+  spec.add_development_dependency 'rspec',   '~> 2.14.1'
+  spec.add_development_dependency 'bundler', '~> 1.5'
+  spec.add_development_dependency 'rails',   '~> 4.0.4'
+  spec.add_development_dependency 'rake'
 
-  spec.add_dependency 'rails', '~> 4.0.4'
-  spec.add_dependency 'sqlite3'
-  spec.add_dependency 'sequel-rails'
-  spec.add_dependency 'will_paginate'
-  spec.add_dependency 'sequel'
-  spec.add_dependency 'json'
-  spec.add_dependency 'htmlentities'
-  spec.add_dependency 'similar_text'
-  spec.add_dependency 'fuzzy_match'
-  spec.add_dependency 'ruby-progressbar'
-  spec.add_dependency 'thor'
+  spec.add_dependency 'sqlite3',          '~> 1.3.9'
+  spec.add_dependency 'sequel-rails',     '~> 0.9.2'
+  spec.add_dependency 'will_paginate',    '~> 3.0.5'
+  spec.add_dependency 'sequel',           '~> 4.9.0'
+  spec.add_dependency 'json',             '~> 1.8.1'
+  spec.add_dependency 'htmlentities',     '~> 4.3.1'
+  spec.add_dependency 'similar_text',     '~> 0.0.4'
+  spec.add_dependency 'fuzzy_match',      '~> 2.0.4'
+  spec.add_dependency 'ruby-progressbar', '~> 1.4.2'
+  spec.add_dependency 'thor',             '~> 0.19.1'
 end
