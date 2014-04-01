@@ -5,13 +5,13 @@
   <td>
     <% library_item.artists_by(:type, group_artist: false).each do |type, artists| %>
       <%= type %>:
-      <%= render partial: 'shared/artist', collection: artists %>
+      <%= render partial: 'dabster/shared/artist', collection: artists %>
     <% end %>
   </td>
   <td>
     <% library_item.artists_by(:type, group_artist: true).each do |type, artists| %>
       <%= type %>:
-      <%= render partial: 'shared/artist', collection: artists %>
+      <%= render partial: 'dabster/shared/artist', collection: artists %>
     <% end %>
   </td>
 </tr>

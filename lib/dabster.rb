@@ -6,7 +6,6 @@ require 'fuzzy_match'
 
 require 'dabster/version'
 require 'dabster/sequel'
-require 'dabster/whatcd'
 
 module Dabster
   class Error < StandardError; end

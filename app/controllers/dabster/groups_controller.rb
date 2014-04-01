@@ -31,8 +31,8 @@ module Dabster
       library_album = Dabster::Library::Album.first!(id: group_params.fetch(:library_album_id).to_i)
       torrent_group = Dabster::Whatcd::TorrentGroup.find(id: group_params.fetch(:whatcd_id).to_i)
       Sequel::Model.db.transaction do
-        @group = Dabster::Service::GroupService.new(Group).associate_group(torrent_group, library_album, 1.0)
-        Dabster::Service::ArtistService.new(Artist).associate_artists(@group)
+        @group = Dabster::Services::GroupService.new(Group).associate_group(torrent_group, library_album, 1.0)
+        Dabster::Services::ArtistService.new(Artist).associate_artists(@group)
       end
       flash[:notice] = 'Association successful'
       redirect_to @group.library_album
