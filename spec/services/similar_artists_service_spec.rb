@@ -2,7 +2,7 @@ require 'unit_spec_helper'
 require 'services/similar_artists_service'
 require 'ostruct'
 
-describe SimilarArtistsService do
+describe Dabster::Services::SimilarArtistsService do
 
   subject(:service) { described_class.new artist_class }
 

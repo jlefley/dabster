@@ -1,7 +1,7 @@
 require 'unit_spec_helper'
 require 'logic/artist_matching'
 
-describe ArtistMatching do
+describe Dabster::Logic::ArtistMatching do
   
   let(:artist0) { double 'artist 0', whatcd_name: 'Mike ShiveR' }
   let(:artist1) { double 'artist 1', whatcd_name: 'Aruna  ' }
@@ -12,7 +12,7 @@ describe ArtistMatching do
   let(:item1) { double 'item 1', artists_by: { }, add_artist: nil, artist: '  Super8 & Tab' }
   
   subject(:group) do
-    group_cls = Struct.new(:library_items) { include ArtistMatching }
+    group_cls = Struct.new(:library_items) { include Dabster::Logic::ArtistMatching }
     group_cls.new([item0, item1])
   end
 

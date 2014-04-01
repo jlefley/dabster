@@ -10,13 +10,11 @@ module Sequel
         attr_reader :relationship_reflections
 
         def categorized_relationship(name, options={})
-          rel_class = options.fetch(:relationship_class)
+          rel_class = options.delete(:relationship_class) { raise ArgumentError, 'must provide relationship class as option' }
           singular_name = singularize(name)
 
-          join_table = Object.const_get(rel_class).table_name
-
           rel_name = "#{singular_name}_relationships".to_sym
-          many_to_many(name, options.merge(join_table: join_table))
+          many_to_many(name, options)
           one_to_many rel_name, class: rel_class, key: association_reflections[name][:left_key]
 
           adder_name = "_add_#{singular_name}".to_sym

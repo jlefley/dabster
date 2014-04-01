@@ -2,7 +2,7 @@ require 'unit_spec_helper'
 require 'whatcd/similar_artists_source'
 require 'ostruct'
 
-describe Whatcd::SimilarArtistsSource do
+describe Dabster::Whatcd::SimilarArtistsSource do
   subject(:source) { described_class.new api, api_cache, OpenStruct }
 
   let(:api_cache) { double 'api cache' }

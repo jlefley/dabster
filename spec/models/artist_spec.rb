@@ -1,7 +1,7 @@
 require 'db_spec_helper'
-require 'models/artist'
+require 'artist'
 
-describe Artist do
+describe Dabster::Artist do
   subject(:artist) { described_class.new }
 
   it { should be_valid }

@@ -19,7 +19,7 @@ end
 
 class TestWork < Sequel::Model
   plugin :categorized_relationship
-  categorized_relationship :contributors, class: 'TestContributor',
+  categorized_relationship :contributors, class: 'TestContributor', join_table: :join_table,
     relationship_class: 'TestContributorTestWork', right_key: :test_contributor_id
 end
 

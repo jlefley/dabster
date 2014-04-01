@@ -1,8 +1,9 @@
 module Dabster
   class Artist < Sequel::Model
     plugin :categorized_relationship
-    categorized_relationship :groups, class: 'Dabster::Group', relationship_class: 'Dabster::ArtistGroupRelationship'
-    categorized_relationship :items, class: 'Dabster::Library::Item',
+    categorized_relationship :groups, class: 'Dabster::Group', relationship_class: 'Dabster::ArtistGroupRelationship',
+      join_table: :artist_group_relationships
+    categorized_relationship :items, class: 'Dabster::Library::Item', join_table: :artist_library_item_relationships,
       relationship_class: 'Dabster::ArtistLibraryItemRelationship', right_key: :library_item_id
     one_to_many :similar_artist_relationships, class: 'Dabster::SimilarArtistsRelationship', eager_graph: :similar_artist
     many_to_many :similar_artists, class: self, join_table: :similar_artists_relationships

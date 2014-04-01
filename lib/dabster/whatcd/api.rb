@@ -43,9 +43,11 @@ module Dabster
       end
 
       def login
-        response = Net::HTTP.post_form(URI(BASE_URI + '/login.php'), { username: '***REMOVED***', password: '***REMOVED***' })
+        response = Net::HTTP.post_form(
+          URI(BASE_URI + '/login.php'), { username: Dabster.config[:whatcd_username], password: Dabster.config[:whatcd_password] }
+        )
 
-        raise Whatcd::Error, "could not login" unless response.code == '302'
+        raise Whatcd::Error, 'could not login to what.cd, check username and password in config' unless response.code == '302'
 
         cookie = response['Set-Cookie'].split('; ')
 

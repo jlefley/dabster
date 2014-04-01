@@ -1,7 +1,7 @@
 require 'db_spec_helper'
-require 'models/similar_artists_relationship'
+require 'similar_artists_relationship'
 
-describe SimilarArtistsRelationship do
+describe Dabster::SimilarArtistsRelationship do
   subject(:relationship) { described_class.new(whatcd_score: 200, artist_id: 5, similar_artist_id: 2) }
 
   it { should be_valid }

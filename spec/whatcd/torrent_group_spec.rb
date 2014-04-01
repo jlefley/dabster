@@ -1,7 +1,7 @@
 require 'unit_spec_helper'
 require 'whatcd/torrent_group'
 
-describe Whatcd::TorrentGroup do
+describe Dabster::Whatcd::TorrentGroup do
 
   let(:result_group) { {
     groupId: 410618,

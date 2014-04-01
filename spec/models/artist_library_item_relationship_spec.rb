@@ -1,7 +1,7 @@
 require 'db_spec_helper'
-require 'models/artist_library_item_relationship'
+require 'artist_library_item_relationship'
 
-describe ArtistLibraryItemRelationship do
+describe Dabster::ArtistLibraryItemRelationship do
   subject(:relationship) { described_class.new }
 
   before do

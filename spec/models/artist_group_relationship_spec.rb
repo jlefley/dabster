@@ -1,7 +1,7 @@
 require 'db_spec_helper'
-require 'models/artist_group_relationship'
+require 'artist_group_relationship'
 
-describe ArtistGroupRelationship do
+describe Dabster::ArtistGroupRelationship do
   subject(:relationship) { described_class.new }
 
   describe 'when type is not a valid type' do

@@ -1,14 +1,14 @@
 require 'unit_spec_helper'
 require 'services/group_service'
 
-describe GroupService do
+describe Dabster::Services::GroupService do
 
   let(:group) { double 'group', :whatcd_updated_at= => nil, :set_fields => nil, :save => nil, :whatcd_confidence= => nil }
   let(:group_class) { double 'group class' }
   let(:library_album) { double 'library album' }
   let(:result_group) { double 'what group 0' }
 
-  subject(:service) { GroupService.new group_class }
+  subject(:service) { described_class.new group_class }
 
   describe 'when associating group' do
     
@@ -17,7 +17,7 @@ describe GroupService do
 
     before do
       allow(Time).to receive(:now).and_return('current time')
-      allow(result_group).to receive(:map).with(GroupService::WHAT_GROUP_MAPPING).and_return('mapped group data')
+      allow(result_group).to receive(:map).with(described_class::WHAT_GROUP_MAPPING).and_return('mapped group data')
     end
 
     describe 'when any argument is nil' do

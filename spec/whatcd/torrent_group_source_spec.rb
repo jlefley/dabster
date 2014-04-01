@@ -1,9 +1,9 @@
 require 'unit_spec_helper'
 require 'whatcd/torrent_group_source'
-require 'whatcd'
+require 'whatcd/error'
 require 'ostruct'
 
-describe Whatcd::TorrentGroupSource do
+describe Dabster::Whatcd::TorrentGroupSource do
 
   subject(:source) { described_class.new api, api_cache, artist_source, OpenStruct, OpenStruct }
 
@@ -39,7 +39,7 @@ describe Whatcd::TorrentGroupSource do
             before { allow(artist_source).to receive(:find).and_return(OpenStruct.new(torrentgroup: [])) }
             
             it 'raises error' do
-              expect { source.find(id: 55) }.to raise_error(Whatcd::Error)
+              expect { source.find(id: 55) }.to raise_error(Dabster::Whatcd::Error)
             end
           end
         
@@ -47,7 +47,7 @@ describe Whatcd::TorrentGroupSource do
             before { allow(artist_source).to receive(:find).and_return(OpenStruct.new(torrentgroup: [{ groupId: 55, name: 'other' }])) }
 
             it 'raises error' do
-              expect { source.find(id: 55) }.to raise_error(Whatcd::Error)
+              expect { source.find(id: 55) }.to raise_error(Dabster::Whatcd::Error)
             end
           end
 
@@ -57,7 +57,7 @@ describe Whatcd::TorrentGroupSource do
           before { allow(api_cache).to receive(:torrent_group).with(id: 55).and_return(group: { musicInfo: {} }) }
           
           it 'raises error' do
-            expect { source.find(id: 55) }.to raise_error(Whatcd::Error)
+            expect { source.find(id: 55) }.to raise_error(Dabster::Whatcd::Error)
           end
         end
 
@@ -96,7 +96,7 @@ describe Whatcd::TorrentGroupSource do
             before { allow(artist_source).to receive(:find).and_return(OpenStruct.new(torrentgroup: [])) }
             
             it 'raises error' do
-              expect { source.find(id: 55) }.to raise_error(Whatcd::Error)
+              expect { source.find(id: 55) }.to raise_error(Dabster::Whatcd::Error)
             end
           end
         
@@ -104,7 +104,7 @@ describe Whatcd::TorrentGroupSource do
             before { allow(artist_source).to receive(:find).and_return(OpenStruct.new(torrentgroup: [{ groupId: 55, name: 'other' }])) }
 
             it 'raises error' do
-              expect { source.find(id: 55) }.to raise_error(Whatcd::Error)
+              expect { source.find(id: 55) }.to raise_error(Dabster::Whatcd::Error)
             end
           end
         end
@@ -113,7 +113,7 @@ describe Whatcd::TorrentGroupSource do
           before { allow(api).to receive(:make_request).and_return(group: { musicInfo: {} }) }
           
           it 'raises error' do
-            expect { source.find(id: 55) }.to raise_error(Whatcd::Error)
+            expect { source.find(id: 55) }.to raise_error(Dabster::Whatcd::Error)
           end
         end
       
@@ -153,7 +153,7 @@ describe Whatcd::TorrentGroupSource do
           before { allow(artist_source).to receive(:find).and_return(OpenStruct.new(torrentgroup: [])) }
           
           it 'raises error' do
-            expect { source.find(hash: 'HASH') }.to raise_error(Whatcd::Error)
+            expect { source.find(hash: 'HASH') }.to raise_error(Dabster::Whatcd::Error)
           end
         end
       
@@ -161,7 +161,7 @@ describe Whatcd::TorrentGroupSource do
           before { allow(artist_source).to receive(:find).and_return(OpenStruct.new(torrentgroup: [{ groupId: 55, name: 'other' }])) }
 
           it 'raises error' do
-            expect { source.find(hash: 'HASH') }.to raise_error(Whatcd::Error)
+            expect { source.find(hash: 'HASH') }.to raise_error(Dabster::Whatcd::Error)
           end
         end
       end
@@ -170,7 +170,7 @@ describe Whatcd::TorrentGroupSource do
         before { allow(api).to receive(:make_request).and_return(group: { musicInfo: {} }) }
         
         it 'raises error' do
-          expect { source.find(hash: 'HASH') }.to raise_error(Whatcd::Error)
+          expect { source.find(hash: 'HASH') }.to raise_error(Dabster::Whatcd::Error)
         end
       end
     

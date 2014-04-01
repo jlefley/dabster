@@ -5,7 +5,8 @@ module Dabster
 
     serialize_attributes :json, :whatcd_artists, :whatcd_tags
     many_to_one :library_album, class: 'Dabster::Library::Album', key: :library_album_id
-    categorized_relationship :artists, class: 'Dabster::Artist', relationship_class: 'Dabster::ArtistGroupRelationship'
+    categorized_relationship :artists, class: 'Dabster::Artist', relationship_class: 'Dabster::ArtistGroupRelationship',
+      join_table: :artist_group_relationships
 
     dataset_module do
       def no_library_album

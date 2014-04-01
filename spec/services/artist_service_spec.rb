@@ -1,7 +1,7 @@
 require 'unit_spec_helper'
 require 'services/artist_service'
 
-describe ArtistService do
+describe Dabster::Services::ArtistService do
 
   let(:group) { double 'group', add_group_artists_to_items: nil, remove_group_artists_from_items: nil,
     match_artists: nil, add_artist: nil, remove_artist: nil, artists_by: {} }
@@ -10,7 +10,7 @@ describe ArtistService do
   let(:artist2) { double 'artist 2', id: 2 }
   let(:artist_class) { double 'artist class' }
 
-  subject(:service) { ArtistService.new artist_class }
+  subject(:service) { described_class.new artist_class }
 
   describe 'when associating artists according to metadata' do
     before do

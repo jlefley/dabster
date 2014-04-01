@@ -22,12 +22,11 @@ module Dabster
       end
       true
     rescue StandardError => e
-      File.open(Dabster.log, 'a') do |file|
-        file.puts "#{e.class} (#{e.message})"
-        file.puts "Artist: #{artist.inspect}"
-        file.puts e.backtrace.join("\n")
-        file.write "\n"
-      end
+      msg = []
+      msg << "#{e.class} (#{e.message})"
+      msg << "Artist: #{artist.inspect}"
+      msg += e.backtrace
+      Dabster.log(:error, msg.join("\n"))
       false
     end
 

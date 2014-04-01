@@ -71,13 +71,12 @@ module Dabster
     private
 
     def log_exception(e, album, torrent_group)
-      File.open(Dabster.log, 'a') do |file|
-        file.puts "#{e.class} (#{e.message})"
-        file.puts "Library album: #{album.inspect}"
-        file.puts "Torrent group: #{torrent_group.inspect}"
-        file.puts e.backtrace.join("\n")
-        file.write "\n"
-      end
+      msg = []
+      msg << "#{e.class} (#{e.message})"
+      msg << "Library album: #{album.inspect}"
+      msg << "Torrent group: #{torrent_group.inspect}"
+      msg += e.backtrace
+      Dabster.log(:error, msg.join("\n"))
     end
 
     def va_only_letters(album)

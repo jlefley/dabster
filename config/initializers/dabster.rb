@@ -1,1 +1,2 @@
-Dabster.connect_library_database
+Dabster.initialize
+Dabster.initialize_db

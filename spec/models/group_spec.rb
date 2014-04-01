@@ -1,8 +1,8 @@
 require 'db_spec_helper'
 require 'logic/artist_matching'
-require 'models/group'
+require 'group'
 
-describe Group do
+describe Dabster::Group do
   subject(:group) { described_class.new }
   let(:valid_whatcd_attributes) {{
     whatcd_id: 1,
