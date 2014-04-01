@@ -4,6 +4,7 @@ require 'htmlentities'
 require 'similar_text'
 require 'fuzzy_match'
 require 'yaml'
+require 'fileutils'
 
 require 'dabster/version'
 require 'dabster/sequel'
