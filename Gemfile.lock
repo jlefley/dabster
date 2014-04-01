@@ -5,7 +5,7 @@ PATH
       fuzzy_match
       htmlentities
       json
-      rails (~> 4.0.3)
+      rails (~> 4.0.4)
       ruby-progressbar
       sequel
       sequel-rails

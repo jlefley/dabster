@@ -1,4 +1,4 @@
 Rails.application.routes.draw do
 
-  mount Dabster::Engine => "/dabster"
+  mount Dabster::Engine => '/'
 end

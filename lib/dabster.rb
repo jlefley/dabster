@@ -30,9 +30,7 @@ module Dabster
 end
 
 if defined?(Rails)
-  require 'sequel-rails'
   require 'dabster/engine'
-  require 'will_paginate/sequel'
 else
   require 'ruby-progressbar'
   require 'thor'

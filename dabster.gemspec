@@ -22,7 +22,7 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency 'rspec'
 
-  spec.add_dependency 'rails', '~> 4.0.3'
+  spec.add_dependency 'rails', '~> 4.0.4'
   spec.add_dependency 'sqlite3'
   spec.add_dependency 'sequel-rails'
   spec.add_dependency 'will_paginate'

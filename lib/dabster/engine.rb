@@ -1,3 +1,7 @@
+require 'sequel-rails'
+require 'will_paginate'
+require 'will_paginate/sequel'
+
 module Dabster
   class Engine < ::Rails::Engine
     isolate_namespace Dabster

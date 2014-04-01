@@ -1,13 +1,13 @@
 module Dabster
   class ArtistLibraryItemRelationshipsController < ApplicationController
     def create
-      rel = ArtistLibraryItemRelationship.create(create_params)
+      rel = Dabster::ArtistLibraryItemRelationship.create(create_params)
       flash[:notice] = 'Artist library item relationship created'
       redirect_to library_item_path(id: rel.library_item_id)
     end
 
     def destroy
-      rel = ArtistLibraryItemRelationship.first!(destroy_params)
+      rel = Dabster::ArtistLibraryItemRelationship.first!(destroy_params)
       rel.destroy
       flash[:notice] = 'Artist library item relationship destroyed'
       redirect_to Library::Item.first!(id: rel.library_item_id)
@@ -16,7 +16,7 @@ module Dabster
     end
 
     def index
-      @artist_library_item_relationships = ArtistLibraryItemRelationship.no_library_item.all
+      @artist_library_item_relationships = Dabster::ArtistLibraryItemRelationship.no_library_item.all
     end
 
     private

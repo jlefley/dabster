@@ -1,6 +1,6 @@
 module Dabster
   class ApplicationController < ActionController::Base
-    rescue_from DabsterApp::Error, with: :handle_error
+    rescue_from Dabster::Error, with: :handle_error
 
     private
     
