@@ -1,3 +1,5 @@
+require 'json'
+
 module Dabster
   class WhatcdTorrentGroupResponse < Sequel::Model
     unrestrict_primary_key

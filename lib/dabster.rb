@@ -1,11 +1,6 @@
-require 'json'
 require 'sequel'
-require 'htmlentities'
-require 'similar_text'
-require 'fuzzy_match'
 require 'yaml'
 require 'fileutils'
-
 require 'dabster/version'
 require 'dabster/sequel'
 
@@ -96,8 +91,6 @@ end
 if defined?(Rails)
   require 'dabster/engine'
 else
-  require 'ruby-progressbar'
-  require 'thor'
   require 'dabster/cli'
 
   Dabster.initialize

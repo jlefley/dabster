@@ -1,3 +1,5 @@
+require 'ruby-progressbar'
+
 module Dabster
   module Scrapers
     class SimilarArtistsScraper

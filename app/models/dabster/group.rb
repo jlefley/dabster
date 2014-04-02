@@ -1,3 +1,5 @@
+require 'json'
+
 module Dabster
   class Group < Sequel::Model
     include Dabster::Logic::ArtistMatching

@@ -1,3 +1,5 @@
+require 'fuzzy_match'
+
 module Dabster
   module Scrapers
     class LibraryAlbumScraper

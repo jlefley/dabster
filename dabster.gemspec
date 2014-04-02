@@ -19,12 +19,12 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_development_dependency 'rspec',   '~> 2.14.1'
-  spec.add_development_dependency 'bundler', '~> 1.5'
+  spec.add_development_dependency 'bundler', '~> 1.6'
   spec.add_development_dependency 'rails',   '~> 4.0.4'
   spec.add_development_dependency 'rake'
 
-  spec.add_dependency 'sqlite3',          '~> 1.3.9'
   spec.add_dependency 'sequel-rails',     '~> 0.9.2'
+  spec.add_dependency 'sqlite3',          '~> 1.3.9'
   spec.add_dependency 'will_paginate',    '~> 3.0.5'
   spec.add_dependency 'sequel',           '~> 4.9.0'
   spec.add_dependency 'json',             '~> 1.8.1'

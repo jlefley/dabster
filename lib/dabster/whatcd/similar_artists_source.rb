@@ -1,5 +1,3 @@
-require 'json'
-
 module Dabster
   module Whatcd
     class SimilarArtistsSource

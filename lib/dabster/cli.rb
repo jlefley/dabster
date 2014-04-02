@@ -1,3 +1,5 @@
+require 'thor'
+
 module Dabster
   class CLI < Thor
 
