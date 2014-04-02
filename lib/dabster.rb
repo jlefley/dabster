@@ -66,7 +66,7 @@ module Dabster
     if File.exists?(config[:library_database])
       Sequel::Model.db.run("ATTACH DATABASE '#{config[:library_database]}' AS libdb")
     else
-      raise(Dabster::Error, "library database (#{config[:library_database]}) could not be found")
+      raise(Dabster::Error, "library_database (#{config[:library_database]}) could not be found. Set library_database in #{Dir.home}/.config/dabster/config.yml to the path to your beets database file.")
     end
 
     # Load structure if not already
