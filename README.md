@@ -8,7 +8,7 @@ Some types of extended metatdata Dabster may be concerned with:
 * Song/artist/album identifiers from other, existing databases
 * Cultural or social perspective on a song/artist/album
 * Quantitative information about songs such as tempo and liveliness
-* Existing playlists your music is contained in
+* Existing playlists containing your music
 
 Along with caching and associating metatdata, Dabster also serves to make use of the information. Future ideas include:
 * Experimentation with recommendation and playlist generation algorithms (Pandora with your own music collection)
@@ -27,11 +27,11 @@ Dabster provides both a command line and web interface.
 
 To access the web interface, first create a host Rails app:
 
-```rails new app```
+```$ rails new app```
 
 Add this line to your application's Gemfile:
 
-```gem 'dabster'```
+```gem 'dabster', git: git://github.com/jlefley/dabster.git```
 
 Then execute:
 
@@ -41,7 +41,7 @@ Add this line to `config/routes.rb`:
 
 ``` mount Dabster::Engine => '/'```
 
-Dabster stores its database by default in '~/.config/dabster` so it can be easily accessed by the command line interface.  This should be the same database used by the Rails app. Edit `config/database.yml` so both the web app and the command line interface will use the same database:
+Dabster stores its database by default in `~/.config/dabster` so it can be easily accessed by the command line interface.  This should be the same database used by the Rails app. Edit `config/database.yml` so both the web app and the command line interface will use the same database:
 
 ```
 development:
@@ -75,7 +75,7 @@ To attempt to associate all albums in the beets database with corresponding what
 
 ```$ dabster match```
 
-Several attempts will be made to locate the correct group for each album using artist/album information but the album will be left unassociated if a likely match is not found.
+Several attempts will be made to locate the correct group for each album using artist/album information. The album will be left unassociated if a likely match is not found.
 
 Similar artist information can also be loaded with the following command:
 
@@ -93,7 +93,7 @@ The web interface can be used to manually update the associations and locate and
 
 ## Contributing
 
-1. Fork it ( http://github.com/<my-github-username>/dabster/fork )
+1. Fork it ( http://github.com/jlefley/dabster/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
