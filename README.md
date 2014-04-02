@@ -41,7 +41,7 @@ Add this line to `config/routes.rb`:
 
 ``` mount Dabster::Engine => '/'```
 
-Dabster stores its database by default in `~/.config/dabster` so it can be easily accessed by the command line interface.  This should be the same database used by the Rails app. Edit `config/database.yml` so both the web app and the command line interface will use the same database:
+Be default, Dabster uses a database at `~/.config/dabster/dabster.sqlite3` for easy access by the command line interface.  This should be the same database used by the Rails app. Edit `config/database.yml` so both the web app and the command line interface will use the same database:
 
 ```
 development:
