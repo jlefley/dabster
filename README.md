@@ -31,7 +31,7 @@ To access the web interface, first create a host Rails app:
 
 Add this line to your application's Gemfile:
 
-```gem 'dabster', git: git://github.com/jlefley/dabster.git```
+```gem 'dabster', git: 'git://github.com/jlefley/dabster.git'```
 
 Then execute:
 
@@ -51,10 +51,6 @@ development:
 
 Dabster will always ensure the database is loaded with the schema and required seed data when starting.
 
-Start the Rails server:
-
-```$ rails s```
-
 Dabster uses a config file at `~/.config/dabster/config.yml`.  Here are the options with their default values:
 
 ```
@@ -69,7 +65,11 @@ It is recommended that at least the what.cd login info and library_database opti
 
 ## Usage
 
-By viewing the web interface at `localhost:3000`, you can browse through various lists by selecting a link at the top of the layout. Library Albums will list all the albums in the beets database.  Select an album to inspect it. Click the search what.cd button to look for a torrent group matching the album.  Select a matching result and click associate.  Now the items for that album are associated with the matching what.cd artist(s) and the album is associated with the torrent group.  A torrent group id can be used directly instead of searching and making a selection.
+Start the Rails server:
+
+```$ rails s```
+
+Go to `localhost:3000` and browse through various lists by selecting a link at the top of the layout. Library Albums will list all the albums in the beets database.  Select an album to inspect it. Click the search what.cd button to look for a torrent group matching the album.  Select a matching result and click associate.  Now the items for that album are associated with the matching what.cd artist(s) and the album is associated with the torrent group.  A torrent group id can be used directly instead of searching and making a selection.
 
 To attempt to associate all albums in the beets database with corresponding what.cd entries, execute this command:
 
