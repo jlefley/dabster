@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['jlefley@gmail.com']
   spec.summary       = %q{Meta manager for digital music libraries}
   #spec.description   = %q{TODO: Write a longer description. Optional.}
-  spec.homepage      = ''
+  spec.homepage      = 'https://github.com/jlefley/dabster'
   spec.license       = 'MIT'
 
   spec.files         = Dir['{app,config,db,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.md']
