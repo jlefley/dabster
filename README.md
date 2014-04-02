@@ -1,6 +1,6 @@
 # Dabster
 
-Dabster is a digital music metadata management tool.  It is not intended to address basic cataloging and tagging of files but rather it serves as a framework for gathering, storing, organizing, and using extended metadata information.  It is designed to read albums/songs from the database created and managed by beets.  Dabster creates its own database to store additional information and references items in the beets database. At a high level the goal of Dabster is to go beyond typical artist/album/song breakdowns when interfacing with music in a collection.
+Dabster is a digital music metadata management tool.  It is not intended to address basic cataloging and tagging of files but rather it serves as a framework for gathering, storing, organizing, and using extended metadata information.  It is designed to read albums/songs from the database created and managed by [beets](http://beets.radbox.org/).  Dabster creates its own database to store additional information and references items in the beets database. At a high level the goal of Dabster is to go beyond typical artist/album/song breakdowns when interfacing with music in a collection.
 
 Some types of extended metatdata Dabster may be concerned with:
 * Song/artist tags and counts
@@ -89,7 +89,7 @@ The web interface can be used to manually update the associations and locate and
 
 * Implement rudimentary playlist generation and playback through XMMS2
 * Fetch data from EchoNest, Discogs and Last.fm
-* Normalize and associate tags
+* Normalize and associate tags (like [whatlastgenre](https://github.com/YetAnotherNerd/whatlastgenre))
 
 ## Contributing
 
