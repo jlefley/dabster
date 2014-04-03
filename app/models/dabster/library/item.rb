@@ -5,6 +5,7 @@ module Dabster
       plugin :many_through_many
 
       many_to_one :library_album, class: 'Dabster::Library::Album', key: :album_id
+      one_to_many :playbacks, class: 'Dabster::LibraryItemPlayback', key: :library_item_id
       many_to_many :all_similar_artist_relationships, class: 'Dabster::SimilarArtistsRelationship',
         join_table: :artist_library_item_relationships, right_key: :artist_id, left_key: :library_item_id
       categorized_relationship :artists, class: 'Dabster::Artist', relationship_class: 'Dabster::ArtistLibraryItemRelationship',
