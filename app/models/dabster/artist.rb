@@ -1,15 +1,19 @@
 module Dabster
   class Artist < Sequel::Model
+    attr_accessor :similarity_score, :last_played_score
+
     plugin :categorized_relationship
+
     categorized_relationship :groups, class: 'Dabster::Group', relationship_class: 'Dabster::ArtistGroupRelationship',
       join_table: :artist_group_relationships
     categorized_relationship :items, class: 'Dabster::Library::Item', join_table: :artist_library_item_relationships,
       relationship_class: 'Dabster::ArtistLibraryItemRelationship', right_key: :library_item_id
-    one_to_many :similar_artist_relationships, class: 'Dabster::SimilarArtistsRelationship', eager_graph: :similar_artist
+    one_to_many :similar_artist_relationships, class: 'Dabster::SimilarArtistsRelationship'
     many_to_many :similar_artists, class: self, join_table: :similar_artists_relationships
 
     def similar_artist_relationships_ordered_by_score
-      similar_artist_relationships_dataset.order(:whatcd_score).reverse.all
+      similar_artist_relationships_dataset.eager_graph_with_options(:similar_artist, join_type: :inner).
+        order(:whatcd_score).reverse.all
     end
 
     def items_dataset

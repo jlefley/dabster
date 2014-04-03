@@ -1,7 +1,7 @@
 module Dabster
   class SimilarArtistsRelationship < Sequel::Model
     unrestrict_primary_key
-    many_to_one :similar_artist, class: 'Dabster::Artist', graph_join_type: :inner
+    many_to_one :similar_artist, class: 'Dabster::Artist'
 
     def similar_artist_name
       similar_artist.whatcd_name
