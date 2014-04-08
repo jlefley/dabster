@@ -1,4 +1,5 @@
 require 'db_spec_helper'
+require 'playlist'
 require 'library_item_playback'
 require 'library/item'
 require 'artist'
@@ -39,15 +40,16 @@ describe Dabster::Artist do
   end
 
   describe 'when querying for item information' do
-    
+
+    let!(:playlist) { Dabster::Playlist.create }    
     let!(:saved_artist) { artist.save }
     let!(:item0) { artist.add_item({}, type: :artist, confidence: 1) }
     let!(:item1) { artist.add_item({}, type: :artist, confidence: 1) }
     let!(:item2) { artist.add_item({}, type: :artist, confidence: 1) }
-    let!(:playback0) { item0.add_playback({}) }
-    let!(:playback1) { item0.add_playback({}) }
-    let!(:playback2) { item1.add_playback({}) }
-    let!(:playback3) { item1.add_playback({}) }
+    let!(:playback0) { item0.add_playback(playlist_id: playlist.id) }
+    let!(:playback1) { item0.add_playback(playlist_id: playlist.id) }
+    let!(:playback2) { item1.add_playback(playlist_id: playlist.id) }
+    let!(:playback3) { item1.add_playback(playlist_id: playlist.id) }
 
     context 'when getting the last time artist was played' do
       it 'returns the latest playback time of all items associated with artist' do
