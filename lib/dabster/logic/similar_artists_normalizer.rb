@@ -16,7 +16,7 @@ module Dabster
 
       def assign_last_played_scores
         played_artists = @artists.select { |a| !a.last_played_at.nil? }
-        return if played_artists.empty?
+        return if played_artists.length < 2
         max = played_artists.max_by { |a| a.last_played_at }.last_played_at.to_f
         min = played_artists.min_by { |a| a.last_played_at }.last_played_at.to_f
         delta = max - min

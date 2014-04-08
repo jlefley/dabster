@@ -24,10 +24,10 @@ module Dabster
       end
 
       def weighted_similar_artists
-        normalizer = Logic::SimilarArtistsNormalizer.new(similar_artists)
+        normalizer = Logic::SimilarArtistsNormalizer.new(weighted_artists = similar_artists)
         normalizer.assign_similarity_scores(similar_artist_relationships)
         normalizer.assign_last_played_scores
-        artists
+        weighted_artists
       end
 
       private

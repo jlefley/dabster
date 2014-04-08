@@ -61,5 +61,13 @@ describe Dabster::Logic::SimilarArtistsNormalizer do
         expect(artist1.last_played_score).to be_nil
       end
     end
+    context 'when only one artist has been played before' do
+      subject(:normalizer) { described_class.new([artist0]) }
+      it 'does not assign scores to any artists' do
+        normalizer.assign_last_played_scores
+        
+        expect(artist0.last_played_score).to be_nil
+      end
+    end
   end
 end

@@ -13,6 +13,9 @@ require File.join(root, 'lib', 'dabster', 'sequel.rb')
 Sequel::Model.db.run(File.read(File.join(root, 'db', 'structure.sql')))
 load File.join(root, 'db', 'seeds.rb')
 
+Sequel::Model.db.run(%(ATTACH DATABASE ':memory:' AS libdb))
+Sequel::Model.db.create_table(:libdb__items) { primary_key :id }
+
 $: << File.join(root, 'app', 'models', 'dabster')
 
 RSpec.configure do |config|

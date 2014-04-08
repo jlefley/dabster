@@ -3,10 +3,10 @@ require 'yaml'
 require 'fileutils'
 require 'dabster/version'
 require 'dabster/sequel'
+require 'dabster/errors'
 
 module Dabster
-  class Error < StandardError; end
-
+  
   @config = {
     library_database: "#{Dir.home}/.config/beets/library.db",
     database:         "#{Dir.home}/.config/dabster/dabster.sqlite3",
