@@ -18,9 +18,9 @@ describe Dabster::Logic::SimilarArtistsNormalizer do
     it 'assigns a score equal to the proportion the total whatcd_score for the artist is out of the maximum whatcd_score' do
       normalizer.assign_similarity_scores([rel0, rel1, rel2, rel3])
 
-      expect(artist0.similarity_score).to eq(0.2)
-      expect(artist1.similarity_score).to eq(0.4)
-      expect(artist2.similarity_score).to eq(1.0)
+      expect(artist0.similarity_score).to eq(0.125)
+      expect(artist1.similarity_score).to eq(0.25)
+      expect(artist2.similarity_score).to eq(0.625)
     end
   end
 

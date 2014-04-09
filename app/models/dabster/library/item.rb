@@ -16,7 +16,10 @@ module Dabster
       ]
 
       def similar_artists
-        all_similar_artists_dataset.exclude(similar_artist_id: artist_id_filter).all
+        # Exclude item's artists and artists without any items
+        all_similar_artists_dataset.exclude(similar_artist_id: artist_id_filter).
+          left_join(:artist_library_item_relationships, { rel__artist_id: :artists__id }, table_alias: :rel).
+          exclude(rel__artist_id: nil).all
       end
 
       def similar_artist_relationships
