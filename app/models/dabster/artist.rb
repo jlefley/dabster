@@ -49,6 +49,18 @@ module Dabster
         order{ random{} }.first
     end
 
+    def similar_artists_with_items
+      similar_artists_dataset.
+        join(:artist_library_item_relationships, { rel__artist_id: :artists__id }, table_alias: :rel).distinct.all
+    end
+
+    def weighted_similar_artists
+      normalizer = Logic::SimilarArtistsNormalizer.new(weighted_artists = similar_artists)
+      normalizer.assign_similarity_scores(similar_artist_relationships)
+      normalizer.assign_last_played_scores
+      weighted_artists
+    end
+
     private
 
     def _add_similar_artist(artist, options)

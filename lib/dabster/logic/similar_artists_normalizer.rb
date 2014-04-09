@@ -7,10 +7,10 @@ module Dabster
       end
 
       def assign_similarity_scores(relationships)
-        total = relationships.reduce(0) { |sum, r| sum += r.whatcd_score }.to_f
+        max = relationships.max_by { |r| r.whatcd_score }.whatcd_score.to_f
         @artists.each do |artist|
           artist.similarity_score =
-            relationships.select { |r| r.similar_artist_id == artist.id }.reduce(0) { |sum, r| sum += r.whatcd_score }.to_f / total
+            relationships.select { |r| r.similar_artist_id == artist.id }.reduce(0) { |sum, r| sum += r.whatcd_score }.to_f / max
         end
       end
 

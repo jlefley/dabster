@@ -1,6 +1,6 @@
 module Dabster
   module Playlists
-    class ArtistGraphDepthFirstDynamicPlaylist
+    class ArtistGraphDepthDynamicPlaylist
      
       attr_reader :playlist, :recommender
 

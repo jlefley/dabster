@@ -1,8 +1,8 @@
 require 'unit_spec_helper'
 require 'errors'
-require 'playlists/artist_graph_depth_first_dynamic_playlist'
+require 'playlists/artist_graph_depth_dynamic_playlist'
 
-describe Dabster::Playlists::ArtistGraphDepthFirstDynamicPlaylist do
+describe Dabster::Playlists::ArtistGraphDepthDynamicPlaylist do
 
   let(:playlist) { double 'underlying playlist' }
   let(:recommender) { double 'artist/item recommender' }
@@ -49,7 +49,7 @@ describe Dabster::Playlists::ArtistGraphDepthFirstDynamicPlaylist do
 
       end
 
-      context 'when item has been played' do
+      context 'when item has been selected' do
 
         before { allow(playlist).to receive(:last_played_item).and_return('last_item') }
 
