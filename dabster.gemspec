@@ -33,4 +33,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'fuzzy_match',      '~> 2.0.4'
   spec.add_dependency 'ruby-progressbar', '~> 1.4.2'
   spec.add_dependency 'thor',             '~> 0.19.1'
+  spec.add_dependency 'foreman',          '~> 0.63'
+  spec.add_dependency 'glib2',            '~> 2.2.0'
+  spec.add_dependency 'eventmachine',     '~> 1.0.3'
 end
