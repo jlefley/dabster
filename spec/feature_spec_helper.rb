@@ -6,6 +6,9 @@ require 'capybara/poltergeist'
 
 Capybara.javascript_driver = :poltergeist
 
+Dabster.initialize_db
+Sequel::Model.db.create_table(:libdb__items) { primary_key :id }
+
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 #Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }

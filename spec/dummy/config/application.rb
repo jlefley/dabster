@@ -10,7 +10,9 @@ require 'dabster'
 module Dummy
   class Application < Rails::Application
     initializer 'dummy.config', after: 'dabster.initialize', before: 'dabster.check_db' do |app|
-      Dabster.configure(database: File.expand_path(app.config.database_configuration[Rails.env].fetch('database'), app.root))
+      ::Configuration.for(Rails.env) {
+        database File.expand_path(app.config.database_configuration[Rails.env].fetch('database'), app.root)
+      }
     end
 
     console do |app|

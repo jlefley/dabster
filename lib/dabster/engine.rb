@@ -18,14 +18,14 @@ module Dabster
 
     initializer 'dabster.check_db', before: 'sequel.connect' do |app|
       app_db_path = File.expand_path(app.config.database_configuration[Rails.env].fetch('database'), app.root)
-      if  app_db_path != Dabster.config[:database]
+      if app_db_path != Dabster.config.database
         raise(Dabster::Error,
-          "Rails database config does not match config.yml, set database in db/database.yml to #{Dabster.config[:database]}")
+          "Rails database config does not match config.yml, set database in db/database.yml to #{Dabster.config.database}")
       end
     end
 
-    initializer 'dabster.initialize_db', after: 'sequel.connect' do |app|
-      Dabster.initialize_db
+    initializer 'dabster.initialize_libdb', after: 'sequel.connect' do |app|
+      Dabster.connect_libdb
     end
 
     initializer 'dabster.append_migrations' do |app|
