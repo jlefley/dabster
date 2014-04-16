@@ -3,13 +3,13 @@
 #load File.join(dir, 'db', 'schema.rb')
 #Sequel::Migration.descendants.each { |m| m.apply(Sequel::Model.db, :up) }
 
-require 'unit_spec_helper'
 require 'sequel'
+require 'unit_spec_helper'
+require 'sequel_initialization'
 
 root = File.expand_path('../..', __FILE__)
 
 Sequel.sqlite
-require File.join(root, 'lib', 'dabster', 'sequel.rb')
 Sequel::Model.db.run(File.read(File.join(root, 'db', 'structure.sql')))
 load File.join(root, 'db', 'seeds.rb')
 

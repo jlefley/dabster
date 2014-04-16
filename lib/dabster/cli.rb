@@ -32,6 +32,22 @@ module Dabster
     def match
       album_scraper.unmatched(options[:limit])
     end
+
+    desc 'server ARTIST_WHATCD_ID', 'start playback proxy server for specified artist and XMMS_HOST, can specify playlist_id to use existing playlist'
+    option :playlist_id
+    def server(artist_whatcd_id)
+
+      if playlist_id = options[:playlist_id]
+        plist = Playlist.first!(id: playlist_id)
+      else
+        plist = Playlist.create(initial_artist: Artist.first!(whatcd_id: artist_whatcd_id))
+      end
+
+      puts "Playlist: #{plist.inspect}"
+      puts "Artist: #{plist.initial_artist.inspect}"
+
+      PlaybackServer.new(Playlists::ArtistGraphBreadthDynamicPlaylist.new(p, Recommenders::PlayAll.new)).run
+    end
     
     private
 

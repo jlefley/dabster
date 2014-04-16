@@ -1,12 +1,33 @@
 require 'sequel'
-require 'yaml'
 require 'fileutils'
+require 'configuration'
 require 'dabster/version'
-require 'dabster/sequel'
+require 'dabster/sequel_initialization'
 require 'dabster/errors'
 
 module Dabster
-  
+ 
+  Configuration.for('dabster') {
+    log "#{Dir.home}/.config/dabster/dabster.log"
+    
+    development {
+      database "#{Dir.home}/.config/dabster/development.sqlite3"
+    }
+    
+    test {
+      database "#{Dir.home}/.config/dabster/test.sqlite3"
+    }
+    
+    production {
+      database "#{Dir.home}/.config/dabster/production.sqlite3"
+    }
+    
+    whatcd {
+      username ''
+      password ''
+    }
+  }
+
   @config = {
     library_database: "#{Dir.home}/.config/beets/library.db",
     database:         "#{Dir.home}/.config/dabster/dabster.sqlite3",

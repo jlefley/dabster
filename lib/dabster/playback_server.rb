@@ -12,10 +12,9 @@ module Dabster
     end
 
     def run
-      # XMMS client setup
-      client.connect
+      client.connect(ENV['XMMS_PATH'])
       client.add_to_glib_mainloop
-
+      
       # Reset server
       stop_playback
       clear_playlist
@@ -33,9 +32,12 @@ module Dabster
         puts 'playlist position changed, adding song'
         puts "now playing song #{res[:position]}"
         add_item
+        true
       end
 
       main.run
+    rescue Xmms::Client::ClientError
+      puts "Failed to connect to XMMS2 daemon at #{ENV['XMMS_PATH']}"
     ensure
       main.quit
     end

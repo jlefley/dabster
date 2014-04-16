@@ -18,9 +18,11 @@ Gem::Specification.new do |spec|
   spec.test_files    = Dir['spec/**/*']
   spec.require_paths = ['lib']
 
-  spec.add_development_dependency 'rspec',   '~> 2.14.1'
-  spec.add_development_dependency 'bundler', '~> 1.6'
-  spec.add_development_dependency 'rails',   '~> 4.0.4'
+  spec.add_development_dependency 'rspec',       '~> 2.14.1'
+  spec.add_development_dependency 'bundler',     '~> 1.6'
+  spec.add_development_dependency 'rails',       '~> 4.0.4'
+  spec.add_development_dependency 'poltergeist', '~> 1.5.0'
+  spec.add_development_dependency 'rspec-rails', '~> 2.14.2'
   spec.add_development_dependency 'rake'
 
   spec.add_dependency 'sequel-rails',     '~> 0.9.2'
@@ -34,6 +36,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'ruby-progressbar', '~> 1.4.2'
   spec.add_dependency 'thor',             '~> 0.19.1'
   spec.add_dependency 'foreman',          '~> 0.63'
-  spec.add_dependency 'glib2',            '~> 2.2.0'
   spec.add_dependency 'eventmachine',     '~> 1.0.3'
+  spec.add_dependency 'configuration',    '~> 1.3.4'
 end
