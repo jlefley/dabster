@@ -10,5 +10,9 @@ module Dabster
       library_item.artist
     end
 
+    def path
+      library_item.path
+    end
+
   end
 end

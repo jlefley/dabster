@@ -1,53 +1,38 @@
 require 'xmmsclient'
+require 'eventmachine'
 
 module Dabster
   module Playback
-    module XMMSClient
-
-      attr_reader :underlying_client
+    class XMMSClient
 
       def initialize
-        @underlying_client = Xmms::Client.new
-      end
-
-      def connect(host_path)
-        underlying_client.connect(host_path)
+        # Create a client
+        @xmms = Xmms::Client.new('dabster')
+        
+        # Connect to xmms daemon
+        @xmms.connect(ENV['XMMS_PATH'])
       rescue Xmms::Client::ClientError
-        raise(Dabster::Error, "Failed to connect to XMMS2 daemon at #{host_path}")
+        raise(Dabster::Error, "Failed to connect to XMMS2 daemon at #{ENV['XMMS_PATH']}")
       end
 
-      def playback_start
-        underlying_client.playback_start.notifier do
-          puts 'playback started'
-        end
-      end
-
-      def playback_stop
-        underlying_client.playback_stop.notifier do
-          puts 'playback stoped'
-        end
+      def stop_playback
+        @xmms.playback_stop.wait
       end
 
       def clear_playlist
-        underlying_client.playlist.clear.notifier do
-          puts 'playlist cleared'
-        end
+        @xmms.playlist.clear.wait
       end
 
-      def queue_item(item)
-        underlying_client.playlist.add_entry(item.path).notifier do
-          puts "added #{item.path}"
-        end
+      def add_entry(path)
+        @xmms.playlist.add_entry("file://#{path}").wait
       end
 
-      def io_fd
-        underlying_client.id_fd
+      def set_next_position(position)
+        @xmms.playlist_set_next(position).wait
       end
 
-      def on_playlist_position_changed
-        underlying_client.broadcast_playlist_current_pos.notifier do |res|
-          true
-        end
+      def start_playback
+        @xmms.playback_start.wait
       end
 
     end

@@ -36,7 +36,8 @@ Dummy::Application.configure do
 end
 
 # Start playback server for testing
-playback_server = Dabster::PlaybackServer.new
+# Inject dummy client so interactions can be tested
+playback_server = Dabster::PlaybackServer.new($client = Object.new)
 server_thread = Thread.new { playback_server.start }
 server_thread.abort_on_exception = true
 

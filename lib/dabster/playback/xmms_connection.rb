@@ -1,26 +1,28 @@
+require 'eventmachine'
+
 module Dabster
   module Playback
     class XMMSConnection < EM::Connection
 
       def initialize(xmms_client)
-        @xmmsc = xmms_client
-        @xmmsc.io_on_need_out { |need_out| need_out_callback(need_out) }
+        @xmms = xmms_client
+        @xmms.io_on_need_out { |need_out| need_out_callback(need_out) }
       end
 
       def post_init
-        need_out_callback(true) if @xmmsc.io_want_out
+        need_out_callback(true) if @xmms.io_want_out
       end
 
       def notify_readable
-        @xmmsc.io_in_handle
+        @xmms.io_in_handle
       end
 
       def notify_writable
-        @xmmsc.io_out_handle
+        @xmms.io_out_handle
       end
       
       def unbind
-        @xmmsc.io_disconnect
+        @xmms.io_disconnect
       end
 
       private
