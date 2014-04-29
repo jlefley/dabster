@@ -6,6 +6,7 @@
 require 'sequel'
 require 'unit_spec_helper'
 require 'sequel_initialization'
+require 'support/database_cleaner'
 
 root = File.expand_path('../..', __FILE__)
 
@@ -16,17 +17,11 @@ if !Sequel::Model.db.table_exists?(:groups)
   load File.join(root, 'db', 'seeds.rb')
 
   Sequel::Model.db.run(%(ATTACH DATABASE ':memory:' AS libdb))
-  Sequel::Model.db.create_table(:libdb__items) { primary_key :id }
+  load File.join(root, 'db', 'library_schema.rb')
 end
 
 $: << File.join(root, 'app', 'models', 'dabster')
 
 RSpec.configure do |config|
-
-  config.around :each do |example|
-    Sequel::Model.db.transaction(rollback: :always) { example.run }
-  end
-  
   config.order = 'random'
-
 end

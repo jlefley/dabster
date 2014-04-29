@@ -34,3 +34,13 @@ Dummy::Application.configure do
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
 end
+
+# Start playback server for testing
+playback_server = Dabster::PlaybackServer.new
+server_thread = Thread.new { playback_server.start }
+server_thread.abort_on_exception = true
+
+# Stop on shutdown
+at_exit do
+  playback_server.stop
+end

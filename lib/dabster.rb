@@ -63,7 +63,7 @@ if defined?(Rails)
 else
   require 'dabster/cli'
   
-  Dabster.initialize_config
+  Dabster.initialize
   Sequel.sqlite(Dabster.config.database)
   Dabster.connect_libdb 
   

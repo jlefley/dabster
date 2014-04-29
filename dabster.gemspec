@@ -23,6 +23,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rails',       '~> 4.0.4'
   spec.add_development_dependency 'poltergeist', '~> 1.5.0'
   spec.add_development_dependency 'rspec-rails', '~> 2.14.2'
+  spec.add_development_dependency 'database_cleaner', '~> 1.2.0'
   spec.add_development_dependency 'rake'
 
   spec.add_dependency 'sequel-rails',     '~> 0.9.2'
@@ -37,5 +38,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'thor',             '~> 0.19.1'
   spec.add_dependency 'foreman',          '~> 0.63'
   spec.add_dependency 'eventmachine',     '~> 1.0.3'
+  spec.add_dependency 'amqp',             '~> 1.3.0'
+  spec.add_dependency 'bunny',            '~> 1.2.1'
   spec.add_dependency 'configuration',    '~> 1.3.4'
 end

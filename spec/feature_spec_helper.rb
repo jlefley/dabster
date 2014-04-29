@@ -7,11 +7,11 @@ require 'capybara/poltergeist'
 Capybara.javascript_driver = :poltergeist
 
 Dabster.initialize_db
-Sequel::Model.db.create_table(:libdb__items) { primary_key :id }
+load File.expand_path('../../db/library_schema.rb', __FILE__)
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
-#Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
+Dir[File.join(Dabster.root, 'spec/support/**/*.rb')].each { |f| require f }
 
 RSpec.configure do |config|
   # ## Mock Framework
@@ -32,8 +32,4 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = 'random'
-  
-  config.around :each do |example|
-    Sequel::Model.db.transaction(rollback: :always) { example.run }
-  end
 end
