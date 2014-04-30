@@ -6,8 +6,8 @@ module Dabster
     end
 
     def play
-      @playlist = Playlist.first!(params[:id])
-      $rabbitmq_channel.default_exchange.publish(@playlist.id.to_s, routing_key: 'dabster.playbackserver.play')
+      playlist = Playlist.first!(params[:id])
+      $rabbitmq_channel.default_exchange.publish(playlist.id.to_s, routing_key: 'dabster.playbackserver.play')
       redirect_to playback_path
     end
     

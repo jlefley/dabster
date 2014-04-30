@@ -19,9 +19,7 @@ feature 'Playlist playback' do
 
     expect($client).to receive(:add_entry).with(item0.path)
     expect($client).to receive(:add_entry).with(item1.path)
-    expect($client).to receive(:add_entry).with(item2.path)
 
-    expect($client).to receive(:set_next_position).with(playlist.current_position)
     expect($client).to receive(:start_playback)
 
     visit dabster.playlist_path(playlist)
@@ -29,7 +27,7 @@ feature 'Playlist playback' do
     click_button 'Play'
 
     expect(page).to have_content /now playing: #{item0.title} - #{item0.artist}/i
-    expect(page).to have_playlist playlist
+    expect(page).to list_items [item0, item1, item2]
   end
 
 end

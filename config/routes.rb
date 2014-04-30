@@ -29,5 +29,5 @@ Dabster::Engine.routes.draw do
     end
   end
 
-  resource :playback, only: [:show]
+  resource :playback, only: [:show], controller: :playback
 end

@@ -23,10 +23,8 @@ module Dabster
           @current_playlist = Dabster::Playlist.first!(id: payload.to_i)
           client.stop_playback
           client.clear_playlist
-          @current_playlist.items.each do |item|
-            client.add_entry(item.path)
-          end
-          client.set_next_position(@current_playlist.current_position)
+          client.add_entry(@current_playlist.current_item.path)
+          client.add_entry(@current_playlist.next_item.path)
           client.start_playback
         end
 
