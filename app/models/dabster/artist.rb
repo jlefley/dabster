@@ -1,5 +1,8 @@
 module Dabster
   class Artist < Sequel::Model
+    include Logic::ItemSelection
+    include Logic::ArtistSorting
+
     attr_accessor :similarity_score, :last_played_score
 
     plugin :categorized_relationship

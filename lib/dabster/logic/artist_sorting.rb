@@ -1,18 +1,9 @@
 module Dabster
-  module Recommenders
-    class PlayAll
+  module Logic
+    module ArtistSorting
 
-      def select_artists_by_item(item)
-        select_artists(item.weighted_similar_artists)
-      end
-
-      def select_artists_by_artist(artist)
-        select_artists(artist.weighted_similar_artists)
-      end
-
-      private
-
-      def select_artists(similar_artists)
+      def sorted_similar_artists
+        similar_artists = weighted_similar_artists
         if !(unplayed_artists = similar_artists.select { |a| a.last_played_score.nil? }).empty?
           unplayed_artists.sort { |a, b| b.similarity_score <=> a.similarity_score }
         else

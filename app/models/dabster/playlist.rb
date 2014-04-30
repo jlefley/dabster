@@ -15,7 +15,16 @@ module Dabster
       if item = items[current_position + offset_from_current_position]
         item
       else
-        item = selector.next_item
+        initial_artist = initial_artists.first
+        if items.empty?
+          # Select item from the initial artist
+          item = initial_artist.least_played_item
+        else
+          # Select item from artist similar to initial artist
+          initial_artist.sorted_similar_artists.each do |artist|
+            break if item = artist.least_played_item
+          end
+        end
         add_item(library_item: item, position: current_position + offset_from_current_position)
         item
       end
