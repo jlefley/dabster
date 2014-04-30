@@ -2,16 +2,23 @@ require 'xmmsclient'
 require 'eventmachine'
 
 module Dabster
-  module Playback
-    class XMMSClient
+  module Xmms
+    class Client
 
       def initialize
         # Create a client
-        @xmms = Xmms::Client.new('dabster')
+        @xmms = ::Xmms::Client.new('dabster')
         
         # Connect to xmms daemon
         @xmms.connect(ENV['XMMS_PATH'])
-      rescue Xmms::Client::ClientError
+
+        # Watch for async events
+=begin
+        EM.next_tick do
+          EM.watch(@xmms.io_fd, Connection, @xmms) { |c| c.notify_readable = true }
+        end
+=end
+      rescue ::Xmms::Client::ClientError
         raise(Dabster::Error, "Failed to connect to XMMS2 daemon at #{ENV['XMMS_PATH']}")
       end
 

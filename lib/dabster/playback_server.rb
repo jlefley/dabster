@@ -35,7 +35,6 @@ module Dabster
         end
       end
 
-      #EM.watch(@xmms.io_fd, XMMSConnection, @xmms) { |c| c.notify_readable = true }
       Signal.trap('INT') { stop }
     end
 

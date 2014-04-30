@@ -1,8 +1,8 @@
 require 'eventmachine'
 
 module Dabster
-  module Playback
-    class XMMSConnection < EM::Connection
+  module Xmms
+    class Connection < EM::Connection
 
       def initialize(xmms_client)
         @xmms = xmms_client
