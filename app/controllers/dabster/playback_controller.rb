@@ -1,6 +1,6 @@
 module Dabster
   class PlaybackController < ApplicationController
-    def index
+    def show
       reply_queue = $rabbitmq_channel.queue('', auto_delete: true, exclusive: true)
 
       lock = Mutex.new

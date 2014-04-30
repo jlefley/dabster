@@ -67,7 +67,7 @@
   <%= render partial: 'library_item', collection: @library_items %>
 </table>
 <hr>
-<%= form_for @group, url: groups_associate_whatcd_path, method: :post do |f| %>
+<%= form_for @group, url: associate_whatcd_groups_path, method: :post do |f| %>
   <p>
   <%= f.label :whatcd_id, 'Torrent group ID' %>
   <%= f.text_field :whatcd_id %>
@@ -87,7 +87,7 @@
 
 <% if @whatcd_response.try(:results) %>
   <h2>what.cd Results</h2>
-  <%= form_for @group, url: groups_associate_whatcd_path, method: :post do |f| %>
+  <%= form_for @group, url: associate_whatcd_groups_path, method: :post do |f| %>
     <%= f.submit 'Associate selection with album' %>
     <%= f.hidden_field :library_album_id, value: @library_album.id %>
     <br><br>
