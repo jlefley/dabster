@@ -1,8 +1,7 @@
 module Dabster
   class PlaybackController < ApplicationController
     def index
-      channel = $rabbitmq.create_channel
-      reply_queue = channel.queue('', auto_delete: true, exclusive: true)
+      reply_queue = $rabbitmq_channel.queue('', auto_delete: true, exclusive: true)
 
       lock = Mutex.new
       condition = ConditionVariable.new
@@ -10,15 +9,16 @@ module Dabster
 
       # Subscribe to response queue
       status = nil
-      reply_queue.subscribe do |delivery_info, properties, payload|
+      consumer = reply_queue.subscribe do |delivery_info, properties, payload|
         if properties.correlation_id == correlation_id
           status = OpenStruct.new(JSON.parse(payload, symbolize_names: true))
           lock.synchronize { condition.signal }
+          delivery_info.consumer.cancel
         end
       end
 
       # Send request
-      channel.default_exchange.publish('get.status',
+      $rabbitmq_channel.default_exchange.publish('get.status',
                                        routing_key: 'dabster.playbackserver.rpc',
                                        message_id: correlation_id,
                                        reply_to: reply_queue.name)
