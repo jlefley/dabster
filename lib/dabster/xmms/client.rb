@@ -5,6 +5,8 @@ module Dabster
   module Xmms
     class Client
 
+      attr_reader :xmms
+
       def initialize
         # Create a client
         @xmms = ::Xmms::Client.new('dabster')
@@ -13,11 +15,10 @@ module Dabster
         @xmms.connect(ENV['XMMS_PATH'])
 
         # Watch for async events
-=begin
         EM.next_tick do
           EM.watch(@xmms.io_fd, Connection, @xmms) { |c| c.notify_readable = true }
         end
-=end
+      
       rescue ::Xmms::Client::ClientError
         raise(Dabster::Error, "Failed to connect to XMMS2 daemon at #{ENV['XMMS_PATH']}")
       end
@@ -40,6 +41,17 @@ module Dabster
 
       def start_playback
         @xmms.playback_start.wait
+      end
+     
+      def entries
+        @xmms.playlist.entries.wait.value
+      end
+
+      def on_current_position_changed(&listener)
+        @xmms.broadcast_playlist_current_pos.notifier do |res|
+          listener.call(res[:position])
+          true
+        end
       end
 
     end

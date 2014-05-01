@@ -3,6 +3,10 @@ module Dabster
     one_to_many :items, class: 'Dabster::PlaylistItem'
     many_to_many :initial_artists, class: 'Dabster::Artist', join_table: :playlist_initial_artist_relationships
 
+    def set_current_item(item)
+      update(current_position: item.position)
+    end
+
     def current_item
       item_by_relative_position(0)
     end

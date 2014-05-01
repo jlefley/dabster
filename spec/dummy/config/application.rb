@@ -9,16 +9,18 @@ require 'dabster'
 
 module Dummy
   class Application < Rails::Application
+    # Set the database to the dummy application database
     initializer 'dummy.config', after: 'dabster.initialize', before: 'dabster.check_db' do |app|
       ::Configuration.for(Rails.env) {
         database File.expand_path(app.config.database_configuration[Rails.env].fetch('database'), app.root)
       }
     end
-
+=begin
     console do |app|
       console = ActiveSupport::Logger.new(STDERR)
       Rails.logger.extend ActiveSupport::Logger.broadcast console
     end
+=end
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

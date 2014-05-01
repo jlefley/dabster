@@ -11,6 +11,16 @@ module Dabster
 
     def start
       puts '[PlaybackServer] Starting playback server'
+
+      client.on_current_position_changed do |new_position|
+        puts "[PlaybackServer] Current position changed, new position: #{new_position}"
+        if new_position == @entries.length - 1
+          @current_playlist.set_current_item(@current_playlist.next_item)
+          client.add_entry(@current_playlist.next_item.path)
+          @entries = client.entries
+        end
+      end
+
       EM.run do
         @amqp = AMQP.connect(host: '127.0.0.1')
         channel = AMQP::Channel.new(@amqp)
@@ -25,7 +35,9 @@ module Dabster
           client.clear_playlist
           client.add_entry(@current_playlist.current_item.path)
           client.add_entry(@current_playlist.next_item.path)
+          @entries = client.entries
           client.start_playback
+          puts '[PlaybackServer] Started playback'
         end
 
         rpc_queue.subscribe do |metadata, payload|
@@ -33,9 +45,9 @@ module Dabster
           message = { playlist_id: @current_playlist.id }.to_json
           channel.default_exchange.publish(message, routing_key: metadata.reply_to, correlation_id: metadata.message_id)
         end
-      end
 
-      Signal.trap('INT') { stop }
+        Signal.trap('INT') { stop }
+      end
     end
 
     def stop
