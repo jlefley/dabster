@@ -16,6 +16,18 @@ class DummyXmmsClient
     @entry_ids.dup
   end
 
+  def stop_playback
+    @playback_status = :stopped
+  end
+
+  def start_playback
+    @playback_status = :playing
+  end
+
+  def playback_status
+    @playback_status
+  end
+
   def on_current_position_changed(&listener)
     @current_position_changed_listener = listener
   end

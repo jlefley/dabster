@@ -25,8 +25,8 @@ feature 'Artist dynamic playlist playback' do
     visit dabster.artist_path(artist0)
 
     click_button 'Start dynamic playlist'
-    
-    expect(page).to have_content /now playing: #{item0.title} - #{item0.artist}/i
+   
+    expect(page).to show_now_playing item0 
     expect(page).to list_items [item0, item1]
   end
 

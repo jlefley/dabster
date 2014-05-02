@@ -47,6 +47,17 @@ module Dabster
         @xmms.playlist.entries.wait.value
       end
 
+      def playback_status
+        case @xmms.playback_status.wait.value
+        when 0
+          :stopped
+        when 1
+          :playing
+        when 2 
+          :paused
+        end
+      end
+
       def on_current_position_changed
         @xmms.broadcast_playlist_current_pos.notifier do |res|
           yield(res[:position])

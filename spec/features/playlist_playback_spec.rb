@@ -24,13 +24,13 @@ feature 'Playlist playback' do
     playlist.add_item(library_item: item3, position: 3)
     playlist.update(current_position: 0)
     
-    expect(client).to receive(:stop_playback)
+    expect(client).to receive(:stop_playback).and_call_original
     expect(client).to receive(:clear_playlist).and_call_original
     
     expect(client).to receive(:add_entry).with(item0.path).and_call_original
     expect(client).to receive(:add_entry).with(item1.path).and_call_original
     
-    expect(client).to receive(:start_playback)
+    expect(client).to receive(:start_playback).and_call_original
 
     visit dabster.playlist_path(playlist)
   end

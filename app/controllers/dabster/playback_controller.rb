@@ -28,9 +28,13 @@ module Dabster
         lock.synchronize { condition.wait(lock) }
       end
 
-      @playlist = Dabster::Playlist.first!(id: status.playlist_id)
-      @items = @playlist.items
-      @current_item = @playlist.current_item
+      if status.state == 'empty'
+        @status = 'Current playlist not present'
+      else
+        playlist = Dabster::Playlist.first!(id: status.playlist_id)
+        @items = playlist.items
+        @status = "Now playing: #{playlist.current_item.title} - #{playlist.current_item.artist}"
+      end
     end
   end
 end

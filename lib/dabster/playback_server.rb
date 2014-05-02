@@ -52,7 +52,11 @@ module Dabster
 
         rpc_queue.subscribe do |metadata, payload|
           puts "[PlaybackServer] Received RPC request: #{payload}"
-          message = { playlist_id: @current_playlist.id }.to_json
+          if @current_playlist.nil?
+            message = { state: :empty }.to_json
+          else
+            message = { state: client.playback_status, playlist_id: @current_playlist.id }.to_json
+          end
           channel.default_exchange.publish(message, routing_key: metadata.reply_to, correlation_id: metadata.message_id)
         end
 

@@ -1,4 +1,4 @@
-<p>Now playing: <%= @current_item.title %> - <%= @current_item.artist %></p>
+<p><%= @status %></p>
 <ol>
-  <%= render partial: 'playlist_item', collection: @items %>
+  <%= render partial: 'playlist_item', collection: @items if @items %>
 </ol>
