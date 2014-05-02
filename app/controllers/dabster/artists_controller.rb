@@ -9,8 +9,8 @@ module Dabster
 
     def start_playlist
       artist = Dabster::Artist.first!(id: params[:id])
-      playlist = Dabster::Playlist.create(current_position: 0)
-      playlist.add_initial_artist(artist)
+      playlist = Dabster::Playlist.create
+      playlist.initialize_with_artist(artist)
       $rabbitmq_channel.default_exchange.publish(playlist.id.to_s, routing_key: 'dabster.playbackserver.play')
       redirect_to playback_path
     end

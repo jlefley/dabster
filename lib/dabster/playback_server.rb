@@ -15,7 +15,7 @@ module Dabster
       client.on_current_position_changed do |new_position|
         puts "[PlaybackServer] Current position changed, new position: #{new_position}"
         if new_position == @entries.length - 1
-          @current_playlist.set_current_item(@current_playlist.next_item)
+          @current_playlist.increment_current_position
           item = @current_playlist.next_item
           client.add_entry(item.path)
           @entries << [client.entry_ids.last, item]
