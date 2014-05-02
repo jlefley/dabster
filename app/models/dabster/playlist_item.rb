@@ -14,5 +14,9 @@ module Dabster
       library_item.path
     end
 
+    def add_playback
+      library_item.add_playback
+    end
+
   end
 end

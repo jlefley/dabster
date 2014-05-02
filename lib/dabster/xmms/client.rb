@@ -43,13 +43,20 @@ module Dabster
         @xmms.playback_start.wait
       end
      
-      def entries
+      def entry_ids
         @xmms.playlist.entries.wait.value
       end
 
-      def on_current_position_changed(&listener)
+      def on_current_position_changed
         @xmms.broadcast_playlist_current_pos.notifier do |res|
-          listener.call(res[:position])
+          yield(res[:position])
+          true
+        end
+      end
+
+      def on_playback_started
+        @xmms.broadcast_playback_current_id.notifier do |res|
+          yield(res)
           true
         end
       end

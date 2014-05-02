@@ -16,6 +16,8 @@ feature 'Playlist playback' do
   let!(:item3) { Dabster::Library::Item.create title: 'title3', artist: 'artist3', path: 'path3' }
 
   before do
+    Time.stub(:now).and_return(Time.new(2000, 1, 1))
+
     playlist.add_item(library_item: item0, position: 0)
     playlist.add_item(library_item: item1, position: 1)
     playlist.add_item(library_item: item2, position: 2)
@@ -37,7 +39,8 @@ feature 'Playlist playback' do
     play_playlist
     
     expect(page).to list_items [item0, item1, item2]
-    expect(item0.last_playback_started_at)
+
+    expect(item0.playbacks[0].playback_started_at).to eq(Time.new(2000, 1, 1))
   end
 
   scenario 'add next song in playlist when queue advances' do

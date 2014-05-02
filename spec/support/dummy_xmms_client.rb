@@ -5,23 +5,28 @@ class DummyXmmsClient
   end
 
   def clear_playlist
-    @entries = []
+    @entry_ids = []
   end
 
   def add_entry(entry)
-    @entries << @entries.length
+    @entry_ids << @entry_ids.length
   end
 
-  def entries
-    @entries.dup
+  def entry_ids
+    @entry_ids.dup
   end
 
   def on_current_position_changed(&listener)
     @current_position_changed_listener = listener
   end
 
+  def on_playback_started(&listener)
+    @playback_started_listener = listener
+  end
+
   def change_current_position(new_position)
     @current_position_changed_listener.call(new_position)
+    @playback_started_listener.call(@entry_ids[new_position])
   end
 
 end

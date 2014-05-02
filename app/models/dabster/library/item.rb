@@ -31,8 +31,8 @@ module Dabster
         weighted_artists
       end
 
-      def start_playback
-        add_playback({})
+      def add_playback
+        super({})
       end
 
       private

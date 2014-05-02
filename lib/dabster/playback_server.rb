@@ -16,9 +16,16 @@ module Dabster
         puts "[PlaybackServer] Current position changed, new position: #{new_position}"
         if new_position == @entries.length - 1
           @current_playlist.set_current_item(@current_playlist.next_item)
-          client.add_entry(@current_playlist.next_item.path)
-          @entries = client.entries
+          item = @current_playlist.next_item
+          client.add_entry(item.path)
+          @entries << [client.entry_ids.last, item]
         end
+      end
+
+      client.on_playback_started do |entry_id|
+        puts "[PlaybackServer] Started entry playback, entry id: #{entry_id}"
+        item = @entries.select { |e| e[0] == entry_id }.first[1]
+        item.add_playback
       end
 
       EM.run do
@@ -33,11 +40,14 @@ module Dabster
           @current_playlist = Dabster::Playlist.first!(id: payload.to_i)
           client.stop_playback
           client.clear_playlist
-          client.add_entry(@current_playlist.current_item.path)
-          client.add_entry(@current_playlist.next_item.path)
-          @entries = client.entries
+          item0 = @current_playlist.current_item
+          item1 = @current_playlist.next_item
+          client.add_entry(item0.path)
+          client.add_entry(item1.path)
+          ids = client.entry_ids
+          @entries = [[ids[0], item0], [ids[1], item1]]
           client.start_playback
-          puts '[PlaybackServer] Started playback'
+          puts '[PlaybackServer] Started playlist playback'
         end
 
         rpc_queue.subscribe do |metadata, payload|
