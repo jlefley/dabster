@@ -1,7 +1,7 @@
 require 'sequel'
 require 'fileutils'
 require 'dabster/version'
-require 'dabster/sequel_initialization'
+require 'dabster/sequel'
 require 'dabster/errors'
 require 'dabster/config'
 
@@ -66,6 +66,7 @@ else
   Dabster.initialize
   Sequel.sqlite(Dabster.config.database)
   Dabster.connect_libdb 
+  Dabster.initialize_db
   
   %w(whatcd services logic scrapers).each do |dir|
     Dir["#{Dabster.root}/lib/dabster/#{dir}/**/*.rb"].each { |f| require(f) }

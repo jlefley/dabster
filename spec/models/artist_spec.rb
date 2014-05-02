@@ -1,8 +1,4 @@
 require 'db_spec_helper'
-require 'playlist'
-require 'library_item_playback'
-require 'library/item'
-require 'artist'
 
 describe Dabster::Artist do
   subject(:artist) { described_class.new }

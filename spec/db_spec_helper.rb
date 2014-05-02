@@ -1,26 +1,14 @@
-#Sequel.extension :migration
-#Sequel.connect(YAML.load_file(File.join(File.expand_path('../../config', __FILE__), 'database.yml'))['test'])
-#load File.join(dir, 'db', 'schema.rb')
-#Sequel::Migration.descendants.each { |m| m.apply(Sequel::Model.db, :up) }
+# Set the environment to test
+ENV['DABSTER_ENV'] ||= 'test'
 
-require 'sequel'
-require 'unit_spec_helper'
-require 'sequel_initialization'
+# Run each example in a database transaction
 require 'support/database_cleaner'
 
-root = File.expand_path('../..', __FILE__)
+# Load library without rails components
+require 'dabster'
 
-Sequel.sqlite
-
-if !Sequel::Model.db.table_exists?(:groups)
-  Sequel::Model.db.run(File.read(File.join(root, 'db', 'structure.sql')))
-  load File.join(root, 'db', 'seeds.rb')
-
-  Sequel::Model.db.run(%(ATTACH DATABASE ':memory:' AS libdb))
-  load File.join(root, 'db', 'library_schema.rb')
-end
-
-$: << File.join(root, 'app', 'models', 'dabster')
+# Load library database schema
+load File.expand_path('../../db/library_schema.rb', __FILE__)
 
 RSpec.configure do |config|
   config.order = 'random'
