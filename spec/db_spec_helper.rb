@@ -8,7 +8,7 @@ require 'support/database_cleaner'
 require 'dabster'
 
 # Load library database schema
-load File.expand_path('../../db/library_schema.rb', __FILE__)
+require 'support/library_database'
 
 RSpec.configure do |config|
   config.order = 'random'

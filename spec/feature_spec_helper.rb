@@ -1,14 +1,17 @@
 ENV['RAILS_ENV'] ||= 'test'
+
 require 'support/dummy_xmms_client'
+
 require File.expand_path('../../spec/dummy/config/environment', __FILE__)
+
 require 'rspec/rails'
 require 'rspec/autorun'
 require 'capybara/poltergeist'
 
 Capybara.javascript_driver = :poltergeist
 
+# Load schema and seed data
 Dabster.initialize_db
-load File.expand_path('../../db/library_schema.rb', __FILE__)
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
