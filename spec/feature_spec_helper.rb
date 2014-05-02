@@ -15,14 +15,6 @@ load File.expand_path('../../db/library_schema.rb', __FILE__)
 Dir[File.join(Dabster.root, 'spec/support/**/*.rb')].each { |f| require f }
 
 RSpec.configure do |config|
-  # ## Mock Framework
-  #
-  # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
-  #
-  # config.mock_with :mocha
-  # config.mock_with :flexmock
-  # config.mock_with :rr
-
   # If true, the base class of anonymous controllers will be inferred
   # automatically. This will be the default behavior in future versions of
   # rspec-rails.

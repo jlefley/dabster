@@ -1,6 +1,4 @@
 require 'db_spec_helper'
-require 'logic/artist_matching'
-require 'group'
 
 describe Dabster::Group do
   subject(:group) { described_class.new }

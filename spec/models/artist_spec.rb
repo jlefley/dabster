@@ -42,10 +42,10 @@ describe Dabster::Artist do
     let!(:item0) { artist.add_item({}, type: :artist, confidence: 1) }
     let!(:item1) { artist.add_item({}, type: :artist, confidence: 1) }
     let!(:item2) { artist.add_item({}, type: :artist, confidence: 1) }
-    let!(:playback0) { item0.add_playback(playlist_id: playlist.id) }
-    let!(:playback1) { item0.add_playback(playlist_id: playlist.id) }
-    let!(:playback2) { item1.add_playback(playlist_id: playlist.id) }
-    let!(:playback3) { item1.add_playback(playlist_id: playlist.id) }
+    let!(:playback0) { item0.start_playback }
+    let!(:playback1) { item0.start_playback }
+    let!(:playback2) { item1.start_playback }
+    let!(:playback3) { item1.start_playback }
 
     context 'when getting the last time artist was played' do
       it 'returns the latest playback time of all items associated with artist' do
