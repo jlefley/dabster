@@ -60,4 +60,35 @@ describe 'Dynamic playlist based on single artist having two similar artists wit
       expect(playlist.next_item.library_item).to eq(item1)
     end
   end
+
+  context 'when fifth song is selected' do
+    it 'returns least recently played item from artist most similar to initial artist' do
+      item0.add_playback
+      item1.add_playback
+      item2.add_playback
+      item4.add_playback
+      playlist.increment_current_position
+      playlist.increment_current_position
+      playlist.increment_current_position
+      
+      expect(playlist.next_item.library_item).to eq(item3)
+    end
+  end
+
+  context 'when sixth song is selected' do
+    it 'returns least recently played item from artist least similar to initial artist' do
+      item0.add_playback
+      item1.add_playback
+      item2.add_playback
+      item3.add_playback
+      item4.add_playback
+      playlist.increment_current_position
+      playlist.increment_current_position
+      playlist.increment_current_position
+      playlist.increment_current_position
+      
+      expect(playlist.next_item.library_item).to eq(item5)
+    end
+  end
+  
 end
