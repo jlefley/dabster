@@ -7,6 +7,7 @@ class DummyXmmsClient
   end
 
   def clear_playlist
+    @current_position = 0
     @entry_ids = []
   end
 
@@ -47,6 +48,12 @@ class DummyXmmsClient
 
   def play_next_entry
     @current_position += 1
+    @current_position_changed_listener.call(@current_position)
+    @playback_started_listener.call(@entry_ids[@current_position])
+  end
+  
+  def play_previous_entry
+    @current_position -= 1
     @current_position_changed_listener.call(@current_position)
     @playback_started_listener.call(@entry_ids[@current_position])
   end

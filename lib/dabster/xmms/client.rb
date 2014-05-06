@@ -59,6 +59,11 @@ module Dabster
         @xmms.playlist_set_next_rel(1).wait
         @xmms.playback_tickle.wait
       end
+      
+      def play_previous_entry
+        @xmms.playlist_set_next_rel(-1).wait
+        @xmms.playback_tickle.wait
+      end
 
       def current_position
         @xmms.playlist.current_pos.wait.value[:position]

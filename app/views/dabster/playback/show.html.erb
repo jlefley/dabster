@@ -1,9 +1,15 @@
-<%# javascript 'dabster/playback' %>
-<p><%= @status %></p>
-<%= button_to '◀ ◀ ', previous_playback_path, remote: true, form_class: 'playback-control' %>
-<%= button_to '▶ ', play_playback_path, remote: true, form_class: 'playback-control' %>
-<%= button_to '❚❚', pause_playback_path, remote: true, form_class: 'playback-control' %>
-<%= button_to '▶ ▶', next_playback_path, remote: true, form_class: 'playback-control' %>
+<%= javascript 'dabster/playback' %>
+<% if @status == :empty || @playlist.nil? %>
+  <p>Current playlist not present<p>
+<% elsif @status == :playing %>
+  <p>Now playing: <%= @playlist.current_item.title %> - <%= @playlist.current_item.artist %></p>
+<% else %>
+  <p><%= @status.capitalize %></p>
+<% end %>
+<%= button_to '◀◀', previous_playback_path, remote: true, form_class: 'playback-control', disabled: previous_disabled? %>
+<%= button_to '▶',  play_playback_path,     remote: true, form_class: 'playback-control', disabled: play_disabled? %>
+<%= button_to '❚❚', pause_playback_path,    remote: true, form_class: 'playback-control', disabled: pause_disabled? %>
+<%= button_to '▶▶', next_playback_path,     remote: true, form_class: 'playback-control', disabled: next_disabled? %>
 <ol>
   <%= render partial: 'playlist_item', collection: @items if @items %>
 </ol>

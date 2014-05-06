@@ -8,10 +8,10 @@ module Dabster
       correlation_id = SecureRandom.uuid
 
       # Subscribe to response queue
-      status = nil
+      rpc_response = nil
       consumer = reply_queue.subscribe do |delivery_info, properties, payload|
         if properties.correlation_id == correlation_id
-          status = OpenStruct.new(JSON.parse(payload, symbolize_names: true))
+          rpc_response = OpenStruct.new(JSON.parse(payload, symbolize_names: true))
           lock.synchronize { condition.signal }
           delivery_info.consumer.cancel
         end
@@ -28,14 +28,10 @@ module Dabster
         lock.synchronize { condition.wait(lock) }
       end
       
-      playlist = Dabster::Playlist.first(id: status.playlist_id)
-      
-      if status.state == 'empty' || playlist.nil?
-        @status = 'Current playlist not present'
-      else
-        @items = playlist.items
-        @current_position = playlist.current_position
-        @status = "Now playing: #{playlist.current_item.title} - #{playlist.current_item.artist}"
+      @status = rpc_response.status.to_sym
+      if @playlist = Dabster::Playlist.first(id: rpc_response.playlist_id)
+        @items = @playlist.items
+        @current_position = @playlist.current_position
       end
     end
 
@@ -51,6 +47,11 @@ module Dabster
 
     def next
       $rabbitmq_channel.default_exchange.publish('next', routing_key: 'dabster.playbackserver.control')
+      render json: true
+    end
+
+    def previous
+      $rabbitmq_channel.default_exchange.publish('previous', routing_key: 'dabster.playbackserver.control')
       render json: true
     end
 

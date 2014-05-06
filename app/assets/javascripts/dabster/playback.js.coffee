@@ -1,6 +1,8 @@
 $(->
-  source = new EventSource('/playback_status')
-  source.addEventListener('status-update', (e) ->
-    console.log(e.data)
+  $(document).on('ajax:complete', ->
+    Turbolinks.visit(document.URL)
   )
+  setInterval((->
+    Turbolinks.visit(document.URL)
+  ), 10000)
 )

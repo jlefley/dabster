@@ -38,5 +38,5 @@ Dabster::Engine.routes.draw do
     end
   end
 
-  resource :playback_status, only: [:show], controller: :playback_status
+  resources :playback_notifications, only: [:index]
 end
