@@ -7,7 +7,7 @@ module Dabster
       db.transaction do
         add_initial_artist(artist)
         update(current_position: 0)
-        add_item(library_item: select_item, position: 0)
+        add_item(library_item: artist.least_played_item, position: 0)
       end
     end
 
@@ -21,21 +21,17 @@ module Dabster
 
     def next_item
       next_position = current_position + 1
-      
-      if !(item = items[next_position])
-        # No item at new position, need to dynamically select the next item
-        add_item(library_item: item = select_item, position: next_position)
-      end
-
-      item
+      items[next_position] || add_item(library_item: select_item, position: next_position)
     end
 
     private
 
     def select_item
       initial_artist = initial_artists.first
-      
-      if items.empty?
+     
+      initial_artist.reload
+
+      if items.empty? || initial_artist.should_play?
         # Select item from the initial artist
         initial_artist.least_played_item
       else

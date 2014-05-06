@@ -1,1 +1,6 @@
-<li><%= playlist_item.title %> - <%= playlist_item.artist %></li>
+<% if playlist_item.position == @current_position %>
+  <li class='current-position'>
+<% else %>
+  <li>
+<% end %>
+<%= playlist_item.title %> - <%= playlist_item.artist %></li>

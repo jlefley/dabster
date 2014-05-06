@@ -1,6 +1,9 @@
 require 'sequel-rails'
 require 'will_paginate'
 require 'will_paginate/sequel'
+require 'jquery-rails'
+#require 'turbolinks'
+require 'coffee-rails'
 
 module Dabster
   class Engine < ::Rails::Engine

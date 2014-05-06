@@ -1,4 +1,9 @@
+<%# javascript 'dabster/playback' %>
 <p><%= @status %></p>
+<%= button_to '◀ ◀ ', previous_playback_path, remote: true, form_class: 'playback-control' %>
+<%= button_to '▶ ', play_playback_path, remote: true, form_class: 'playback-control' %>
+<%= button_to '❚❚', pause_playback_path, remote: true, form_class: 'playback-control' %>
+<%= button_to '▶ ▶', next_playback_path, remote: true, form_class: 'playback-control' %>
 <ol>
   <%= render partial: 'playlist_item', collection: @items if @items %>
 </ol>

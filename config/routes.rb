@@ -29,5 +29,14 @@ Dabster::Engine.routes.draw do
     end
   end
 
-  resource :playback, only: [:show], controller: :playback
+  resource :playback, only: [:show], controller: :playback do
+    collection do
+      post :play
+      post :pause
+      post :next
+      post :previous
+    end
+  end
+
+  resource :playback_status, only: [:show], controller: :playback_status
 end

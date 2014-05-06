@@ -18,13 +18,18 @@ Gem::Specification.new do |spec|
   spec.test_files    = Dir['spec/**/*']
   spec.require_paths = ['lib']
 
-  spec.add_development_dependency 'rspec',       '~> 2.14.1'
-  spec.add_development_dependency 'bundler',     '~> 1.6'
-  spec.add_development_dependency 'rails',       '~> 4.0.4'
-  spec.add_development_dependency 'poltergeist', '~> 1.5.0'
-  spec.add_development_dependency 'rspec-rails', '~> 2.14.2'
+  spec.add_development_dependency 'rspec',            '~> 2.14.1'
+  spec.add_development_dependency 'bundler',          '~> 1.6'
+  spec.add_development_dependency 'poltergeist',      '~> 1.5.0'
+  spec.add_development_dependency 'rspec-rails',      '~> 2.14.2'
   spec.add_development_dependency 'database_cleaner', '~> 1.2.0'
   spec.add_development_dependency 'rake'
+  
+  spec.add_dependency 'rails',            '~> 4.0.4'
+  spec.add_dependency 'jquery-rails',     '~> 3.1.0'
+  spec.add_dependency 'coffee-rails',     '~> 4.0.1'
+  spec.add_dependency 'turbolinks',       '~> 2.2.2'
+  spec.add_dependency 'puma',             '~> 2.8.2'
 
   spec.add_dependency 'sequel-rails',     '~> 0.9.2'
   spec.add_dependency 'sqlite3',          '~> 1.3.9'

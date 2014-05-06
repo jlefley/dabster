@@ -19,3 +19,11 @@ td {
 .inline {
   display: inline
 }
+
+.playback-control {
+  display: inline
+}
+
+.playback-control div {
+  display: inline
+}

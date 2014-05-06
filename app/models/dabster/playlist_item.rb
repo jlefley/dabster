@@ -1,6 +1,7 @@
 module Dabster
   class PlaylistItem < Sequel::Model
     many_to_one :library_item, class: 'Dabster::Library::Item'
+    many_to_one :artist, class: 'Dabster::Artist'
 
     def title
       library_item.title

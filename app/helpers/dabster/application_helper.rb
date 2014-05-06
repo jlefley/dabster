@@ -10,5 +10,9 @@ module Dabster
     def try_format_float float
       ('%.2f' % float) if float
     end
+
+    def javascript(file)
+      content_for(:head) { javascript_include_tag file, 'data-turbolinks-track' => true }
+    end
   end
 end

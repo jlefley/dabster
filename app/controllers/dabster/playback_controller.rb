@@ -27,14 +27,32 @@ module Dabster
       Timeout.timeout(2) do
         lock.synchronize { condition.wait(lock) }
       end
-
-      if status.state == 'empty'
+      
+      playlist = Dabster::Playlist.first(id: status.playlist_id)
+      
+      if status.state == 'empty' || playlist.nil?
         @status = 'Current playlist not present'
       else
-        playlist = Dabster::Playlist.first!(id: status.playlist_id)
         @items = playlist.items
+        @current_position = playlist.current_position
         @status = "Now playing: #{playlist.current_item.title} - #{playlist.current_item.artist}"
       end
     end
+
+    def pause
+      $rabbitmq_channel.default_exchange.publish('pause', routing_key: 'dabster.playbackserver.control')
+      render json: true
+    end
+
+    def play
+      $rabbitmq_channel.default_exchange.publish('play', routing_key: 'dabster.playbackserver.control')
+      render json: true
+    end
+
+    def next
+      $rabbitmq_channel.default_exchange.publish('next', routing_key: 'dabster.playbackserver.control')
+      render json: true
+    end
+
   end
 end

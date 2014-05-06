@@ -3,11 +3,11 @@ module Dabster
     module ArtistSorting
 
       def sorted_similar_artists
-        similar_artists = weighted_similar_artists
-        if !(unplayed_artists = similar_artists.select { |a| a.last_played_score.nil? }).empty?
+        weighted_artists = weighted_similar_artists
+        if !(unplayed_artists = weighted_artists.select { |a| a.last_played_score.nil? }).empty?
           unplayed_artists.sort { |a, b| b.similarity_score <=> a.similarity_score }
         else
-          similar_artists.sort { |a, b| combine_scores(b) <=> combine_scores(a) }
+          weighted_artists.sort { |a, b| combine_scores(b) <=> combine_scores(a) }
         end
       end
 

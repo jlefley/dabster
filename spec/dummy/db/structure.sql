@@ -5,7 +5,7 @@ CREATE TABLE `groups` (`id` integer NOT NULL PRIMARY KEY AUTOINCREMENT, `library
 CREATE TABLE `library_item_playbacks` (`id` integer NOT NULL PRIMARY KEY AUTOINCREMENT, `library_item_id` integer NOT NULL, `playback_started_at` timestamp NOT NULL);
 CREATE TABLE `playlist_initial_artist_relationships` (`initial_artist_id` integer NOT NULL REFERENCES `artists`, `playlist_id` integer NOT NULL REFERENCES `playlists`, PRIMARY KEY (`initial_artist_id`, `playlist_id`));
 CREATE TABLE `playlist_items` (`id` integer NOT NULL PRIMARY KEY AUTOINCREMENT, `playlist_id` integer NOT NULL REFERENCES `playlists`, `library_item_id` integer NOT NULL, `position` integer NOT NULL, `created_at` timestamp NOT NULL);
-CREATE TABLE `playlists` (`id` integer NOT NULL PRIMARY KEY AUTOINCREMENT, `created_at` timestamp NOT NULL, `current_position` integer);
+CREATE TABLE `playlists`(`id` integer DEFAULT (NULL) NOT NULL PRIMARY KEY, `created_at` timestamp DEFAULT (NULL) NOT NULL, `current_position` integer);
 CREATE TABLE `schema_info` (`version` integer DEFAULT (0) NOT NULL);
 CREATE TABLE `schema_migrations` (`filename` varchar(255) NOT NULL PRIMARY KEY);
 CREATE TABLE `similar_artists_relationships` (`artist_id` integer NOT NULL REFERENCES `artists`, `similar_artist_id` integer NOT NULL REFERENCES `artists`, `whatcd_score` integer NOT NULL, PRIMARY KEY (`artist_id`, `similar_artist_id`));
