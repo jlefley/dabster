@@ -20,7 +20,7 @@ describe Dabster::SimilarArtistsRelationship do
 
   describe 'when finding relationships for artists' do
     def rel(artist, similar_artist, distance)
-      { artist_id: artist.id, similar_artist_id: similar_artist.id, distance: distance, whatcd_score: 100 }
+      OpenStruct.new(artist_id: artist.id, similar_artist_id: similar_artist.id, distance: distance, whatcd_score: 100)
     end
     
     def relate_artists(artist_a, artist_b)
@@ -36,8 +36,8 @@ describe Dabster::SimilarArtistsRelationship do
     let!(:f) { Dabster::Artist.create(whatcd_name: 'F') }
     let!(:x) { Dabster::Artist.create(whatcd_name: 'X') }
 
-    let(:a_a) { { artist_id: a.id, similar_artist_id: a.id, distance: 0, whatcd_score: 0 } }
-    let(:x_x) { { artist_id: x.id, similar_artist_id: x.id, distance: 0, whatcd_score: 0 } }
+    let(:a_a) { OpenStruct.new(artist_id: a.id, similar_artist_id: a.id, distance: 0, whatcd_score: 0) }
+    let(:x_x) { OpenStruct.new(artist_id: x.id, similar_artist_id: x.id, distance: 0, whatcd_score: 0) }
 
     before do
       relate_artists(a, b)

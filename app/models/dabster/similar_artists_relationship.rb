@@ -29,7 +29,7 @@ module Dabster
               union(db["level#{d}".to_sym].exclude(similar_artist_id: artist_ids), all: true)
           end
 
-          result_ds.all
+          result_ds.all.map { |d| OpenStruct.new(d) }
         end
         results.flatten
       end
