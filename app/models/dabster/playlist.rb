@@ -31,7 +31,7 @@ module Dabster
      
       initial_artist.reload
 
-      if items.empty? || initial_artist.should_play?
+      if items.empty?# || initial_artist.should_play?
         # Select item from the initial artist
         initial_artist.least_played_item
       else

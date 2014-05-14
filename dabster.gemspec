@@ -34,7 +34,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'sequel-rails',     '~> 0.9.2'
   spec.add_dependency 'sqlite3',          '~> 1.3.9'
   spec.add_dependency 'will_paginate',    '~> 3.0.5'
-  spec.add_dependency 'sequel',           '~> 4.9.0'
+  spec.add_dependency 'sequel',           '~> 4.10.0'
   spec.add_dependency 'json',             '~> 1.8.1'
   spec.add_dependency 'htmlentities',     '~> 4.3.1'
   spec.add_dependency 'similar_text',     '~> 0.0.4'
