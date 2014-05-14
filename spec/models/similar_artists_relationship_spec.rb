@@ -35,6 +35,10 @@ describe Dabster::SimilarArtistsRelationship do
     let!(:e) { Dabster::Artist.create(whatcd_name: 'E') }
     let!(:f) { Dabster::Artist.create(whatcd_name: 'F') }
     let!(:x) { Dabster::Artist.create(whatcd_name: 'X') }
+
+    let(:a_a) { { artist_id: a.id, similar_artist_id: a.id, distance: 0, whatcd_score: 0 } }
+    let(:x_x) { { artist_id: x.id, similar_artist_id: x.id, distance: 0, whatcd_score: 0 } }
+
     before do
       relate_artists(a, b)
       relate_artists(a, c)
@@ -49,20 +53,20 @@ describe Dabster::SimilarArtistsRelationship do
     context 'when a single artist is specified' do
       context 'when max distance is one' do
         it 'returns all relationships where artist matches specified artist' do
-          expect(described_class.find_by_artists([a], 1)).to match_array([rel(a, b, 1), rel(a, c, 1)])
+          expect(described_class.find_by_artists([a], 1)).to match_array([a_a, rel(a, b, 1), rel(a, c, 1)])
         end
       end
       context 'when max distance is two' do
         it 'returns all relationships within 2 edge traversals of specified artist' do
           expect(described_class.find_by_artists([a], 2)).to match_array(
-            [rel(a, b, 1), rel(a, c, 1), rel(a, b, 2), rel(a, c, 2), rel(a, d, 2), rel(a, x, 2)]
+            [a_a, rel(a, b, 1), rel(a, c, 1), rel(a, b, 2), rel(a, c, 2), rel(a, d, 2), rel(a, x, 2)]
           )
         end
       end
       context 'when max distance is three' do
         it 'returns all relationships within 3 edge traversals of specified artist' do
           expect(described_class.find_by_artists([a], 3)).to match_array(
-            [rel(a, b, 1), rel(a, c, 1), rel(a, b, 2), rel(a, c, 2), rel(a, d, 2), rel(a, x, 2),
+            [a_a, rel(a, b, 1), rel(a, c, 1), rel(a, b, 2), rel(a, c, 2), rel(a, d, 2), rel(a, x, 2),
              rel(a, d, 3), rel(a, e, 3), rel(a, f, 3), rel(a, x, 3), rel(a, f, 3)]
           )
         end
@@ -72,14 +76,14 @@ describe Dabster::SimilarArtistsRelationship do
       context 'when max distance is one' do
         it 'returns all relationships where artist matches specified artist' do
           expect(described_class.find_by_artists([a, x], 1)).to match_array(
-            [rel(a, b, 1), rel(a, c, 1), rel(x, c, 1), rel(x, f, 1)]
+            [a_a, x_x, rel(a, b, 1), rel(a, c, 1), rel(x, c, 1), rel(x, f, 1)]
           )
         end
       end
       context 'when max distance is two' do
         it 'returns all relationships within 2 edge traversals of specified artist' do
           expect(described_class.find_by_artists([a, x], 2)).to match_array(
-            [rel(a, b, 1), rel(a, c, 1), rel(a, b, 2), rel(a, c, 2), rel(a, d, 2),
+            [a_a, x_x, rel(a, b, 1), rel(a, c, 1), rel(a, b, 2), rel(a, c, 2), rel(a, d, 2),
              rel(x, c, 1), rel(x, f, 1), rel(x, b, 2), rel(x, d, 2)]
           )
         end
@@ -87,7 +91,7 @@ describe Dabster::SimilarArtistsRelationship do
       context 'when max distance is three' do
         it 'returns all relationships within 3 edge traversals of specified artist' do
           expect(described_class.find_by_artists([a, x], 3)).to match_array(
-            [rel(a, b, 1), rel(a, c, 1), rel(a, b, 2), rel(a, c, 2), rel(a, d, 2),
+            [a_a, x_x, rel(a, b, 1), rel(a, c, 1), rel(a, b, 2), rel(a, c, 2), rel(a, d, 2),
              rel(a, d, 3), rel(a, e, 3), rel(a, f, 3), rel(a, f, 3),
              rel(x, c, 1), rel(x, f, 1), rel(x, b, 2), rel(x, d, 2),
              rel(x, b, 3), rel(x, d, 3), rel(x, b, 3), rel(x, e, 3)]

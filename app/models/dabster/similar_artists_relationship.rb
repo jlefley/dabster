@@ -9,10 +9,12 @@ module Dabster
         raise(ArgumentError, 'max distance must be 3 or less') unless max_distance < 4
         artist_ids = artists.map { |a| a.id }
         results = artists.map do |artist|
-          base_ds = db[table_name].select(Sequel.as(artist.id, :artist_id), :whatcd_score, :similar_artist_id)
-          level0_ds = db.select(Sequel.as(artist.id, :artist_id), Sequel.as('', :similar_artist_id), Sequel.as(0, :distance))
+          base_ds = db[table_name].select(Sequel.as(artist.id, :artist_id), :similar_artist_id, :whatcd_score)
+          level0_ds = db.select(Sequel.as(artist.id, :artist_id), Sequel.as(artist.id, :similar_artist_id),
+            Sequel.as(0, :whatcd_score), Sequel.as(0, :distance))
           level1_ds = base_ds.select_more(Sequel.as(1, :distance)).where(artist_id: db[:level0].select(:artist_id))
-          result_ds = db[:level1].with(:level0, level0_ds).with(:level1, level1_ds).exclude(similar_artist_id: artist_ids)
+          result_ds = db[:level0].with(:level0, level0_ds).with(:level1, level1_ds).
+            union(db[:level1].exclude(similar_artist_id: artist_ids), all: true)
           
           (2..max_distance).each do |d|
             level_ds = base_ds.select_more(Sequel.as(d, :distance)).
