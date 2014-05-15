@@ -27,6 +27,23 @@ module Dabster
     private
 
     def select_item
+     
+      if items.empty?
+        # Select item from the initial artist
+        initial_artist.least_played_item
+      else
+        relationships = SimilarArtistsRelationship.find_by_artists(initial_artists, 1)
+        artists = Artist.where(artists__id: relationships.map { |r| r.similar_artist_id }).having_items.
+          eager(:library_item_playbacks).all
+        weighted_artists = RecommendationEngineCore.weigh_artist_similarity(artists, relationships)
+        weighted_artists = RecommendationEngineCore.weigh_artist_last_playback(weighted_artists)
+        sorted_artists = RecommendationEngineCore.sort_artists(weighted_artists)
+        puts sorted_artists.inspect
+        Artist.first(id: sorted_artists.first.id).least_played_item
+      end
+    end
+    
+    def old_select_item
       initial_artist = initial_artists.first
      
       initial_artist.reload

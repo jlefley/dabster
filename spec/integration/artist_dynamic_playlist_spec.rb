@@ -14,6 +14,7 @@ describe 'Dynamic playlist based on single artist having two similar artists wit
   let!(:playlist) { Dabster::Playlist.create }
 
   before do
+    puts artist0.id
     artist0.add_similar_artist(artist1, whatcd_score: 200)
     artist0.add_similar_artist(artist2, whatcd_score: 100)
     item0.add_artist(artist0, type: :artist, confidence: 1.0)
@@ -64,9 +65,9 @@ describe 'Dynamic playlist based on single artist having two similar artists wit
   context 'when fifth song is selected' do
     it 'returns least recently played item from artist most similar to initial artist' do
       item0.add_playback
-      item1.add_playback
       item2.add_playback
       item4.add_playback
+      item1.add_playback
       playlist.increment_current_position
       playlist.increment_current_position
       playlist.increment_current_position
@@ -78,10 +79,10 @@ describe 'Dynamic playlist based on single artist having two similar artists wit
   context 'when sixth song is selected' do
     it 'returns least recently played item from artist least similar to initial artist' do
       item0.add_playback
-      item1.add_playback
       item2.add_playback
-      item3.add_playback
       item4.add_playback
+      item1.add_playback
+      item3.add_playback
       playlist.increment_current_position
       playlist.increment_current_position
       playlist.increment_current_position

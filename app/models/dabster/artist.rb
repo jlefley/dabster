@@ -20,6 +20,16 @@ module Dabster
     many_to_many :library_item_playbacks, class: 'Dabster::LibraryItemPlayback',
       join_table: :artist_library_item_relationships, right_key: :library_item_id, right_primary_key: :library_item_id
 
+    dataset_module do
+      def having_items
+        join(:artist_library_item_relationships, artist_id: :artists__id).distinct.select_all(:artists)
+      end
+    end
+
+    def marshal_dump
+      { id: id, last_played_at: last_played_at }
+    end
+
     def similar_artist_relationships_ordered_by_score
       similar_artist_relationships_dataset.eager_graph_with_options(:similar_artist, join_type: :inner).
         order(:whatcd_score).reverse.all

@@ -35,6 +35,16 @@ describe Dabster::Artist do
     end
   end
 
+  describe 'when selecting artists having items' do
+    let!(:other_artist) { described_class.create }
+    let!(:saved_artist) { artist.save }
+    let!(:item0) { artist.add_item({}, type: :artist, confidence: 1) }
+    
+    it 'returns artists matching criteria and having items' do
+      expect(described_class.where(artists__id: [other_artist.id, artist.id]).having_items.all).to match_array([artist])
+    end
+  end
+
   describe 'when querying for item information' do
 
     let!(:playlist) { Dabster::Playlist.create }    

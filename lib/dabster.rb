@@ -4,6 +4,7 @@ require 'dabster/version'
 require 'dabster/sequel'
 require 'dabster/errors'
 require 'dabster/config'
+require 'dabster/recommendation_engine_core'
 
 module Dabster
  
