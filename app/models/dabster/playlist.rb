@@ -41,24 +41,6 @@ module Dabster
         Artist.first(id: sorted_artists.first.id).least_played_item
       end
     end
-    
-    def old_select_item
-      initial_artist = initial_artists.first
-     
-      initial_artist.reload
-
-      if items.empty?# || initial_artist.should_play?
-        # Select item from the initial artist
-        initial_artist.least_played_item
-      else
-        # Select item from artist similar to initial artist
-        initial_artist.sorted_similar_artists.each do |artist|
-          if item = artist.least_played_item
-            return item
-          end
-        end
-      end
-    end
-
+   
   end
 end

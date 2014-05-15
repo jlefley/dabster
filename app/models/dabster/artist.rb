@@ -1,9 +1,6 @@
 module Dabster
   class Artist < Sequel::Model
     include Logic::ItemSelection
-    include Logic::ArtistSorting
-
-    attr_accessor :similarity_score, :last_played_score
 
     plugin :categorized_relationship
 
@@ -13,10 +10,6 @@ module Dabster
       relationship_class: 'Dabster::ArtistLibraryItemRelationship', right_key: :library_item_id
     one_to_many :similar_artist_relationships, class: 'Dabster::SimilarArtistsRelationship'
     many_to_many :similar_artists, class: self, join_table: :similar_artists_relationships
-    many_to_many :similar_artists_having_items, class: self, join_table: :similar_artists_relationships,
-      right_key: :similar_artist_id, eager: :library_item_playbacks do |ds|
-      ds.join(:artist_library_item_relationships, artist_id: :artists__id).distinct
-    end
     many_to_many :library_item_playbacks, class: 'Dabster::LibraryItemPlayback',
       join_table: :artist_library_item_relationships, right_key: :library_item_id, right_primary_key: :library_item_id
 
@@ -26,6 +19,15 @@ module Dabster
       end
     end
 
+    def validate
+      super
+      
+      if whatcd_id
+        validates_presence :whatcd_name
+        validates_presence :whatcd_updated_at
+      end
+    end
+  
     def marshal_dump
       { id: id, last_played_at: last_played_at }
     end
@@ -40,21 +42,8 @@ module Dabster
         select_all(:items)
     end
 
-    def validate
-      super
-      
-      if whatcd_id
-        validates_presence :whatcd_name
-        validates_presence :whatcd_updated_at
-      end
-    end
-
     def last_played_at
       library_item_playbacks.map { |p| p.playback_started_at }.sort { |a, b| b <=> a }.first
-    end
-
-    def similar_artist_last_played_at
-      similar_artists_having_items.map { |a| a.last_played_at }.compact.max
     end
 
     def least_recently_played_item
@@ -68,25 +57,6 @@ module Dabster
     def random_unplayed_item
       items_dataset.left_join(:library_item_playbacks, { library_item_id: :items__id }, table_alias: :p).where(p__id: nil).
         order{ random{} }.first
-    end
-
-    def weighted_similar_artists
-      normalizer = Logic::SimilarArtistsNormalizer.new(weighted_artists = similar_artists_having_items)
-      normalizer.assign_similarity_scores(similar_artist_relationships)
-      normalizer.assign_last_played_scores
-      weighted_artists
-    end
-
-    def all_similar_artists_played?
-      similar_artists_having_items.length == similar_artists_having_items.map { |a| a.last_played_at }.compact.length
-    end
-
-    def should_play?
-      if last_played_at && similar_artist_last_played_at && all_similar_artists_played?
-        last_played_at < similar_artist_last_played_at
-      else
-        false
-      end
     end
 
     private

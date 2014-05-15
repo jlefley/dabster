@@ -24,13 +24,6 @@ module Dabster
         all_similar_artist_relationships_dataset.exclude(similar_artist_id: artist_id_filter).all
       end
 
-      def weighted_similar_artists
-        normalizer = Logic::SimilarArtistsNormalizer.new(weighted_artists = similar_artists_having_items)
-        normalizer.assign_similarity_scores(similar_artist_relationships)
-        normalizer.assign_last_played_scores
-        weighted_artists
-      end
-
       def add_playback
         super({})
       end
