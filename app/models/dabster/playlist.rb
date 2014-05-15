@@ -38,7 +38,6 @@ module Dabster
         weighted_artists = RecommendationEngineCore.weigh_artist_similarity(artists, relationships)
         weighted_artists = RecommendationEngineCore.weigh_artist_last_playback(weighted_artists)
         sorted_artists = RecommendationEngineCore.sort_artists(weighted_artists)
-        puts sorted_artists.inspect
         Artist.first(id: sorted_artists.first.id).least_played_item
       end
     end

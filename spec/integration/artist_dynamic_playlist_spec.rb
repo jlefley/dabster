@@ -78,9 +78,10 @@ describe 'Dynamic playlist based on single artist having two similar artists wit
 
   context 'when sixth song is selected' do
     it 'returns least recently played item from artist least similar to initial artist' do
+      # Add playback to item 4 first to allow enough time to pass so item 5 is selected rather than item 0
+      item4.add_playback
       item0.add_playback
       item2.add_playback
-      item4.add_playback
       item1.add_playback
       item3.add_playback
       playlist.increment_current_position
