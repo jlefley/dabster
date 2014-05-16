@@ -2,7 +2,7 @@
   <% @group_artists.each do |type, artists| %>
     <tr>
       <td><%= type %></td>
-      <td><%= render partial: 'dabster/shared/artist', collection: artists, spacer_template: 'dabster/shared/break' %></td>
+      <td><%= render partial: 'shared/artist', collection: artists, spacer_template: 'shared/break' %></td>
     </tr>
   <% end %>
 </table>

@@ -7,10 +7,11 @@ feature 'Artist dynamic playlist playback' do
   let!(:artist1) { Dabster::Artist.create whatcd_name: 'artist1' }
   let!(:artist2) { Dabster::Artist.create whatcd_name: 'artist2' }
   let!(:artist3) { Dabster::Artist.create whatcd_name: 'artist2' }
-  let!(:item0) { Dabster::Library::Item.create album: 'album', title: 'title0', artist: 'artist0', path: 'path0' }
-  let!(:item1) { Dabster::Library::Item.create album: 'album', title: 'title1', artist: 'artist1', path: 'path1' }
-  let!(:item2) { Dabster::Library::Item.create album: 'album', title: 'title2', artist: 'artist2', path: 'path2' }
-  let!(:item3) { Dabster::Library::Item.create album: 'album', title: 'title3', artist: 'artist3', path: 'path3' }
+  let!(:album) { Dabster::Library::Album.create }
+  let!(:item0) { Dabster::Library::Item.create library_album: album, title: 'title0', artist: 'artist0', path: 'path0' }
+  let!(:item1) { Dabster::Library::Item.create library_album: album, title: 'title1', artist: 'artist1', path: 'path1' }
+  let!(:item2) { Dabster::Library::Item.create library_album: album, title: 'title2', artist: 'artist2', path: 'path2' }
+  let!(:item3) { Dabster::Library::Item.create library_album: album, title: 'title3', artist: 'artist3', path: 'path3' }
 
   before do
     artist0.add_similar_artist(artist1, whatcd_score: 300)
@@ -29,7 +30,7 @@ feature 'Artist dynamic playlist playback' do
   end
     
   scenario 'start playback of dynamic playlist from artist' do
-    visit dabster.artist_path(artist0)
+    visit artist_path(artist0)
 
     click_button 'Start dynamic playlist'
    
@@ -38,7 +39,7 @@ feature 'Artist dynamic playlist playback' do
   end
 
   scenario 'next song is queued when when queue advances' do
-    visit dabster.artist_path(artist0)
+    visit artist_path(artist0)
     
     click_button 'Start dynamic playlist'
 

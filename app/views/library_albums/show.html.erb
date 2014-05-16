@@ -52,10 +52,10 @@
     </td>
   </tr>
 </table>
-<%= render partial: 'dabster/shared/group' %>
+<%= render partial: 'shared/group' %>
 <% if @group_artists %>
   <h2>Artists</h2>
-  <%= render partial: 'dabster/shared/group_artists' %>
+  <%= render partial: 'shared/group_artists' %>
 <% end %>
 <h2>Items</h2>
 <table>
@@ -91,8 +91,8 @@
     <%= f.submit 'Associate selection with album' %>
     <%= f.hidden_field :library_album_id, value: @library_album.id %>
     <br><br>
-    <%= render partial: 'dabster/what/torrent_group', locals: { f: f, library_album: @library_album },
-      collection: @sorted_groups, as: :torrent_group, spacer_template: 'dabster/shared/rule' %>
+    <%= render partial: 'what/torrent_group', locals: { f: f, library_album: @library_album },
+      collection: @sorted_groups, as: :torrent_group, spacer_template: 'shared/rule' %>
   <% end %>
   <br>
   <span>Pages:

@@ -2,7 +2,7 @@ ENV['RAILS_ENV'] ||= 'test'
 
 require 'support/dummy_xmms_client'
 
-require File.expand_path('../../spec/dummy/config/environment', __FILE__)
+require File.expand_path('../../config/environment', __FILE__)
 
 require 'rspec/rails'
 require 'rspec/autorun'

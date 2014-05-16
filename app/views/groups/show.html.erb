@@ -1,9 +1,9 @@
 <h1>Group</h1>
 <h2 class='inline'>Metadata</h2>
 <%= link_to 'edit', edit_group_path(@group) %>
-<%= render partial: 'dabster/shared/group' %>
+<%= render partial: 'shared/group' %>
 <h2>Artists</h2>
-<%= render partial: 'dabster/shared/group_artists' %>
+<%= render partial: 'shared/group_artists' %>
 <%= form_for @group, method: :delete do |f| %>
   <p>
   <%= f.submit 'Delete', data: { confirm: 'Are you sure? This will also delete artist relationships for this group.' } %>
