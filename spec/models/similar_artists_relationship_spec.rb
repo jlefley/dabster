@@ -1,4 +1,4 @@
-require 'db_spec_helper'
+require 'app_spec_helper'
 
 describe Dabster::SimilarArtistsRelationship do
   subject(:relationship) { described_class.new(whatcd_score: 200, artist_id: 5, similar_artist_id: 2) }

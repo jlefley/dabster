@@ -1,16 +1,4 @@
-begin
-  require 'bundler/setup'
-rescue LoadError
-  puts 'You must `gem install bundler` and `bundle install` to run rake tasks'
-end
+require "bundler/gem_tasks"
+require File.expand_path('../config/application', __FILE__)
+Rails.application.load_tasks
 
-Bundler::GemHelper.install_tasks
-
-APP_RAKEFILE = File.expand_path("../spec/dummy/Rakefile", __FILE__)
-load 'rails/tasks/engine.rake'
-
-require 'rspec/core/rake_task'
-RSpec::Core::RakeTask.new(:spec) do |t|
-  t.verbose = false
-end
-task default: :spec

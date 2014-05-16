@@ -1,8 +1,6 @@
-*.swp
-*.swo
-
 *.gem
 *.rbc
+.bundle
 .config
 .yardoc
 Gemfile.lock
@@ -11,19 +9,23 @@ _yardoc
 coverage
 doc/
 lib/bundler/man
+pkg
 rdoc
 spec/reports
 test/tmp
 test/version_tmp
 tmp
+*.bundle
+*.so
+*.o
+*.a
+mkmf.log
 
-.bundle/
+*.swp
+*.swo
+
+db/*.sqlite3
+db/*.sqlite3-journal
 log/*.log
-pkg/
-spec/dummy/db/*.sqlite3
-spec/dummy/db/*.sqlite3-journal
-spec/dummy/log/*.log
-spec/dummy/tmp/
-spec/dummy/.sass-cache
 
 .ruby-version

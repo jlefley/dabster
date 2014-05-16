@@ -1,4 +1,4 @@
-require 'db_spec_helper'
+require 'app_spec_helper'
 
 describe Dabster::Artist do
   subject(:artist) { described_class.new }

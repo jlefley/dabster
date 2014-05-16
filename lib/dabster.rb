@@ -60,7 +60,6 @@ end
 
 if defined?(Rails)
   ENV['DABSTER_ENV'] = Rails.env
-  require 'dabster/engine'
 else
   require 'dabster/cli'
   

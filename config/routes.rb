@@ -1,4 +1,4 @@
-Dabster::Engine.routes.draw do
+Rails.application.routes.draw do
   root 'main#index'
 
   resources :library_artists, only: [:index]

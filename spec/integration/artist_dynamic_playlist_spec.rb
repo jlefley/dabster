@@ -1,4 +1,4 @@
-require 'db_spec_helper'
+require 'app_spec_helper'
 
 describe 'Dynamic playlist based on single artist having two similar artists with traversal depth of one', type: :feature do
   
