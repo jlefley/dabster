@@ -38,6 +38,6 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
 end
 
-# Start playback server for testing
+# Start playback proxy for testing
 # Inject dummy client so interactions can be tested
-$playback_proxy = Dabster::PlaybackServer.new($client = DummyXmmsClient.new)
+$playback_proxy = Dabster::PlaybackProxy.new($client = DummyXmmsClient.new)

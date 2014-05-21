@@ -1,5 +1,5 @@
 module Dabster
-  class PlaybackServer
+  class PlaybackProxy
 
     attr_reader :current_playlist
 

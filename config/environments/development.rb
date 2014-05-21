@@ -33,4 +33,4 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
 end
 
-$playback_proxy = Dabster::PlaybackServer.new(Dabster::Xmms::Client.new)
+$playback_proxy = Dabster::PlaybackProxy.new(Dabster::Xmms::Client.new)
