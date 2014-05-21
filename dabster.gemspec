@@ -33,6 +33,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'turbolinks',    '~> 2.2.2'
   spec.add_dependency 'sequel-rails',  '~> 0.9.2'
   spec.add_dependency 'will_paginate', '~> 3.0.5' 
+  spec.add_dependency 'thin',          '~> 1.6.2'
 
   spec.add_dependency 'sqlite3',          '~> 1.3.9'
   spec.add_dependency 'sequel',           '~> 4.10.0'
