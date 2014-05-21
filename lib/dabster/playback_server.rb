@@ -1,104 +1,74 @@
-require 'amqp'
-
 module Dabster
   class PlaybackServer
 
-    attr_reader :client
+    attr_reader :current_playlist
 
     def initialize(client)
       @client = client
 
-      client.on_current_position_changed do |new_position|
+      @client.on_current_position_changed do |new_position|
         puts "[PlaybackServer] Current position changed, new position: #{new_position}"
         @current_playlist.update(current_position: new_position)
-        publish_notification(event: 'current-position-changed', playlist_id: @current_playlist.id)
       end
 
-      client.on_playback_started do |entry_id|
+      @client.on_playback_started do |entry_id|
         puts "[PlaybackServer] Started entry playback, entry id: #{entry_id}"
         @entries.select { |e| e[0] == entry_id }.first[1].add_playback
 
-        if client.current_position == @entries.length - 1
+        if @client.current_position == @entries.length - 1
           puts '[PlaybackServer] Queuing entry'
           item = @current_playlist.next_item
-          client.add_entry(item.path)
-          @entries << [client.entry_ids.last, item]
-          publish_notification(event: 'playlist-changed', playlist_id: @current_playlist.id)
+          @client.add_entry(item.path)
+          @entries << [@client.entry_ids.last, item]
         end
       end
 
-      client.on_playback_status_changed do |new_status|
+      @client.on_playback_status_changed do |new_status|
         puts "[PlaybackServer] Playback status changed to #{new_status}"
       end
     end
-    
-    def start
-      puts '[PlaybackServer] Starting playback server'
 
+    def reset
       @current_playlist = nil
       @entries = []
-      client.clear_playlist
+      @client.clear_playlist
+    end
 
-      EM.run do
-        @amqp = AMQP.connect(host: '127.0.0.1')
-        channel = AMQP::Channel.new(@amqp)
+    def pause_playback
+      @client.pause_playback
+    end
 
-        play_queue = AMQP::Queue.new(channel, 'dabster.playbackserver.play', auto_delete: true, exclusive: true)
-        control_queue = AMQP::Queue.new(channel, 'dabster.playbackserver.control', auto_delete: true, exclusive: true)
-        rpc_queue = AMQP::Queue.new(channel, 'dabster.playbackserver.rpc', auto_delete: true, exclusive: true)
-        @notification_exchange = channel.fanout('dabster.playbackserver.notifications')
+    def start_playback
+      @client.start_playback
+    end
+    
+    def play_next_entry
+      @client.play_next_entry
+    end
 
-        play_queue.subscribe do |metadata, playlist_id|
-          puts "[PlaybackServer] Received playlist to play, playlist_id: #{playlist_id}"
-          @current_playlist = Dabster::Playlist.first!(id: playlist_id.to_i)
-          client.stop_playback
-          client.clear_playlist
-          
-          @current_playlist.items.each { |item| client.add_entry(item.path) }
-          @entries = client.entry_ids.each_with_index.map { |id, i| [id, @current_playlist.items[i]] }
-          
-          client.start_playback
-          puts '[PlaybackServer] Started playlist playback'
-        end
+    def play_previous_entry
+      @client.play_previous_entry
+    end
 
-        rpc_queue.subscribe do |metadata, request|
-          puts "[PlaybackServer] Received RPC request: #{request}"
-          if @current_playlist.nil?
-            message = { status: :empty }.to_json
-          else
-            message = { status: client.playback_status, playlist_id: @current_playlist.id }.to_json
-          end
-          channel.default_exchange.publish(message, routing_key: metadata.reply_to, correlation_id: metadata.message_id)
-        end
-
-        control_queue.subscribe do |metadata, command|
-          puts "[PlaybackServer] Received #{command} command"
-          case command
-          when 'pause'
-            client.pause_playback
-          when 'play'
-            client.start_playback
-          when 'next'
-            client.play_next_entry
-          when 'previous'
-            client.play_previous_entry
-          end
-        end
-
-        Signal.trap('INT') { stop }
+    def status
+      if @current_playlist.nil?
+        :empty
+      else
+        @client.playback_status
       end
     end
 
-    def stop
-      puts '[PlaybackServer] Stoping playback server'
-      #return unless EM.reactor_running? and @amqp
-      @amqp.close { EM.stop }
-    end
-
-    private
-
-    def publish_notification(message)
-      @notification_exchange.publish(message.to_json)
+    def play_playlist(playlist)
+      puts "[PlaybackServer] Received playlist to play: #{playlist.inspect}"
+      @current_playlist = playlist
+      @client.stop_playback
+      @client.clear_playlist
+      
+      @current_playlist.items.each { |item| @client.add_entry(item.path) }
+      @entries = @client.entry_ids.each_with_index.map { |id, i| [id, @current_playlist.items[i]] }
+      
+      @client.start_playback
+      puts '[PlaybackServer] Started playlist playback'
     end
 
   end

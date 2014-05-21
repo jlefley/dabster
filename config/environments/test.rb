@@ -40,11 +40,4 @@ end
 
 # Start playback server for testing
 # Inject dummy client so interactions can be tested
-playback_server = Dabster::PlaybackServer.new($client = DummyXmmsClient.new)
-server_thread = Thread.new { playback_server.start }
-server_thread.abort_on_exception = true
-
-# Stop on shutdown
-at_exit do
-  playback_server.stop
-end
+$playback_proxy = Dabster::PlaybackServer.new($client = DummyXmmsClient.new)

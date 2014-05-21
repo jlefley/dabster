@@ -6,7 +6,7 @@ class PlaylistsController < ApplicationController
 
   def play
     playlist = Dabster::Playlist.first!(id: params[:id])
-    $rabbitmq_channel.default_exchange.publish(playlist.id.to_s, routing_key: 'dabster.playbackserver.play')
+    $playback_proxy.play_playlist(playlist)
     redirect_to playback_path
   end
   

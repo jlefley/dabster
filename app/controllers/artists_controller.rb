@@ -10,7 +10,7 @@ class ArtistsController < ApplicationController
     artist = Dabster::Artist.first!(id: params[:id])
     playlist = Dabster::Playlist.create
     playlist.initialize_with_artist(artist)
-    $rabbitmq_channel.default_exchange.publish(playlist.id.to_s, routing_key: 'dabster.playbackserver.play')
+    $playback_proxy.play_playlist(playlist)
     redirect_to playback_path
   end
 end
